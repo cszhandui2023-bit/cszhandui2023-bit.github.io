@@ -1,0 +1,4 @@
+/*
+  Cache-Control: public, max-age=300, s-maxage=3600, stale-while-revalidate=600, stale-error=300
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
