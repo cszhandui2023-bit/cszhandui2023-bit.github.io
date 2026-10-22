@@ -1,0 +1,2440 @@
+<!doctype html>
+
+<html lang="ko" data-page-node-id="zhZbAxwOUm1A2Dv5PtEqoZ">
+
+<head data-page-node-id="PYjkDf254j5NYl3QG0o1GY">
+
+  <meta charset="utf-8" data-page-node-id="X95HuWSMCMAbgSpO77TjsD">
+  <meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="HnqaVYuK1E0DgfNBfKIKh4">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" data-page-node-id="VBfBuD7rPtErg9kkz9J8lQ">
+  <meta http-equiv="Pragma" content="no-cache" data-page-node-id="ZvClF6Gp71KaFV823YeHEk">
+  <meta http-equiv="Expires" content="0" data-page-node-id="1Q464U1CFFuqT4eCphCQlB">
+  <title>LGECH C.O.I Dashboard - 보상금 제외 기준</title>
+  <style>
+    #auth-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#061626;}
+    #auth-gate .auth-box{width:320px;padding:36px 32px;background:linear-gradient(180deg,rgba(12,41,68,.96),rgba(5,21,38,.94));border:1px solid rgba(91,179,235,.42);box-shadow:0 0 36px rgba(20,160,255,.16);text-align:center;}
+    #auth-gate .auth-box h2{margin:0 0 6px;color:#edf7ff;font-size:20px;}
+    #auth-gate .auth-box p{margin:0 0 22px;color:#91abc2;font-size:12px;}
+    #auth-gate .auth-box input{width:100%;box-sizing:border-box;padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(127,195,238,.35);color:#edf7ff;font-size:16px;text-align:center;letter-spacing:.3em;border-radius:4px;outline:none;}
+    #auth-gate .auth-box input:focus{border-color:#35d8ff;box-shadow:0 0 14px rgba(53,216,255,.28);}
+    #auth-gate .auth-box button{margin-top:14px;width:100%;padding:11px;color:#041624;background:linear-gradient(180deg,#35d8ff,#75e9ff);border:none;border-radius:4px;font-size:15px;font-weight:900;cursor:pointer;}
+    #auth-gate .auth-box .auth-err{margin-top:12px;color:#ff6f70;font-size:12px;min-height:16px;}
+    #auth-gate .auth-box .auth-en{margin:-18px 0 22px;color:#5d7a8c;font-size:11px;letter-spacing:.02em;opacity:.55;}
+    #auth-gate .auth-box .auth-ko{margin-top:6px;color:#5d7a8c;font-size:11px;letter-spacing:.02em;opacity:.55;}
+    #auth-gate.hidden{display:none!important;}
+
+
+    :root {
+
+      --bg: #061626;
+
+      --bg2: #071d31;
+
+      --panel: rgba(8, 28, 47, .92);
+
+      --panel2: rgba(10, 37, 61, .88);
+
+      --line: rgba(91, 179, 235, .42);
+
+      --line-soft: rgba(91, 179, 235, .18);
+
+      --ink: #edf7ff;
+
+      --muted: #91abc2;
+
+      --cyan: #35d8ff;
+
+      --mint: #43e1be;
+
+      --blue: #64a8ff;
+
+      --gold: #ffd66b;
+
+      --red: #ff6f70;
+
+      --green: #58e29b;
+
+      --shadow: 0 0 36px rgba(20, 160, 255, .16);
+
+    }
+
+
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+
+
+    body {
+
+      margin: 0;
+
+      color: var(--ink);
+
+      background:
+
+        radial-gradient(circle at 50% 22%, rgba(55, 216, 255, .20), transparent 24%),
+
+        linear-gradient(120deg, rgba(67, 225, 190, .08), transparent 28%),
+
+        repeating-linear-gradient(90deg, rgba(90, 178, 235, .07) 0 1px, transparent 1px 80px),
+
+        repeating-linear-gradient(0deg, rgba(90, 178, 235, .045) 0 1px, transparent 1px 80px),
+
+        var(--bg);
+
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .page {
+
+      width: min(1920px, calc(100vw - 20px));
+
+      height: calc(100vh - 30px);
+
+      margin: 6px auto 24px;
+
+      display: grid;
+
+      grid-template-rows: 56px 86px minmax(0, 1fr) 198px;
+
+      gap: 8px;
+
+    }
+
+
+
+    .topbar,
+
+    .panel,
+
+    .kpi,
+
+    .mini-kpi {
+
+      background: linear-gradient(180deg, rgba(12, 41, 68, .96), rgba(5, 21, 38, .94));
+
+      border: 1px solid var(--line);
+
+      box-shadow: var(--shadow);
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .topbar:before,
+
+    .panel:before,
+
+    .kpi:before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+
+        linear-gradient(90deg, rgba(53, 216, 255, .24), transparent 18%, transparent 82%, rgba(53, 216, 255, .18)),
+
+        linear-gradient(180deg, rgba(255, 255, 255, .04), transparent 38%);
+
+      opacity: .55;
+
+    }
+
+
+
+    .topbar {
+
+      display: grid;
+
+      grid-template-columns: 1fr auto 1fr;
+
+      align-items: center;
+
+      padding: 0 18px;
+
+    }
+
+
+
+    .brand {
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+
+    h1 {
+
+      margin: 0;
+
+      font-size: 22px;
+
+      letter-spacing: .04em;
+
+      white-space: nowrap;
+
+    }
+
+
+
+    .subtitle {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-top: 2px;
+
+    }
+
+
+
+    .controls {
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+
+
+    .right-meta {
+
+      justify-self: end;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      gap: 5px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+    .right-meta span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 20px;
+      padding: 0 10px;
+      color: #fff;
+      background: #b0003a;
+      border-radius: 6px;
+      font-size: 11px;
+      line-height: 20px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      text-align: center;
+      white-space: nowrap;
+      box-shadow: 0 4px 9px rgba(176, 0, 58, .16);
+    }
+
+
+
+    .right-meta .update-badge {
+
+      min-height: 20px;
+
+      padding: 0 11px;
+
+      color: #c8102e;
+
+      background: #fff;
+
+      border: 1.5px solid #f0a8b8;
+
+      border-radius: 999px;
+
+      font-size: 11px;
+
+      line-height: 18px;
+
+      font-weight: 900;
+
+      letter-spacing: -.01em;
+
+      box-shadow: 0 2px 6px rgba(200, 16, 46, .12);
+
+    }
+
+
+
+    button {
+
+      min-height: 34px;
+
+      padding: 7px 13px;
+
+      color: #c8dded;
+
+      background: rgba(255, 255, 255, .04);
+
+      border: 1px solid rgba(127, 195, 238, .35);
+
+      cursor: pointer;
+
+      font: inherit;
+
+      font-weight: 800;
+
+      transition: .16s ease;
+
+    }
+
+
+
+    button:hover {
+
+      color: #fff;
+
+      border-color: var(--cyan);
+
+      box-shadow: 0 0 14px rgba(53, 216, 255, .28);
+
+    }
+
+
+
+    button.active {
+
+      color: #041624;
+
+      background: linear-gradient(180deg, var(--cyan), #75e9ff);
+
+      border-color: var(--cyan);
+
+    }
+
+
+
+    .kpi-row {
+
+      display: grid;
+
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+
+      gap: 10px;
+
+    }
+
+
+
+    .kpi {
+
+      padding: 8px 14px;
+
+      display: grid;
+
+      align-content: space-between;
+
+      min-width: 0;
+
+    }
+
+
+
+    .kpi span,
+
+    .panel-title span,
+
+    .tiny {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: .03em;
+
+    }
+
+
+
+    .kpi b {
+
+      font-size: clamp(18px, 1.5vw, 26px);
+
+      line-height: 1;
+
+      font-variant-numeric: tabular-nums;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .good {
+
+      color: var(--green);
+
+    }
+
+
+
+    .bad {
+
+      color: var(--red);
+
+    }
+
+
+
+    .warn {
+
+      color: var(--gold);
+
+    }
+
+
+
+    .main-grid {
+
+      display: grid;
+
+      grid-template-columns: 1.05fr 1.48fr 1.05fr;
+
+      gap: 10px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .left-stack,
+
+    .right-stack,
+
+    .center-stack {
+
+      display: grid;
+
+      gap: 10px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .left-stack {
+
+      grid-template-rows: minmax(0, 1fr);
+
+    }
+
+
+
+    .center-stack {
+
+      grid-template-rows: minmax(0, 1fr);
+
+    }
+
+
+
+    .right-stack {
+
+      grid-template-rows: .82fr 1.18fr;
+
+    }
+
+
+
+    .panel {
+
+      padding: 14px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .panel-title {
+
+      display: flex;
+
+      align-items: baseline;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 12px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .panel-title h2 {
+
+      margin: 0;
+
+      color: #d8ebff;
+
+      font-size: 17px;
+
+      letter-spacing: .04em;
+
+    }
+
+
+
+    table {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+      font-size: 12px;
+
+      font-variant-numeric: tabular-nums;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    th,
+
+    td {
+
+      padding: 5px 6px;
+
+      border-bottom: 1px dashed rgba(151, 202, 235, .25);
+
+      white-space: nowrap;
+
+    }
+
+
+
+    th {
+
+      color: #a9dfff;
+
+      font-weight: 900;
+
+      text-align: left;
+
+      background: rgba(53, 216, 255, .12);
+
+    }
+
+
+
+    td.num,
+
+    th.num {
+
+      text-align: right;
+
+    }
+
+
+
+    tr.active-row td {
+
+      background: rgba(178, 143, 255, .18);
+
+      color: #fff;
+
+      font-weight: 900;
+
+    }
+
+    tr.total-row td {
+      background: rgba(255, 214, 107, .12);
+      border-top: 1px solid rgba(255, 214, 107, .5);
+      border-bottom: 1px solid rgba(255, 214, 107, .5);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .trend-mini {
+      height: 168px;
+      margin-top: 12px;
+      padding: 8px 10px 6px;
+      border: 1px solid rgba(127, 195, 238, .18);
+      background: rgba(255, 255, 255, .025);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .trend-mini svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    .trend-mini text {
+      fill: #a9dfff;
+      font-size: 10px;
+      font-weight: 800;
+      font-family: inherit;
+    }
+
+    .trend-mini .grid-line {
+      stroke: rgba(151, 202, 235, .18);
+      stroke-dasharray: 4 4;
+    }
+
+    .trend-mini .coi-line {
+      fill: none;
+      stroke: #ffd66b;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .trend-mini .coi-dot {
+      fill: #ffd66b;
+      stroke: #071d31;
+      stroke-width: 2;
+    }
+
+    .trend-mini .hover-zone {
+      fill: transparent;
+      cursor: pointer;
+    }
+
+    .trend-mini .legend-text {
+      fill: #d8ebff;
+      font-size: 10px;
+    }
+
+    .month-summary {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 10px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .mini-kpi {
+
+      min-height: 86px;
+
+      padding: 12px;
+
+      border-color: var(--line-soft);
+
+      box-shadow: none;
+
+    }
+
+
+
+    .mini-kpi span {
+
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      margin-bottom: 8px;
+
+    }
+
+
+
+    .mini-kpi b {
+
+      font-size: 25px;
+
+      font-variant-numeric: tabular-nums;
+
+    }
+
+
+
+    .bar-list {
+
+      display: grid;
+
+      gap: 5px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr) 126px;
+      gap: 8px;
+      align-items: center;
+      color: #d9e9f7;
+      font-size: 10px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar-row > span:first-child {
+      white-space: nowrap;
+    }
+
+    .bar-row > span:last-child {
+      font-size: 10px;
+      line-height: 1.2;
+      letter-spacing: -.01em;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+
+    .track {
+
+      height: 10px;
+
+      border-radius: 999px;
+
+      background: rgba(255, 255, 255, .12);
+
+      overflow: hidden;
+
+    }
+
+
+
+    .fill {
+
+      height: 100%;
+
+      width: var(--w);
+
+      border-radius: inherit;
+
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+
+      box-shadow: 0 0 12px rgba(53, 216, 255, .35);
+
+    }
+
+
+
+    .fill.loss {
+
+      background: linear-gradient(90deg, #ff6f70, #ffd66b);
+
+    }
+
+
+
+    .structure-list {
+
+      display: grid;
+
+      gap: 13px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .structure-row {
+
+      display: grid;
+
+      grid-template-columns: 102px minmax(0, 1fr) 112px;
+
+      gap: 12px;
+
+      align-items: center;
+
+      color: #e2f2ff;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      font-variant-numeric: tabular-nums;
+
+    }
+
+
+
+    .structure-track {
+
+      height: 16px;
+
+      border-radius: 999px;
+
+      background: rgba(255, 255, 255, .12);
+
+      overflow: hidden;
+
+    }
+
+
+
+    .structure-fill {
+
+      height: 100%;
+
+      width: var(--w);
+
+      border-radius: inherit;
+
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+
+      box-shadow: 0 0 14px rgba(53, 216, 255, .34);
+
+    }
+
+
+
+    .structure-fill.cost {
+
+      background: linear-gradient(90deg, var(--blue), #9ad5ff);
+
+    }
+
+
+
+    .structure-fill.loss {
+
+      background: linear-gradient(90deg, #ff6f70, var(--gold));
+
+    }
+
+
+
+    .structure-value {
+      text-align: right;
+      color: var(--gold);
+    }
+
+    .customer-list {
+      gap: 12px;
+    }
+
+    #focusPanel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    #focusContent {
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .customer-scroll {
+      max-height: 100%;
+      padding-right: 10px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan) rgba(255, 255, 255, .08);
+    }
+
+    .customer-scroll::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .customer-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, .08);
+      border-radius: 999px;
+    }
+
+    .customer-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--cyan), var(--mint));
+      border-radius: 999px;
+    }
+
+    .customer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 126px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .customer-name-line {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .customer-rank {
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(53, 216, 255, .16);
+      border: 1px solid rgba(53, 216, 255, .45);
+      color: var(--cyan);
+      font-size: 10px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .customer-main,
+    .customer-metrics {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .customer-main b,
+    .customer-metrics b {
+      font-size: 14px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .customer-main b {
+      color: #e2f2ff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .customer-main span,
+    .customer-metrics span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .customer-metrics {
+      text-align: right;
+    }
+
+
+    .insight {
+      margin-top: 10px;
+      padding: 10px;
+      color: #dcecff;
+
+      background: rgba(255, 255, 255, .045);
+
+      border-left: 4px solid var(--gold);
+
+      font-size: 12px;
+
+      line-height: 1.45;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .donut-layout {
+
+      display: grid;
+
+      grid-template-columns: 156px minmax(0, 1fr);
+
+      gap: 12px;
+
+      align-items: center;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .donut {
+
+      width: 148px;
+
+      height: 148px;
+
+      border-radius: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      position: relative;
+
+      box-shadow: 0 0 22px rgba(53, 216, 255, .25);
+
+    }
+
+    .donut svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      transform: rotate(-90deg);
+    }
+
+    .donut-segment {
+      cursor: pointer;
+      transition: opacity .16s ease, filter .16s ease, stroke-width .16s ease;
+      stroke: #061626;
+      stroke-width: 1.5;
+    }
+
+    .donut-segment:hover,
+    .donut-segment.active {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px rgba(255, 214, 107, .7));
+      stroke-width: 2.5;
+    }
+
+    .donut.has-active .donut-segment:not(.active) {
+      opacity: .42;
+    }
+
+
+
+    .donut-core {
+
+      width: 92px;
+
+      height: 92px;
+
+      border-radius: 50%;
+
+      background: #071d31;
+
+      display: grid;
+
+      place-items: center;
+
+      text-align: center;
+
+      border: 1px solid rgba(255, 255, 255, .12);
+
+      position: relative;
+
+      z-index: 2;
+
+      pointer-events: none;
+
+    }
+
+
+
+    .donut-core b {
+
+      display: block;
+
+      font-size: 18px;
+
+    }
+
+    .donut-core small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .product-tip {
+      margin-top: 10px;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 6px 12px;
+      background: rgba(255, 255, 255, .055);
+      border: 1px solid rgba(255, 214, 107, .36);
+      box-shadow: inset 0 0 18px rgba(255, 214, 107, .08);
+      color: #dcecff;
+      font-size: 12px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-tip b {
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .product-tip span {
+      color: var(--muted);
+    }
+
+
+
+    .legend {
+
+      display: grid;
+
+      gap: 8px;
+
+      font-size: 12px;
+
+    }
+
+
+
+    .legend-item {
+
+      display: grid;
+
+      grid-template-columns: 10px 1fr auto;
+
+      gap: 8px;
+
+      align-items: center;
+
+      color: #d8eafa;
+
+      cursor: pointer;
+
+      border-radius: 6px;
+
+      padding: 2px 4px;
+
+      transition: background .16s ease, color .16s ease;
+
+    }
+
+    .legend-item:hover,
+    .legend-item.active {
+      background: rgba(255, 214, 107, .12);
+      color: #fff;
+    }
+
+
+
+    .dot {
+
+      width: 9px;
+
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: var(--cyan);
+
+    }
+
+
+
+    .bottom-grid {
+
+      display: grid;
+
+      grid-template-columns: 1.05fr 1.3fr 1.15fr;
+
+      gap: 10px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .risk-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 8px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .risk-card {
+
+      padding: 10px;
+
+      background: rgba(255, 255, 255, .045);
+
+      border: 1px solid var(--line-soft);
+
+      min-height: 58px;
+
+    }
+
+
+
+    .risk-card span {
+
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      margin-bottom: 7px;
+
+    }
+
+
+
+    .risk-card b {
+
+      font-size: 19px;
+
+    }
+
+
+
+    .action-list {
+
+      display: grid;
+
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 8px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .action {
+
+      padding: 10px;
+
+      min-height: 108px;
+
+      background: rgba(255, 255, 255, .045);
+
+      border: 1px solid var(--line-soft);
+
+    }
+
+
+
+    .action b {
+
+      display: block;
+
+      margin-bottom: 8px;
+
+      color: #fff;
+
+      font-size: 13px;
+
+    }
+
+
+
+    .action span {
+
+      color: #aec4d6;
+
+      font-size: 11px;
+
+      line-height: 1.42;
+
+    }
+
+
+
+    .product-view-grid {
+
+      display: none;
+
+      grid-template-columns: 1.1fr 1.25fr 1.1fr;
+
+      gap: 10px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .product-view-grid.active {
+
+      display: grid;
+
+    }
+
+
+
+    .product-view-grid .panel {
+
+      display: flex;
+
+      flex-direction: column;
+
+      min-height: 0;
+
+    }
+
+
+
+    .product-context-panel {
+
+      display: grid !important;
+
+      grid-template-rows: auto auto auto minmax(260px, 1fr);
+
+      min-height: 0;
+
+    }
+
+
+
+    .product-month-tabs {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+      margin-bottom: 10px;
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+
+
+    .product-month-tabs button {
+
+      min-height: 28px;
+
+      padding: 4px 10px;
+
+      font-size: 12px;
+
+    }
+
+
+
+    .product-rank-list {
+
+      display: grid;
+
+      gap: 9px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    #productCustomerList {
+
+      align-content: start;
+
+      min-height: 0;
+
+      overflow: auto;
+
+      padding-right: 4px;
+
+      scrollbar-width: thin;
+
+      scrollbar-color: var(--cyan) rgba(255, 255, 255, .08);
+
+    }
+
+
+
+    .product-rank-row {
+
+      display: grid;
+
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, .95fr) 118px;
+
+      gap: 10px;
+
+      align-items: center;
+
+      padding: 7px 0;
+
+      border-bottom: 1px dashed rgba(151, 202, 235, .2);
+
+      font-variant-numeric: tabular-nums;
+
+    }
+
+
+
+    .product-rank-row b {
+
+      color: #fff;
+
+      font-size: 13px;
+
+    }
+
+
+
+    .product-rank-row span {
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+    }
+
+
+
+    .product-detail-card {
+
+      display: grid;
+
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      gap: 8px;
+
+      margin-bottom: 10px;
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+
+    .product-detail-card div {
+
+      padding: 10px;
+
+      background: rgba(255, 255, 255, .045);
+
+      border: 1px solid var(--line-soft);
+
+    }
+
+
+
+    .product-detail-card span {
+
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+    }
+
+
+
+    .product-detail-card b {
+
+      font-size: 18px;
+
+      font-variant-numeric: tabular-nums;
+
+    }
+
+
+
+    .product-compare-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 10px;
+
+      min-height: 0;
+
+    }
+
+
+
+    .product-view-table-wrap {
+
+      min-height: 0;
+
+      overflow: auto;
+
+      position: relative;
+
+      z-index: 1;
+
+      scrollbar-width: thin;
+
+      scrollbar-color: var(--cyan) rgba(255, 255, 255, .08);
+
+    }
+
+
+
+    .product-coi-chart {
+
+      margin-top: 12px;
+
+      min-height: 190px;
+
+      flex: 1;
+
+      border: 1px solid rgba(91, 179, 235, .28);
+
+      background: rgba(3, 18, 32, .34);
+
+      position: relative;
+
+      z-index: 1;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .product-coi-chart svg {
+
+      width: 100%;
+
+      height: 100%;
+
+      min-height: 190px;
+
+      display: block;
+
+    }
+
+
+
+    .product-coi-chart text {
+
+      fill: #bfeeff;
+
+      font-size: 18px;
+
+      font-weight: 900;
+
+    }
+
+
+
+    .product-coi-chart .coi-chart-heading {
+
+      fill: #edf7ff;
+
+      font-size: 18px;
+
+      letter-spacing: .02em;
+
+    }
+
+
+
+    .product-coi-chart .coi-chart-title {
+
+      fill: #edf7ff;
+
+      font-size: 17px;
+
+    }
+
+
+
+    .product-coi-chart .coi-chart-value {
+
+      fill: #bfeeff;
+
+      font-size: 16px;
+
+    }
+
+
+
+    .product-coi-chart .coi-chart-value.negative {
+
+      fill: #ff6f70 !important;
+
+    }
+
+
+
+    .product-view-table-wrap table tbody tr {
+
+      cursor: pointer;
+
+    }
+
+
+
+    .product-view-table-wrap table tbody tr:hover,
+
+    .product-view-table-wrap table tbody tr.active-row {
+
+      background: rgba(255, 214, 107, .12);
+
+    }
+
+
+
+    .dashboard-view.hidden {
+
+      display: none;
+
+    }
+
+
+
+    .page.product-mode {
+
+      grid-template-rows: 60px 96px minmax(0, 1fr);
+
+    }
+
+
+
+    .page.product-mode .product-view-grid {
+
+      height: 100%;
+
+    }
+
+
+
+    @media (max-width: 1200px) {
+
+      body {
+
+        overflow: auto;
+
+      }
+
+
+
+      .page {
+
+        height: auto;
+
+        grid-template-rows: auto;
+
+      }
+
+
+
+      .topbar,
+
+      .kpi-row,
+
+      .main-grid,
+
+      .bottom-grid,
+
+      .month-summary,
+
+      .donut-layout,
+
+      .risk-grid,
+
+      .action-list,
+
+      .product-view-grid,
+
+      .product-detail-card,
+
+      .product-compare-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body data-page-node-id="1GEC9PSbHgAhWAqxqW3Upg">
+  <div id="auth-gate" data-page-node-id="fXBu3YiBzL8ASzbuFeaCgx">
+    <div class="auth-box" data-page-node-id="wLjtD0tdhBDsvm2OFxju4Q">
+      <h2 data-page-node-id="mp2DPZcq7nPawrXB1z9qvJ">C.O.I Dashboard</h2>
+      <p data-page-node-id="TsPmm2fvLCoKFHgbQncB8b">访问需要密码</p>
+      <p class="auth-en" data-page-node-id="NCIu9f24X2zpThxHXo2iho">Password required to access</p>
+      <input type="password" id="auth-input" placeholder="••••" autocomplete="off" autofocus data-page-node-id="cJUREfFIn8Yso97n2rpIjl">
+      <div class="auth-err" id="auth-err" data-page-node-id="fjmwsCOXSqi1LYHMZG53Qg"></div>
+      <button id="auth-btn" type="button" data-page-node-id="g3iAVxranQ78bh5DGRnLzb">进入</button>
+      <p class="auth-ko" data-page-node-id="ERHJO6OwBdyHTSs3L7uBoP">접속</p>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var KEY='coi_auth_ok';
+    if(sessionStorage.getItem(KEY)==='1'){document.getElementById('auth-gate').classList.add('hidden');return;}
+    function tryAuth(){
+      var v=document.getElementById('auth-input').value;
+      if(v==='2026'){sessionStorage.setItem(KEY,'1');document.getElementById('auth-gate').classList.add('hidden');}
+      else{document.getElementById('auth-err').textContent='密码错误，请重试';document.getElementById('auth-input').value='';document.getElementById('auth-input').focus();}
+    }
+    document.getElementById('auth-btn').addEventListener('click',tryAuth);
+    document.getElementById('auth-input').addEventListener('keydown',function(e){if(e.key==='Enter')tryAuth();});
+  })();
+  </script>
+
+  <main class="page" data-page-node-id="kfCWqkqgD6HyiG6pkY6iL4">
+
+    <header class="topbar" data-page-node-id="JN1fQkxsupIYwSIaJp57TK">
+      <div class="brand" data-page-node-id="DaO9TjC7E09sIS0u1nEYQG">
+        <div data-page-node-id="JwHe3hOm5idqosq3eVg3Ed">
+          <h1 data-page-node-id="LmAmNawWzVf4mZLxrw40AC">LGECH C.O.I Dashboard</h1>
+          <div class="subtitle" data-page-node-id="sM0GDVr544wF4LD5zIs0Yy">보상금 제외 기준 · 지점/채널/고객/제품 손익 분석</div>
+        </div>
+
+      </div>
+
+      <div class="controls" aria-label="month controls" data-page-node-id="cj9y6C6TL9oLyJZdPqpdbO">
+
+        <button class="month-btn" type="button" data-month="01" data-page-node-id="4UQa5ZGN9h4M1knbAClCH1">1월</button>
+
+        <button class="month-btn" type="button" data-month="02" data-page-node-id="f3ZMpQ5fPscAIxBqCB19KU">2월</button>
+
+        <button class="month-btn" type="button" data-month="03" data-page-node-id="A1zCdmmPFh4Xiay2uDI82f">3월</button>
+
+        <button class="month-btn" type="button" data-month="04" data-page-node-id="ztdhwlMMCHZqP7ksVHREeN">4월</button>
+        <button class="month-btn" type="button" data-month="05" data-page-node-id="C4xA0VCu93aVUP8za3aQML">5월</button>
+        <button class="month-btn" type="button" data-month="06" data-page-node-id="rWJIM412u2ARuMpP7GDWpT">6월</button>
+        <button class="month-btn" type="button" data-month="07" data-page-node-id="H0ZrdHPsikxdEOdZyCAzNC">7월</button>
+        <button class="month-btn" type="button" data-month="08" data-page-node-id="FGRYQ6ZoJS7oYzDJrEvBmJ">8월</button>
+        <button class="month-btn active" type="button" data-month="09">9월</button>
+        <button class="view-btn" type="button" data-view="product" data-page-node-id="E2y3vIjP84MYJxbDmG5GN8">제품별</button>
+
+      </div>
+      <div class="right-meta" data-page-node-id="HGtT0ckq2qLNMjg8XPAhTB">
+        <span data-page-node-id="K6rnRDVVUcqg7XZ5TZSEZK">Powered by BI Team</span>
+        <span class="update-badge" data-page-node-id="updBadge01">업데이트: 2026-09-21</span>
+      </div>
+    </header>
+
+
+
+    <section class="kpi-row" id="kpiRow" data-page-node-id="jr8bxKorM3cpGNAUbbHbhR"></section>
+
+
+
+    <section class="main-grid dashboard-view" id="dashboardMain" data-page-node-id="5g0CBq3gZATDjKvpqdgeGY">
+
+      <div class="left-stack" data-page-node-id="3BD2eebgxNYXFVpjR1XH5R">
+
+        <section class="panel" data-page-node-id="xLUFNOooJVVLYx7hT2uFiV">
+          <div class="panel-title" data-page-node-id="ZWgruN6bMeMQYqLXkDpU9k">
+            <h2 data-page-node-id="xCprBF5R7IGU9BVbfIAvBU">월별 추세</h2>
+            <span data-page-node-id="ixSbjTxdhPkKa6bHSEJaZj">Adjusted COI 기준</span>
+          </div>
+          <table id="trendTable" data-page-node-id="wDiyJJXxDEKPjYd41jFrSe"></table>
+          <div class="trend-mini" id="trendMini" data-page-node-id="EaqwzvTdNC9dfGrlIJhe4A"></div>
+        </section>
+
+      </div>
+
+
+
+      <div class="center-stack" data-page-node-id="2T99l6jswxO60BnS4uA2MC">
+
+        <section class="panel" id="focusPanel" data-page-node-id="xmLSiDsV3h2LN0dslvkOF2">
+          <div class="panel-title" data-page-node-id="Bh06XxCquNSBsyyxOenDcl">
+            <h2 id="focusTitle" data-page-node-id="SvGMrQd8D4Rn53DAJKufOc">핵심 고객 COI</h2>
+            <span id="focusSub" data-page-node-id="7B1oEx3Dde3trygHzoLS6E">순매출 / 조정 COI / COI%</span>
+          </div>
+          <div id="focusContent" data-page-node-id="d4WjR4BwDoKpGZz9ikYdmT"></div>
+        </section>
+      </div>
+
+
+
+      <div class="right-stack" data-page-node-id="gKfNwaC35RirDm59BJ7fwi">
+
+        <section class="panel" data-page-node-id="5SHjjRqVrkgSaIUKTWgxu8">
+
+          <div class="panel-title" data-page-node-id="qPKLZaMeP0I9ZHoY0nkSOI">
+
+            <h2 id="channelTitle" data-page-node-id="ybac1fX9RiF71IHfBTXtqG">채널 손익</h2>
+
+            <span data-page-node-id="BdCz6PEQxkfNNXe4JHoKN3">COI-K$/COI-%</span>
+
+          </div>
+
+          <div class="bar-list" id="channelBars" data-page-node-id="rQC8pcezCN4kg3anQFN7Il"></div>
+
+        </section>
+
+
+
+        <section class="panel" data-page-node-id="i7PI5VvNV09ZwaOYHSBgMC">
+
+          <div class="panel-title" data-page-node-id="e2eUrJRPjTf2PsRkUrFqKc">
+
+            <h2 id="productTitle" data-page-node-id="7QjPfAoUoXBPZyjnC8qEOO">제품 구조</h2>
+
+            <span data-page-node-id="N9c018gvK63ZgDFlx734EC">매출 비중% / 손익K$</span>
+
+          </div>
+
+          <div class="donut-layout" data-page-node-id="InWiKzAS2XlO6q3AmNHwov">
+
+            <div class="donut" data-page-node-id="4fFn2qBO3PL4rT2QtsD2Tu">
+
+              <div class="donut-core" data-page-node-id="ZyUApwkoK4uvnKIOwSX0BC">
+
+                <div data-page-node-id="YR9qf85NfxMilc0RE1Wr1t"></div>
+
+              </div>
+
+            </div>
+
+            <div class="legend" id="productLegend" data-page-node-id="85mVennd9tkEsoIAFC5aqP"></div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+
+
+    <section class="bottom-grid dashboard-view" id="dashboardBottom" data-page-node-id="HD09veUS1VY6agHqnsz5OT">
+
+      <section class="panel" data-page-node-id="Txlmsz2kbUXWRoVf8Clvuj">
+
+        <div class="panel-title" data-page-node-id="avMiX18NYdPZNwd6Ch4WZl">
+
+          <h2 id="teamLossTitle" data-page-node-id="kmIaSHNvi5EEk1NXMVcv0t">손실 영업팀</h2>
+
+          <span data-page-node-id="Bombhw1EgdfPX9vzzDBN63">개선 우선순위 COI(K$)</span>
+
+        </div>
+
+        <div class="bar-list" id="teamLossBars" data-page-node-id="NhLiNcAoPz0FO7A8A43AbM"></div>
+
+      </section>
+
+
+
+      <section class="panel" data-page-node-id="1bHMBVVpYjPLGqGAb8YN1g">
+
+        <div class="panel-title" data-page-node-id="okCH01DL6JE2Z1IVuGIBDN">
+
+          <h2 data-page-node-id="KD2OrqyS7JfnxR8Cx1y8eW">고객 집중도와 리스크</h2>
+
+          <span id="riskMonthLabel" data-page-node-id="63EuqSZ69twh9Yntqua275">선택 월 기준</span>
+
+        </div>
+
+        <div class="risk-grid" id="riskGrid" data-page-node-id="9VtkXMK3rqamhzUHTXCKcr"></div>
+
+      </section>
+
+
+
+      <section class="panel" data-page-node-id="lRo881R7Ir6NTJcBQK76IO">
+
+        <div class="panel-title" data-page-node-id="eubFgKNTsP3M5Ok4yXlWQq">
+
+          <h2 data-page-node-id="MPuMXz6NL80tAM6WnCOgkp">Needs Improvement</h2>
+
+          <span data-page-node-id="MxK0akIDdaCFhBFIeoBk6C">금액 영향 기준</span>
+
+        </div>
+
+        <div class="action-list" id="actionList" data-page-node-id="nFQ9zhFMTB48i7wfAuhDSG"></div>
+
+      </section>
+
+    </section>
+
+    <section class="product-view-grid" id="productView" data-page-node-id="Lm8Y0J9OSGrVJgPe3e8mwe">
+      <section class="panel" data-page-node-id="9iDtDj7UfKxKdSLSmJbNyY">
+        <div class="panel-title" data-page-node-id="eZLviW2TEbyPV9xkC9YIWq">
+          <h2 data-page-node-id="nAr3jT7hda9u4EgAhaXsBt">제품별 월별 손익</h2>
+          <span data-page-node-id="tgW6w54eRsy0QSeiTGOB7y">제품 클릭 시 상세 전환</span>
+        </div>
+        <div class="product-month-tabs" id="productMonthTabs" data-page-node-id="kA1Z2NXqZM1U80qLz1ZXJp"></div>
+        <div class="product-view-table-wrap" data-page-node-id="pQQRx9Taulkiyn7JqZqFzO">
+          <table id="productMatrixTable" data-page-node-id="HEH2UjMsdEgMFgF2iFUHhD"></table>
+        </div>
+        <div class="product-coi-chart" id="productCoiChart" data-page-node-id="GBhxPjVgxmnNHv10cI6seD"></div>
+      </section>
+
+      <!-- 제품별 페이지 제품 손익 분석 모듈: 유지 -->
+      <section class="panel" data-page-node-id="mNEywHBtjoD78kE4URYp0U">
+        <div class="panel-title" data-page-node-id="bsPnSwfN38Djjz6GotEl6G">
+          <h2 id="productDetailTitle" data-page-node-id="04bCL3xh3nTlErHzt0idkW">제품 손익 분석</h2>
+          <span id="productDetailSub" data-page-node-id="E73YdQYE1XvVSOeMSvfXDJ">월별 / 손익 / COI%</span>
+        </div>
+        <div class="product-detail-card" id="productDetailCards" data-page-node-id="LcywU0XYcY4ZGgbSSdXPqG"></div>
+        <div class="trend-mini" id="productTrendMini" data-page-node-id="xXdWn0ym2KguLaItjE3ztA"></div>
+        <div class="product-rank-list" id="productMonthlyList" data-page-node-id="vOph2bdXGA3HZDACIt5dEk"></div>
+      </section>
+
+      <!-- 제품별 페이지 구조 분석 모듈: 유지 -->
+      <section class="panel product-context-panel" data-page-node-id="L9qBdCJSUjlrPqEh6HPEdT">
+        <div class="panel-title" data-page-node-id="ZjTjVGxzeEdxoylDhri79O">
+          <h2 id="productContextTitle" data-page-node-id="HI7kAWKEyF4FDlFKmKVDqA">월별 구조 분석</h2>
+          <span data-page-node-id="Dc9A1MKQDCHAgUMXLauQZh">채널 · Team · 고객 손익</span>
+        </div>
+        <div class="product-compare-grid" data-page-node-id="DtDEnu0aIzc0alwdO19Afg">
+          <div data-page-node-id="CKRoJL7zjEt4RtCVhHGWZv">
+            <div class="tiny" data-page-node-id="YWOxT12K0gqZFzUDH6hXbn">채널별 손익</div>
+            <div class="bar-list" id="productChannelBars" data-page-node-id="6Jo6zkiJF1gkrMAtoU2Lqn"></div>
+          </div>
+          <div data-page-node-id="3jXg7nRQNIR6oKpWrO8tHX">
+            <div class="tiny" data-page-node-id="199HD6U6qGGD5yF2UEkiYn">Team별 손익</div>
+            <div class="bar-list" id="productTeamBars" data-page-node-id="ckg4afmgn3nxx5yk596nuE"></div>
+          </div>
+        </div>
+        <div class="tiny" style="margin-top:12px;position:relative;z-index:1;" data-page-node-id="bmt4liuauFD3t1QzF1CaY7">고객별 손익</div>
+        <div class="product-rank-list" id="productCustomerList" data-page-node-id="hRWobm3VHXVUIMcUPZbX5C"></div>
+      </section>
+    </section>
+
+  </main>
+
+
+
+  <script>
+
+    const DATA = {"totals":{"qty":231721.0,"net":111561.15523229343,"cogs":70902.0831333915,"sga":34425.53576627549,"coi":6233.536332626402,"adj":6233.536332626402,"comp":0,"margin":5.587550899456795,"cogsRate":63.554454044294076,"sgaRate":30.8579950562491},"months":{"01":{"qty":26436.0,"net":14210.425399459502,"cogs":8041.276464945992,"sga":3167.8254982183985,"coi":3001.3234362951007,"adj":3001.3234362951007,"comp":0,"margin":21.12057416950556,"cogsRate":56.587162163715696,"sgaRate":22.292263666778673,"label":"1월"},"02":{"qty":18035.0,"net":7294.9013548303,"cogs":5804.496371415504,"sga":3075.370165058799,"coi":-1584.965181643999,"adj":-1584.965181643999,"comp":0,"margin":-21.72702692675232,"cogsRate":79.56922361358693,"sgaRate":42.157803313165445,"label":"2월"},"03":{"qty":28005.0,"net":13025.053710736309,"cogs":8139.1803753995,"sga":4131.858341581699,"coi":754.0149937551004,"adj":754.0149937551004,"comp":0,"margin":5.788958805855671,"cogsRate":62.48865114997971,"sgaRate":31.722390044164545,"label":"3월"},"04":{"qty":32692.0,"net":14605.699579666803,"cogs":10118.987512140797,"sga":4495.4993353150985,"coi":-8.787267789099905,"adj":-8.787267789099905,"comp":0,"margin":-0.060163279007415874,"cogsRate":69.28108754357687,"sgaRate":30.779075735430496,"label":"4월"},"05":{"qty":32361.0,"net":16522.760078235195,"cogs":10173.369985965606,"sga":5872.585899745701,"coi":476.80419252389987,"adj":476.80419252389987,"comp":0,"margin":2.885741790513414,"cogsRate":61.57185565725548,"sgaRate":35.54240255223118,"label":"5월"},"06":{"qty":21841.0,"net":11937.694718041803,"cogs":7592.834135517797,"sga":3221.7832408914996,"coi":1123.0773416325003,"adj":1123.0773416325003,"comp":0,"margin":9.407824275612938,"cogsRate":63.60385581013824,"sgaRate":26.98831991424877,"label":"6월"},"07":{"qty":22894.0,"net":10996.979064004407,"cogs":6501.7202536402965,"sga":3193.6299556358986,"coi":1301.6288547281997,"adj":1301.6288547281997,"comp":0,"margin":11.836240181530622,"cogsRate":59.12278468294892,"sgaRate":29.040975135520352,"label":"7월"},"08":{"qty":21799.0,"net":9709.749227878801,"cogs":6218.128554790097,"sga":3405.611472195599,"coi":86.00920089309982,"adj":86.00920089309982,"comp":0,"margin":0.8858024947353811,"cogsRate":64.04005303181773,"sgaRate":35.074144473446836,"label":"8월"},"09":{"qty":27658.0,"net":13257.892099440298,"cogs":8312.089479575896,"sga":3861.3718576327988,"coi":1084.4307622316007,"adj":1084.4307622316007,"comp":0,"margin":8.179511147759165,"cogsRate":62.695407514493226,"sgaRate":29.125081337747595,"label":"9월","channels":[["全渠道营业部",5012.9174165951,737.8650530070998,14.719274061136966,6719.0],["IT营业部",3852.6847429337,-50.51393697499999,-1.3111360089259523,13997.0],["区域营业部",3792.6670071137028,170.4251491641004,4.493543694831184,5858.0],["D2C营业部",578.6946066306003,32.46467926990001,5.609984765353667,1084.0],["others",20.9283261672,194.18981776549998,927.8803102268384,0.0]],"products":[["W/M",4826.334599215702,549.8151346108003,11.391981291561248,9354.0],["MNT",3746.4242329297,87.01405101680001,2.322589370738591,14048.0],["LTV",3486.4038281815006,611.9466297678,17.552373733107956,3136.0],["REF",1018.8050184565002,-122.41692238150004,-12.015736099039136,974.0],["PC",165.6572600149,-99.90291769330001,-60.30699631535271,120.0],["Air Care",12.4264885218,1.5090220047,12.14359150658448,26.0],["VCC BD",0.9425893171999999,0.6086657531,64.57380133567253,0.0],["Audio",0.4923078435,14.1925716079,2882.865222499751,0.0],["Dishwasher",0.4057764300999998,-5.4258034166,-1337.1410989206202,0.0],["others",-7.351999999999775e-07,47.090330963,-6405104864.390839,0.0],["Wellness",-7.354000000000527e-07,-1.09999999997612e-09,0.14957846069840103,0.0]],"teams":[["CE平台营业Team",4582.2081287204,734.9296290103999,16.038765773296117,5918.0],["IT渠道营业Team",2221.9010304824997,-6.032186237500006,-0.2714876204990138,9175.0],["IT平台营业Team",1561.5196770489001,-26.966549606099985,-1.7269426701726736,4768.0],["华南营业Team",1176.0119745969996,51.05310732370001,4.341206418514156,1480.0],["华中营业Team",1083.1640462891999,64.60120809889999,5.964120422960546,1550.0],["华北营业Team",1017.5418613348999,7.5439854529000145,0.7413931298121886,2246.0],["D2C营业Team",578.6946066306003,32.46467926990001,5.609984765353667,1084.0],["东北营业Team",515.9491248926,47.22684828860002,9.153392458690721,582.0],["CE POP 营业Team",430.70928787469995,2.935423996699998,0.6815325509195796,801.0],["B2B营业Team",69.26403540230001,-17.5152011314,-25.28758399603495,54.0],["others",20.9283261672,194.18981776549998,927.8803102268384,0.0]],"customers":[["赛夫",4604.1855727638995,758.2850658917,16.469472264049088,5918.0],["京东世纪贸易(IT)",1561.5196770489001,-26.966549606099985,-1.7269426701726736,4768.0],["天津鸿雁百大商贸",857.9037905618,-3.4168091864999903,-0.3982741682796956,1704.0],["武汉广晋",620.2458080033,18.626604053300003,3.003100353594151,2048.0],["OBS",577.4833684471001,33.29892055490001,5.766212911800996,1080.0],["上海亦晶实业",569.2910242702,12.453803279500002,2.187598740989303,981.0],["上海伟仕佳杰",497.1144376467,-21.116810459,-4.247877120400142,2861.0],["上海沪敬",493.645904779,10.107199529699999,2.0474594100451182,2050.0],["新七天电子",394.3436821062,31.194510707900005,7.910488267819914,723.0],["依宝联众",349.7858176896,6.2216236322,1.7786952236357023,1370.0],["沈阳世纪创新",311.9594832411,65.09288073690001,20.86581246404763,274.0],["深圳顺电",252.3954990472,-117.495540046,-46.55215346135289,381.0],["深圳驰铭",215.0913629641,25.221272098199996,11.725841405547081,270.0],["福州森冠",212.1102173755,9.7850674016,4.613199459542034,813.0],["四川品之尚",145.0216310975,23.037802803900004,15.885770025860058,117.0],["浙江百诚 - 浙江",110.29337331230002,38.7509863775,35.13446475861706,98.0],["华中营业Team B2B",93.67025805610001,4.4841222400000005,4.787135567956284,143.0],["广州璟宜达",85.94650860830001,23.279563293800003,27.086107010927325,10.0],["南京百音",80.2314845149,24.5276174107,30.571062668228343,18.0],["东北经贸",80.14337716819999,-11.088613218799999,-13.835969496927861,126.0],["广东金誉电子",78.3688994026,-3.1416559137999998,-4.00880443358092,98.0],["百利商业",78.31237253949999,28.2058965933,36.017165204735974,13.0],["延吉百大",76.5253836942,0.8382711237000002,1.095415773476918,81.0],["沈阳品尚勤恒",75.17830988460001,34.104286683,45.36452965669308,14.0],["广州广百（穗）",72.1298420607,25.251731314100002,35.008715661472976,87.0],["衡准宝声",69.95511320329999,20.1267586578,28.770961458254867,14.0],["武汉泰欣",68.31425651069999,1.6481032897999999,2.4125319867045016,61.0],["广州君求",65.2390294532,31.9176708211,48.92419628038232,55.0],["Others_华北营业Team",64.6117350258,12.676424169999999,19.619383638186154,47.0],["深圳聚虎",61.3780353962,-8.594271631199998,-14.002194067834372,304.0],["黑龙江广汇",42.00153228850001,-7.3096576320999995,-17.4033118170343,88.0],["盛世恒隆",37.2069262868,10.019187341299999,26.928285513481214,33.0],["上海融影",36.4082994648,-8.240868301599999,-22.634587230769657,20.0],["百业慧通",35.4433895553,-18.3804208788,-51.85853020666161,78.0],["汕头振乐",33.3463302501,-2.8000247645000003,-8.396800318054797,153.0],["合肥塞翁",30.120294725799997,-5.9552249035,-19.771469561348486,27.0],["华南营业Team B2B",28.4761537437,-8.4250752006,-29.586422648332363,59.0],["天恩志兴",23.5672008362,-8.361572170699999,-35.47970006627324,12.0],["others",20.9283261672,194.18981776549998,927.8803102268384,0.0],["昆明际洲",19.5306797408,-9.7954581654,-50.154210172916216,56.0],["英飞生",18.4135495275,-0.0621927279,-0.33775523728935214,22.0],["均统上海",17.472823074700003,-15.351619011,-87.85998087068467,16.0],["唐山百大",17.1235985325,-1.2077079579,-7.052886433933918,24.0],["青岛宇恒",16.3162930336,-3.54401206,-21.720693865339673,319.0],["湖南航启",16.234769000700002,6.8513598843,42.201770065250614,7.0],["至诚志远",15.0912989162,-1.9807385352999993,-13.125036793047308,57.0],["北国商城",13.7068117656,-1.0257215032,-7.483297507406167,62.0],["实清康宏",13.281711383600001,-3.6333319821,-27.35590224153167,12.0],["方柏时代",13.0269950288,4.6946226448,36.03764824060466,13.0],["贵州永泰盛",9.452169771599998,-4.0349027828,-42.68758264291099,27.0],["广宇世纪",9.3876013788,-4.5257154528,-48.20949750828166,5.0],["梦界科技",7.467741156300001,-5.233913840900001,-70.08697451282869,13.0],["Others_东北营业Team",5.3193485006,-0.3060327211,-5.75319930749942,13.0],["山东新青年SOO",1.9708661656,1.8649247266,94.62462541347917,0.0],["Others_华南营业Team",1.6272633336000002,0.1440978957,8.855229066165446,1.0],["昆百家电",1.4362950468,-0.11892556300000001,-8.280023193351587,1.0],["Others_D2C营业Team",1.2112381835000001,-0.8342412849999999,-68.87508141374573,4.0],["上海康提",0.3823588821,-2.8600172134,-747.9928798023859,0.0],["上海虹宁",0.3734587557,-0.6135031757,-164.27601879357948,0.0],["广州龙元",0.3029861219,-0.20724557659999998,-68.4010129904237,0.0],["江苏欧曼",0.1557076906,-0.338773504,-217.57018082702203,0.0],["Others_华中营业Team",0.1018397462,0.11765132319999999,115.5259391249347,0.0],["上海沃宁",0.0844728398,0.0844728398,100.0,0.0],["温州盛鸿",0.0028774399,0.0018415346,63.99906389009201,0.0],["苏州华科",0.0,0.0,0,0.0],["北京天予",0.0,0.0,0,0.0],["臻元界",-0.0016384704,-0.0609213897,3718.186773468718,0.0],["孚届成都",-0.0034402733,-0.27434194559999997,7974.423008776656,0.0],["沈阳易来邦",-0.0049286553,0.0573759037,-1164.1289602865918,0.0],["史赛克上海",-0.023879587900000002,-0.9462414845,3962.553660735493,0.0],["祺正明翔",-0.0250780923,-0.2777638303,1107.5955338915471,0.0],["陕西天熙",-0.1284466859,-0.5492724769999999,427.6268189804654,0.0],["杭州鑫泽林",-0.22672108529999999,-0.1307407005,57.66587625804737,0.0],["武汉乐聚天",-0.8001586145000003,-2.3006600231,287.52549574656854,6.0],["智信百诚",-1.0486499524000001,-11.743590559,1119.877088834358,0.0],["南京路顿夫",-1.1531567146,-0.8787993268000001,76.2081437564913,0.0],["包头同利",-4.4185927874,-3.9766368155,89.99781167524023,0.0],["福州腾旭（建材）",-4.451351171200001,-8.7171555339,195.83167444302129,3.0],["广州荷花",-17.2128786338,-12.552064353999999,72.92251703530977,0.0],["亲水商贸",-21.9774440435,-23.3554368813,106.27003228888918,0.0]],"teamLoss":[["IT平台营业Team",1561.5196770489001,-26.966549606099985,-1.7269426701726736,4768.0],["B2B营业Team",69.26403540230001,-17.5152011314,-25.28758399603495,54.0],["IT渠道营业Team",2221.9010304824997,-6.032186237500006,-0.2714876204990138,9175.0],["CE POP 营业Team",430.70928787469995,2.935423996699998,0.6815325509195796,801.0],["华北营业Team",1017.5418613348999,7.5439854529000145,0.7413931298121886,2246.0],["D2C营业Team",578.6946066306003,32.46467926990001,5.609984765353667,1084.0]],"customerLoss":[["深圳顺电",252.3954990472,-117.495540046,-46.55215346135289,381.0],["京东世纪贸易(IT)",1561.5196770489001,-26.966549606099985,-1.7269426701726736,4768.0],["亲水商贸",-21.9774440435,-23.3554368813,106.27003228888918,0.0],["上海伟仕佳杰",497.1144376467,-21.116810459,-4.247877120400142,2861.0],["百业慧通",35.4433895553,-18.3804208788,-51.85853020666161,78.0],["均统上海",17.472823074700003,-15.351619011,-87.85998087068467,16.0],["广州荷花",-17.2128786338,-12.552064353999999,72.92251703530977,0.0],["智信百诚",-1.0486499524000001,-11.743590559,1119.877088834358,0.0]],"risk":{"topCustomer":"赛夫","topShare":34.72788538502491,"topAdj":758.2850658917,"exTopAdj":758.2850658917,"top5Share":62.010900037209346}}}};
+    const monthIds = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
+
+    const monthLabels = {"01": "1월", "02": "2월", "03": "3월", "04": "4월", "05": "5월", "06": "6월", "07": "7월", "08": "8월", "09": "9월"};
+
+    monthIds.forEach(id => { DATA.months[id].label = monthLabels[id]; });
+
+    let selectedMonth = "09";
+    let currentView = "month";
+    let selectedProduct = null;
+
+
+
+    const colors = ["#35d8ff", "#64a8ff", "#ffd66b", "#9ad5ff", "#43e1be", "#8e78ff"];
+
+    const nameMap = {
+
+      "区域营业部": "지역 채널", "IT营业部": "IT 채널", "全渠道营业部": "전채널", "D2C营业部": "D2C", "others": "기타",
+
+      "华南营业Team": "화남 영업팀", "华中营业Team": "화중 영업팀", "华北营业Team": "화북 영업팀", "东北营业Team": "동북 영업팀",
+
+      "IT渠道营业Team": "IT 채널팀", "IT平台营业Team": "IT 플랫폼팀", "CE平台营业Team": "CE 플랫폼팀", "CE POP 营业Team": "CE POP팀",
+
+      "D2C营业Team": "D2C팀", "B2B营业Team": "B2B팀",
+
+      "W/M": "세탁기", "MNT": "모니터", "LTV": "TV", "REF": "냉장고", "PC": "PC", "Dishwasher": "식기세척기", "Air Care": "에어케어",
+
+      "京东世纪贸易(IT)": "징둥세기무역(IT)", "天津鸿雁百大商贸": "톈진 홍옌 바이대", "上海亦晶实业": "상하이 이징실업", "新七天电子": "신치텐전자",
+
+      "沈阳世纪创新": "선양 세기창신", "赛夫": "사이푸", "武汉广晋": "우한 광진", "广东金誉电子": "광둥 진위전자",
+
+      "亲水商贸": "친수이상무", "唐山百大": "탕산 바이대", "武汉泰欣": "우한 타이신", "黑龙江广汇": "헤이룽장 광후이", "北国商城": "베이궈상청",
+
+      "上海沪敬": "상하이 후징", "依宝联众": "이바오롄중", "OBS": "OBS", "智信百诚": "즈신바이청", "四川品之尚": "쓰촨 핀즈상",
+
+      "至诚志远": "즈청즈위안", "深圳顺电": "선전 순뎬", "上海伟仕佳杰": "상하이 웨이스자제"
+
+    };
+
+
+
+    function labelName(name) { return nameMap[name] || name; }
+
+    function fmt(value, digits = 2) { return Number(value).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }); }
+
+    function money(value) { return `${fmt(value, 0)}K$`; }
+
+    function cls(value) { if (value > 0) return "good"; if (value < 0) return "bad"; return "warn"; }
+
+
+
+    function bindControls() {
+
+      document.querySelectorAll("[data-month]").forEach(btn => {
+
+        btn.classList.toggle("active", currentView === "month" && btn.dataset.month === selectedMonth);
+
+        btn.onclick = () => { currentView = "month"; selectedMonth = btn.dataset.month; render(); };
+
+      });
+
+      document.querySelectorAll("[data-view='product']").forEach(btn => {
+
+        btn.classList.toggle("active", currentView === "product");
+
+        btn.onclick = () => { currentView = "product"; render(); };
+
+      });
+
+    }
+
+
+
+    function kpi(label, value, sub, className = "") {
+
+      return `<div class="kpi"><span>${label}</span><b class="${className}">${value}</b><span>${sub}</span></div>`;
+
+    }
+
+
+
+    function renderKpis() {
+
+      const m = DATA.months[selectedMonth];
+
+      const t = DATA.totals;
+
+      document.getElementById("kpiRow").innerHTML = [
+
+        kpi("누적 순매출", money(t.net), `${monthIds[0]}-${monthIds[monthIds.length - 1]}월`, ""),
+
+        kpi("누적 조정 COI(비정상 비용 제외)", money(t.adj), "보상금 제외", cls(t.adj)),
+
+        kpi(`${m.label} 순매출`, money(m.net), `${fmt(m.qty, 0)} QTY(대)`, ""),
+
+        kpi(`${m.label} 조정 COI(비정상 비용 제외)`, money(m.adj), `시스템기준 금액`, cls(m.adj)),
+
+        kpi(`${m.label} 조정 COI%(비정상 비용 제외)`, `${fmt(m.margin)}%`, `COGS ${fmt(m.cogsRate)}%`, cls(m.margin)),
+
+        kpi("조정 금액", money(m.comp), m.comp ? "원 COI와 차이" : "조정 없음", m.comp ? "warn" : ""),
+
+      ].join("");
+
+    }
+
+
+
+    function renderTrendTable() {
+
+      const rows = monthIds.map(id => { const m = DATA.months[id]; return `
+
+        <tr class="${id === selectedMonth ? "active-row" : ""}">
+
+          <td>${m.label}</td><td class="num">${fmt(m.net, 0)}</td><td class="num ${cls(m.adj)}">${fmt(m.adj, 0)}</td><td class="num ${cls(m.margin)}">${fmt(m.margin)}%</td><td class="num ${m.cogsRate > 68 ? "bad" : ""}">${fmt(m.cogsRate)}%</td>
+
+        </tr>`; }).join("");
+
+      const t = DATA.totals;
+      const totalRow = `<tr class="total-row"><td>Total</td><td class="num">${fmt(t.net, 0)}</td><td class="num ${cls(t.adj)}">${fmt(t.adj, 0)}</td><td class="num ${cls(t.margin)}">${fmt(t.margin)}%</td><td class="num ${t.cogsRate > 68 ? "bad" : ""}">${fmt(t.cogsRate)}%</td></tr>`;
+
+      document.getElementById("trendTable").innerHTML = `<thead><tr><th>월</th><th class="num">순매출</th><th class="num">조정 COI</th><th class="num">COI%</th><th class="num">COGS%</th></tr></thead><tbody>${rows}${totalRow}</tbody>`;
+      renderTrendMini();
+
+    }
+
+    function renderTrendMini() {
+      const months = monthIds.map(id => DATA.months[id]);
+      const minMargin = Math.min(...months.map(m => m.margin));
+      const maxMargin = Math.max(...months.map(m => m.margin));
+      const chartLeft = 28;
+      const chartTop = 18;
+      const chartWidth = 304;
+      const chartHeight = 92;
+      const step = chartWidth / Math.max(1, months.length - 1);
+      const marginRange = Math.max(1, maxMargin - minMargin);
+      const x = index => chartLeft + index * step;
+      const yMargin = value => chartTop + (maxMargin - value) / marginRange * chartHeight;
+      const points = months.map((m, index) => `${x(index)},${yMargin(m.margin)}`).join(" ");
+      const labels = months.map((m, index) => `<text x="${x(index)}" y="${chartTop + chartHeight + 18}" text-anchor="middle">${m.label}</text>`).join("");
+      const dots = months.map((m, index) => {
+        const pointY = yMargin(m.margin);
+        const isNegative = m.margin < 0;
+        const labelY = isNegative ? pointY - 18 : pointY - 8;
+        const labelX = isNegative ? x(index) - 24 : x(index);
+        const anchor = isNegative ? "end" : "middle";
+        const textColor = isNegative ? "#ff6f70" : "#bfeeff";
+        return `<circle class="coi-dot" cx="${x(index)}" cy="${pointY}" r="4"><title>${m.label} COI ${money(m.adj)} / COI% ${fmt(m.margin)}%</title></circle><text x="${labelX}" y="${labelY}" text-anchor="${anchor}" fill="${textColor}" style="fill:${textColor} !important">${fmt(m.margin)}%</text>`;
+      }).join("");
+      const zones = months.map((m, index) => `<rect class="hover-zone" x="${x(index) - 30}" y="0" width="60" height="142"><title>${m.label} COI ${money(m.adj)} / COI% ${fmt(m.margin)}%</title></rect>`).join("");
+      document.getElementById("trendMini").innerHTML = `<svg viewBox="0 0 360 142" role="img" aria-label="COI% 추세"><line class="grid-line" x1="${chartLeft}" y1="${chartTop + chartHeight}" x2="${chartLeft + chartWidth}" y2="${chartTop + chartHeight}"></line><text class="legend-text" x="10" y="54">COI%</text>${labels}<polyline class="coi-line" points="${points}"></polyline>${dots}${zones}</svg>`;
+
+    }
+
+
+
+    function barRows(rows, maxAbs, showMargin = false) {
+
+      return rows.map(row => {
+
+        const [name, net, value, margin] = row;
+
+        const width = Math.max(4, Math.min(100, Math.abs(value) / Math.max(1, maxAbs) * 100));
+
+        return `<div class="bar-row"><span>${labelName(name)}</span><div class="track"><div class="fill ${value < 0 ? "loss" : ""}" style="--w:${width}%"></div></div><span class="${cls(value)}">${money(value)}${showMargin ? ` / ${fmt(margin)}%` : ""}</span></div>`;
+
+      }).join("");
+
+    }
+
+
+
+    function renderFocus() {
+      const m = DATA.months[selectedMonth];
+      const rows = [...m.customers].sort((a, b) => b[2] - a[2]);
+      const maxAbs = Math.max(...rows.map(row => Math.abs(row[2])), 1);
+      const rowHtml = rows.map(([name, net, value, margin], index) => {
+        const width = Math.max(4, Math.min(100, Math.abs(value) / maxAbs * 100));
+        return `<div class="customer-row"><div class="customer-main"><div class="customer-name-line"><span class="customer-rank">${index + 1}</span><b>${labelName(name)}</b></div><span>순매출 ${money(net)}</span></div><div class="structure-track"><div class="structure-fill ${value < 0 ? "loss" : ""}" style="--w:${width}%"></div></div><div class="customer-metrics"><b class="${cls(value)}">${money(value)}</b><span class="${cls(margin)}">COI ${fmt(margin)}%</span></div></div>`;
+      }).join("");
+      document.getElementById("focusTitle").textContent = `${m.label} 핵심 고객 COI Ranking`;
+      document.getElementById("focusSub").textContent = "순매출 / 조정 COI / COI%";
+      document.getElementById("focusContent").innerHTML = `<div class="customer-scroll"><div class="structure-list customer-list">${rowHtml}</div></div>`;
+    }
+
+
+    function describeProduct(product, totalProductNet) {
+      const [name, net, value, margin, qty] = product;
+      const share = Math.max(0, net) / totalProductNet * 100;
+      return { name, net, value, margin, qty, share };
+    }
+
+    function productCore(product, totalProductNet) {
+      const p = describeProduct(product, totalProductNet);
+      return `<div><b>${labelName(p.name)}</b><span class="${cls(p.value)}">COI ${money(p.value)}</span><small>매출비중 ${fmt(p.share)}%</small></div>`;
+    }
+
+    function productTip(product, totalProductNet) {
+      const p = describeProduct(product, totalProductNet);
+      return `<div><span>제품</span><b>${labelName(p.name)}</b></div><div><span>매출비중</span><b>${fmt(p.share)}%</b></div><div><span>순매출</span><b>${money(p.net)}</b></div><div><span>판매수량</span><b>${fmt(p.qty, 0)} QTY(대)</b></div><div><span>조정 COI</span><b class="${cls(p.value)}">COI ${money(p.value)}</b></div><div><span>COI%</span><b class="${cls(p.margin)}">${fmt(p.margin)}%</b></div>`;
+    }
+
+    function productSegmentPath(start, end, outer = 74, inner = 46) {
+      const toPoint = (angle, radius) => {
+        const rad = angle * Math.PI / 180;
+        return [74 + Math.cos(rad) * radius, 74 + Math.sin(rad) * radius];
+      };
+      const [x1, y1] = toPoint(start, outer);
+      const [x2, y2] = toPoint(end, outer);
+      const [x3, y3] = toPoint(end, inner);
+      const [x4, y4] = toPoint(start, inner);
+      const largeArc = end - start > 180 ? 1 : 0;
+      return `M ${x1} ${y1} A ${outer} ${outer} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${inner} ${inner} 0 ${largeArc} 0 ${x4} ${y4} Z`;
+    }
+
+    function renderProductDonut(m) {
+      const products = [...m.products].sort((a, b) => Math.max(0, b[1]) - Math.max(0, a[1]));
+      const totalProductNet = products.reduce((s, p) => s + Math.max(0, p[1]), 0) || 1;
+      const donut = document.querySelector(".donut");
+      const tip = document.getElementById("productTip");
+      const legend = document.getElementById("productLegend");
+      let acc = 0;
+      const segments = products.map((p, i) => {
+        const share = Math.max(0, p[1]) / totalProductNet * 100;
+        const start = acc / 100 * 360;
+        acc += share;
+        const end = acc / 100 * 360;
+        return `<path class="donut-segment" data-product-index="${i}" d="${productSegmentPath(start, end)}" fill="${colors[i % colors.length]}"></path>`;
+      }).join("");
+      donut.innerHTML = `<svg viewBox="0 0 148 148" aria-label="product share donut">${segments}</svg><div class="donut-core"></div>`;
+      const worstProduct = [...m.products].sort((a,b)=>a[2]-b[2])[0];
+      const defaultIndex = Math.max(0, products.findIndex(p => p[0] === worstProduct[0]));
+      function activate(index) {
+        const product = products[index] || products[defaultIndex];
+        donut.classList.add("has-active");
+        donut.querySelectorAll(".donut-segment").forEach((seg, i) => seg.classList.toggle("active", i === index));
+        legend.querySelectorAll(".legend-item").forEach((item, i) => item.classList.toggle("active", i === index));
+        donut.querySelector(".donut-core").innerHTML = productCore(product, totalProductNet);
+        if (tip) tip.innerHTML = productTip(product, totalProductNet);
+      }
+      legend.innerHTML = products.map((p, i) => `<div class="legend-item" data-product-index="${i}"><span class="dot" style="background:${colors[i % colors.length]}"></span><span>${labelName(p[0])} 매출비중 ${fmt(Math.max(0, p[1]) / totalProductNet * 100)}%</span><b class="${cls(p[2])}">COI ${money(p[2])}</b></div>`).join("");
+      donut.querySelectorAll(".donut-segment").forEach(segment => {
+        segment.addEventListener("mouseenter", () => activate(Number(segment.dataset.productIndex)));
+        segment.addEventListener("focus", () => activate(Number(segment.dataset.productIndex)));
+      });
+      legend.querySelectorAll(".legend-item").forEach(item => {
+        item.addEventListener("mouseenter", () => activate(Number(item.dataset.productIndex)));
+        item.addEventListener("focus", () => activate(Number(item.dataset.productIndex)));
+      });
+      activate(defaultIndex);
+      return worstProduct;
+    }
+
+    function productNames() {
+      const names = new Set();
+      monthIds.forEach(id => DATA.months[id].products.forEach(product => names.add(product[0])));
+      return [...names];
+    }
+
+    function productByMonth(productName, monthId) {
+      return DATA.months[monthId].products.find(product => product[0] === productName) || [productName, 0, 0, 0, 0];
+    }
+
+    function productTotals(productName) {
+      return monthIds.reduce((sum, id) => {
+        const product = productByMonth(productName, id);
+        sum.net += product[1];
+        sum.value += product[2];
+        sum.qty += product[4] || 0;
+        return sum;
+      }, { net: 0, value: 0, qty: 0 });
+    }
+
+    function productRankRows(rows, maxAbs) {
+      return rows.map(([name, net, value, margin, qty], index) => {
+        const width = Math.max(4, Math.min(100, Math.abs(value) / Math.max(1, maxAbs) * 100));
+        return `<div class="product-rank-row"><div><b>${index + 1}. ${labelName(name)}</b><br><span>순매출 ${money(net)} · ${fmt(qty || 0, 0)} QTY(대)</span></div><div class="structure-track"><div class="structure-fill ${value < 0 ? "loss" : ""}" style="--w:${width}%"></div></div><div class="customer-metrics"><b class="${cls(value)}">${money(value)}</b><span class="${cls(margin)}">COI ${fmt(margin)}%</span></div></div>`;
+      }).join("");
+    }
+
+    function renderProductMatrix() {
+      const names = productNames().sort((a, b) => productTotals(b).value - productTotals(a).value);
+      if (!selectedProduct || !names.includes(selectedProduct)) selectedProduct = names[0];
+      const rows = names.map(name => {
+        const total = productTotals(name);
+        const margin = total.net ? total.value / total.net * 100 : 0;
+        const monthCells = monthIds.map(id => {
+          const product = productByMonth(name, id);
+          return `<td class="num ${cls(product[2])}">${fmt(product[2], 0)}</td>`;
+        }).join("");
+        return `<tr class="${name === selectedProduct ? "active-row" : ""}" data-product="${name}"><td>${labelName(name)}</td><td class="num">${fmt(total.net, 0)}</td><td class="num ${cls(total.value)}">${fmt(total.value, 0)}</td><td class="num ${cls(margin)}">${fmt(margin)}%</td>${monthCells}</tr>`;
+      }).join("");
+      const monthHeads = monthIds.map(id => `<th class="num">${DATA.months[id].label}</th>`).join("");
+      const totalNet = monthIds.reduce((sum, id) => sum + DATA.months[id].net, 0);
+      const totalCoi = monthIds.reduce((sum, id) => sum + DATA.months[id].adj, 0);
+      const totalMargin = totalNet ? totalCoi / totalNet * 100 : 0;
+      const totalMonthCells = monthIds.map(id => `<td class="num ${cls(DATA.months[id].adj)}">${fmt(DATA.months[id].adj, 0)}</td>`).join("");
+      const totalRow = `<tr class="total-row"><td>Total</td><td class="num">${fmt(totalNet, 0)}</td><td class="num ${cls(totalCoi)}">${fmt(totalCoi, 0)}</td><td class="num ${cls(totalMargin)}">${fmt(totalMargin)}%</td>${totalMonthCells}</tr>`;
+      document.getElementById("productMatrixTable").innerHTML = `<thead><tr><th>제품</th><th class="num">누적 순매출</th><th class="num">누적 COI</th><th class="num">누적 COI%</th>${monthHeads}</tr></thead><tbody>${rows}${totalRow}</tbody>`;
+      document.querySelectorAll("#productMatrixTable tbody tr[data-product]").forEach(row => {
+        row.onclick = () => { selectedProduct = row.dataset.product; renderProductView(); };
+      });
+    }
+
+    function renderProductCoiChart() {
+      const months = monthIds.map(id => DATA.months[id]);
+      const values = months.map(month => month.margin);
+      const minValue = Math.min(...values, 0);
+      const maxValue = Math.max(...values, 0);
+      const chartLeft = 64;
+      const chartTop = 72;
+      const chartWidth = 620;
+      const chartHeight = 112;
+      const range = Math.max(1, maxValue - minValue);
+      const step = chartWidth / Math.max(1, months.length - 1);
+      const x = index => chartLeft + index * step;
+      const y = value => chartTop + (maxValue - value) / range * chartHeight;
+      const zeroY = y(0);
+      const points = months.map((month, index) => `${x(index)},${y(month.margin)}`).join(" ");
+      const labels = months.map((month, index) => `<text x="${x(index)}" y="${chartTop + chartHeight + 42}" text-anchor="middle">${month.label}</text>`).join("");
+      const dots = months.map((month, index) => {
+        const pointX = x(index);
+        const pointY = y(month.margin);
+        const isNegative = month.margin < 0;
+        const labelX = isNegative ? pointX - 54 : pointX;
+        const labelY = isNegative ? chartTop + chartHeight + 20 : pointY - 12;
+        const labelAnchor = isNegative ? "middle" : "middle";
+        const pointColor = isNegative ? "#ff6f70" : "#ffd66b";
+        const valueClass = isNegative ? "coi-chart-value negative" : "coi-chart-value";
+        const textStyle = isNegative ? "fill:#ff6f70 !important;color:#ff6f70;font-size:15px" : "fill:#bfeeff;color:#bfeeff";
+        return `<circle cx="${pointX}" cy="${pointY}" r="6" fill="${pointColor}" stroke="#092037" stroke-width="3"><title>${month.label} COI% ${fmt(month.margin)}%</title></circle><text x="${labelX}" y="${labelY}" text-anchor="${labelAnchor}" class="${valueClass}" fill="${isNegative ? "#ff6f70" : "#bfeeff"}" style="${textStyle}">${fmt(month.margin)}%</text>`;
+      }).join("");
+      document.getElementById("productCoiChart").innerHTML = `<svg viewBox="0 0 760 250" role="img" aria-label="전 제품 COI 월별 현황"><text x="28" y="24" class="coi-chart-heading">전 제품 COI 월별 현황</text><text x="32" y="126" class="coi-chart-title">COI%</text><line x1="${chartLeft}" y1="${zeroY}" x2="${chartLeft + chartWidth}" y2="${zeroY}" stroke="rgba(145,171,194,.36)" stroke-width="1.5" stroke-dasharray="8 8"></line><polyline points="${points}" fill="none" stroke="#ffd66b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></polyline>${dots}${labels}</svg>`;
+    }
+
+    function renderProductTrend(productName) {
+      const products = monthIds.map(id => ({ id, label: DATA.months[id].label, product: productByMonth(productName, id) }));
+      const values = products.map(item => item.product[2]);
+      const minValue = Math.min(...values);
+      const maxValue = Math.max(...values);
+      const chartLeft = 28;
+      const chartTop = 18;
+      const chartWidth = 304;
+      const chartHeight = 92;
+      const step = chartWidth / Math.max(1, products.length - 1);
+      const range = Math.max(1, maxValue - minValue);
+      const x = index => chartLeft + index * step;
+      const y = value => chartTop + (maxValue - value) / range * chartHeight;
+      const points = products.map((item, index) => `${x(index)},${y(item.product[2])}`).join(" ");
+      const labels = products.map((item, index) => `<text x="${x(index)}" y="${chartTop + chartHeight + 18}" text-anchor="middle">${item.label}</text>`).join("");
+      const dots = products.map((item, index) => {
+        const value = item.product[2];
+        const pointY = y(value);
+        const isNegative = value < 0;
+        const labelX = isNegative ? x(index) - 24 : x(index);
+        const labelY = isNegative ? pointY - 18 : pointY - 8;
+        const anchor = isNegative ? "end" : "middle";
+        const pointColor = isNegative ? "#ff6f70" : "#ffd66b";
+        const textColor = isNegative ? "#ff6f70" : "#bfeeff";
+        return `<circle class="coi-dot" cx="${x(index)}" cy="${pointY}" r="4" fill="${pointColor}" style="fill:${pointColor} !important"><title>${item.label} ${labelName(productName)} COI ${money(value)}</title></circle><text x="${labelX}" y="${labelY}" text-anchor="${anchor}" fill="${textColor}" style="fill:${textColor} !important">${fmt(value, 0)}</text>`;
+      }).join("");
+      const _ptm = document.getElementById("productTrendMini");
+      if (_ptm) _ptm.innerHTML = `<svg viewBox="0 0 360 142" role="img" aria-label="product COI trend"><line class="grid-line" x1="${chartLeft}" y1="${chartTop + chartHeight}" x2="${chartLeft + chartWidth}" y2="${chartTop + chartHeight}"></line><text class="legend-text" x="10" y="54">COI</text>${labels}<polyline class="coi-line" points="${points}"></polyline>${dots}</svg>`;
+    }
+
+    function renderProductDetail() {
+      const productName = selectedProduct;
+      const total = productTotals(productName);
+      const margin = total.net ? total.value / total.net * 100 : 0;
+      const monthRows = monthIds.map(id => productByMonth(productName, id));
+      const maxAbs = Math.max(...monthRows.map(row => Math.abs(row[2])), 1);
+      const selectedRows = [...DATA.months[selectedMonth].products].sort((a, b) => b[2] - a[2]);
+      const _dt = document.getElementById("productDetailTitle");
+      const _ds = document.getElementById("productDetailSub");
+      const _dc = document.getElementById("productDetailCards");
+      const _ml = document.getElementById("productMonthlyList");
+      if (_dt) _dt.textContent = `${labelName(productName)} 제품 손익 분석`;
+      if (_ds) _ds.textContent = `누적 ${money(total.value)} / ${fmt(margin)}%`;
+      if (_dc) _dc.innerHTML = `<div><span>누적 순매출</span><b>${money(total.net)}</b></div><div><span>누적 조정 COI</span><b class="${cls(total.value)}">${money(total.value)}</b></div><div><span>누적 COI%</span><b class="${cls(margin)}">${fmt(margin)}%</b></div>`;
+      renderProductTrend(productName);
+      if (_ml) _ml.innerHTML = productRankRows(monthRows.map((row, index) => [DATA.months[monthIds[index]].label, row[1], row[2], row[3], row[4]]), maxAbs);
+      document.getElementById("productContextTitle").textContent = `${DATA.months[selectedMonth].label} 전체 제품 구조`;
+      document.getElementById("productChannelBars").innerHTML = barRows(DATA.months[selectedMonth].channels, Math.max(...DATA.months[selectedMonth].channels.map(r => Math.abs(r[2]))), true);
+      document.getElementById("productTeamBars").innerHTML = barRows(DATA.months[selectedMonth].teamLoss, Math.max(...DATA.months[selectedMonth].teamLoss.map(r => Math.abs(r[2]))));
+      const customerRows = DATA.months[selectedMonth].customers.slice(0, 8);
+      document.getElementById("productCustomerList").innerHTML = productRankRows(customerRows, Math.max(...customerRows.map(row => Math.abs(row[2])), 1));
+    }
+
+    function renderProductView() {
+      document.querySelector(".page").classList.add("product-mode");
+      document.getElementById("dashboardMain").classList.add("hidden");
+      document.getElementById("dashboardBottom").classList.add("hidden");
+      document.getElementById("productView").classList.add("active");
+      document.getElementById("productMonthTabs").innerHTML = monthIds.map(id => `<button class="${id === selectedMonth ? "active" : ""}" type="button" data-product-month="${id}">${DATA.months[id].label}</button>`).join("");
+      document.querySelectorAll("[data-product-month]").forEach(btn => {
+        btn.onclick = () => { selectedMonth = btn.dataset.productMonth; renderProductView(); };
+      });
+      renderProductMatrix();
+      renderProductCoiChart();
+      renderProductDetail();
+    }
+
+    function renderDashboardView() {
+      document.querySelector(".page").classList.remove("product-mode");
+      document.getElementById("dashboardMain").classList.remove("hidden");
+      document.getElementById("dashboardBottom").classList.remove("hidden");
+      document.getElementById("productView").classList.remove("active");
+      renderKpis();
+      renderTrendTable();
+      renderFocus();
+      renderMonthPanels();
+    }
+
+    function renderMonthPanels() {
+
+      const m = DATA.months[selectedMonth];
+
+      document.getElementById("channelTitle").textContent = `${m.label} 채널 손익`;
+
+      document.getElementById("productTitle").textContent = `${m.label} 제품 구조`;
+
+      document.getElementById("teamLossTitle").textContent = `${m.label} 손실 영업팀`;
+
+      document.getElementById("riskMonthLabel").textContent = `${m.label} 기준`;
+
+      document.getElementById("channelBars").innerHTML = barRows(m.channels, Math.max(...m.channels.map(r => Math.abs(r[2]))), true);
+
+      document.getElementById("teamLossBars").innerHTML = barRows(m.teamLoss, Math.max(...m.teamLoss.map(r => Math.abs(r[2]))));
+
+      const worstProduct = renderProductDonut(m);
+
+      document.getElementById("riskGrid").innerHTML = `<div class="risk-card"><span>상위 고객</span><b>${labelName(m.risk.topCustomer)}</b></div><div class="risk-card"><span>상위 고객 매출 비중</span><b class="warn">${fmt(m.risk.topShare)}%</b></div><div class="risk-card"><span>상위 고객 조정 COI</span><b class="${cls(m.risk.topAdj)}">${money(m.risk.topAdj)}</b></div><div class="risk-card"><span>상위 고객 제외 COI</span><b class="${cls(m.risk.exTopAdj)}">${money(m.risk.exTopAdj)}</b></div>`;
+
+      const worstChannel = [...m.channels].sort((a,b)=>a[2]-b[2])[0];
+
+      const worstTeam = m.teamLoss[0];
+
+      document.getElementById("actionList").innerHTML = `<div class="action"><b>${labelName(worstProduct[0])} 제품</b><span>COI ${money(worstProduct[2])}. 제품 믹스와 원가율을 점검하고 저수익 SKU를 조정해야 합니다.</span></div><div class="action"><b>${labelName(worstChannel[0])} 채널</b><span>COI ${money(worstChannel[2])}. 가격·프로모션 조건을 재검토하고 비용 부담을 낮춰야 합니다.</span></div><div class="action"><b>${labelName(worstTeam[0])} 영업팀</b><span>COI ${money(worstTeam[2])}. 손실 고객 원인을 확인하고 거래 조건을 개선해야 합니다.</span></div><div class="action"><b>조정 항목</b><span>보상금 ${money(m.comp)}. 원 COI와 차이를 추적하고 반복 발생을 관리해야 합니다.</span></div>`;
+
+    }
+
+
+
+    function render() {
+      bindControls();
+      if (currentView === "product") {
+        renderKpis();
+        renderProductView();
+        return;
+      }
+      renderDashboardView();
+    }
+    render();
+
+  </script>
+
+</body>
+
+</html>
+
+
