@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Styler Sellout / Sellin 销售分析报告 / Sales Analysis Report 2025-2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --heritage:#A50034;        /* LG Heritage Red */
+    --heritage-soft:#fdf2f4;
+    --heritage-border:#f3d4dc;
+    --ink:#1a1a1a;
+    --dark-grey:#595959;
+    --mid-grey:#8a8a8a;
+    --border:#e7e3db;
+    --border-soft:#eeece7;
+    --cream:#f3f1ec;
+    --cream-deep:#e8e3d7;
+    --page-bg:#f6f5f2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'LG Smart_H Regular','Pretendard','Noto Sans KR','Noto Sans SC','PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:var(--page-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .page{max-width:1360px;margin:0 auto;padding:36px 36px 80px}
+
+  /* ===== Header (LG bracket + eyebrow style) ===== */
+  .report-header{position:relative;padding:24px 0 0 18px;margin-bottom:24px}
+  .lge-internal{text-align:center;font-size:9px;color:var(--mid-grey);letter-spacing:.3px;margin-bottom:8px}
+  .lbracket{position:absolute;top:18px;left:0}
+  .lbracket .v{position:absolute;left:0;top:0;width:7px;height:54px;background:var(--heritage)}
+  .lbracket .h{position:absolute;left:0;top:0;width:34px;height:7px;background:var(--heritage)}
+  .report-header .eyebrow{font-size:11px;font-weight:700;color:var(--dark-grey);letter-spacing:.6px;margin-bottom:4px}
+  .report-header .htitle{font-size:30px;font-weight:800;color:var(--ink);letter-spacing:-.5px;line-height:1.12}
+  .report-header .hsub-en{font-size:16px;font-weight:600;color:var(--mid-grey);margin-top:5px;letter-spacing:.3px}
+  .report-header .hsub-kr{font-size:14px;font-weight:600;color:var(--heritage);margin-top:2px}
+  .report-header .sep{height:2px;background:var(--ink);margin:13px 0 12px}
+  .report-header .hbadges{display:flex;gap:8px;flex-wrap:wrap}
+  .badge-red{display:inline-block;font-size:11px;font-weight:700;color:var(--heritage);background:var(--heritage-soft);border:1px solid var(--heritage-border);border-radius:5px;padding:4px 12px}
+  .badge-grey{display:inline-block;font-size:11px;font-weight:700;color:var(--dark-grey);background:var(--cream);border:1px solid var(--cream-deep);border-radius:5px;padding:4px 12px}
+  .update-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--heritage);background:#fff;border:1.5px solid var(--heritage);border-radius:20px;padding:7px 15px;letter-spacing:.2px;box-shadow:0 1px 2px rgba(165,0,52,0.08)}
+  .update-badge::before{content:'';width:7px;height:7px;background:var(--heritage);border-radius:50%}
+
+  /* ===== Cards ===== */
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px 28px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px;letter-spacing:-.2px}
+  .sub{font-size:12px;color:var(--mid-grey);margin-bottom:16px}
+  .sub em{font-style:normal;color:var(--heritage)}
+
+  /* ===== Section labels ===== */
+  .sec-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark-grey);margin:38px 0 14px;padding-left:13px;position:relative}
+  .sec-label::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:15px;background:var(--heritage);border-radius:2px}
+
+  /* ===== KPI ===== */
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+  .kpi{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,0.04);position:relative;overflow:hidden}
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--heritage)}
+  .kpi .kl{font-size:11px;color:var(--mid-grey);letter-spacing:.3px;margin-bottom:9px;font-weight:600}
+  .kpi .kv{font-size:30px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:5px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+  .kpi .ks{font-size:11px;color:var(--mid-grey)}
+
+  /* ===== Insights ===== */
+  .ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .ins{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  .ins .it{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:-.2px}
+  .ins .ib{font-size:12px;color:#555;line-height:1.8}
+  .ins .ib b{color:var(--ink);font-weight:700}
+
+  /* ===== Tables ===== */
+  .tw{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+  thead th{background:var(--dark-grey);color:#fff;font-size:11px;font-weight:700;letter-spacing:.4px;padding:10px 13px;text-align:left;border-bottom:2px solid var(--dark-grey);white-space:nowrap}
+  tbody tr{border-bottom:1px solid var(--border-soft);transition:background .1s}
+  tbody tr:hover{background:var(--cream)}
+  tbody td{padding:9px 13px;color:#333;white-space:nowrap}
+  td.n{font-weight:700;color:var(--ink)}
+  td.rk{color:var(--mid-grey);font-size:12px}
+  td.asp{color:#b45309;font-weight:700}
+  td.up{color:#16a34a;font-weight:600}
+  td.dn{color:#dc2626;font-weight:600}
+
+  /* ===== Heatmap ===== */
+  .hm{border-collapse:collapse;font-size:11px;width:100%}
+  .hm th{font-size:10px;font-weight:700;color:var(--mid-grey);padding:7px 9px;text-align:center;white-space:nowrap;background:var(--cream);border-bottom:1px solid var(--border)}
+  .hm .rl{text-align:left;color:var(--ink);font-weight:700;background:#fff;padding:6px 11px;white-space:nowrap;font-size:12px;border-right:1px solid var(--border-soft)}
+  .hm td{padding:5px 8px;text-align:center;border:1px solid #fff;font-size:11px}
+  .hm-tot{background:var(--cream)!important;color:#b45309!important;font-weight:700}
+  /* sticky first column (모델/型号) in heatmap */
+  .hm thead th:first-child,.hm tbody td:first-child{position:sticky;left:0;z-index:3}
+  .hm thead th:first-child{box-shadow:2px 0 4px rgba(0,0,0,.06)}
+  .hm tbody td:first-child{box-shadow:2px 0 4px rgba(0,0,0,.06)}
+
+  /* ===== Bars / badges ===== */
+  .bp{height:6px;border-radius:3px;display:inline-block;vertical-align:middle}
+  .bd{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700}
+  .b-rx{background:var(--heritage-soft);color:var(--heritage)}
+  .b-st{background:#f0fdf4;color:#16a34a}
+
+  /* ===== Tabs ===== */
+  .tab-bar{display:flex;gap:10px;justify-content:center;margin-bottom:34px}
+  .tb{flex:0 0 auto;padding:13px 42px;border-radius:10px;border:1px solid var(--border);font-size:16px;font-weight:700;cursor:pointer;transition:all .18s;background:#fff;color:var(--dark-grey);letter-spacing:.5px}
+  .tb:hover{color:var(--heritage);background:var(--heritage-soft);border-color:var(--heritage-border)}
+  #btn-si{background:var(--cream);border-color:var(--cream-deep);color:var(--heritage)}
+  #btn-si:hover{background:var(--heritage-soft);border-color:var(--heritage-border)}
+  #btn-si.active{background:var(--heritage);color:#fff;border-color:var(--heritage);box-shadow:0 5px 16px rgba(165,0,52,0.25)}
+  .tb.active{background:var(--heritage);color:#fff;border-color:var(--heritage);box-shadow:0 5px 16px rgba(165,0,52,0.25)}
+  .tb .ico{font-size:19px;display:block;margin-bottom:4px}
+  /* header actions (tabs + update badge) top-right */
+  .header-actions{position:absolute;bottom:70px;right:0;top:auto;display:flex;flex-direction:column;align-items:center;gap:16px;z-index:10}
+  .report-header .tab-bar{position:static;margin-bottom:0;gap:8px;z-index:10}
+  .report-header .tab-bar .tb{padding:7px 16px;font-size:12px;border-radius:8px;box-shadow:none;letter-spacing:.3px}
+  .report-header .tab-bar .tb .ico{font-size:13px;margin:0 4px 0 0;display:inline-block}
+  .report-header .tab-bar .tb.active{box-shadow:0 2px 8px rgba(165,0,52,0.18)}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  @media(max-width:768px){.page{padding:24px 16px}.report-header{padding-top:24px}.header-actions{position:static;align-items:center;margin-bottom:14px}.report-header .tab-bar{justify-content:center}.update-badge{font-size:11px;padding:5px 11px}.report-header .tab-bar .tb{flex:0 0 auto;padding:9px 16px;font-size:12px}.kpi-row,.ins-grid{grid-template-columns:1fr}.tb{flex:1;padding:12px 20px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER BANNER -->
+<div class="report-header">
+  <div class="header-actions">
+    <div class="tab-bar">
+      <button class="tb active" id="btn-so" onclick="switchTab('so')"><span class="ico">📤</span>Sell Out</button>
+      <button class="tb" id="btn-si" onclick="switchTab('si')"><span class="ico">📥</span>Sell In</button>
+    </div>
+    <div class="update-badge">업데이트: 2026-10-08</div>
+  </div>
+  <div class="lge-internal">LGE Internal Use Only</div>
+  <div class="lbracket"><span class="v"></span><span class="h"></span></div>
+  <div class="htitle">Styler 销售分析报告</div>
+  <div class="hsub-en">Styler Sales Analysis Report</div>
+  <div class="hsub-kr">Styler 매출 분석 보고서</div>
+  <div class="sep"></div>
+  <div class="hbadges">
+    <span class="badge-grey">Created by BI Team</span>
+  </div>
+</div>
+
+<!-- ==================== SELL OUT CONTENT ==================== -->
+<div class="tab-content active" id="tab-so">
+
+<div class="card" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
+  <div>
+    <p style="font-size:13px;color:#888;line-height:1.8">
+      데이터 범위：2024년 1월 — 2026년 9월 (共33个月)<br>
+      Sellout = 소비자에게 실제 판매된 수량 / 终端实际销量
+    </p>
+  </div>
+</div>
+
+<div class="sec-label">01 / 핵심 지표 / 核心指标</div>
+<div class="kpi-row">
+  <div class="kpi"><div class="kl">누적 판매량 / 累计销量</div><div class="kv">21,839</div><div class="ks">대 / 台 (Sellout Q)</div></div>
+  <div class="kpi"><div class="kl">누적 매출액 / 累计销售额</div><div class="kv">264,375</div><div class="ks">KRMB</div></div>
+  <div class="kpi"><div class="kl">평균판매단가 ASP / 平均售价</div><div class="kv">12,106</div><div class="ks">RMB/대</div></div>
+  <div class="kpi"><div class="kl">월평균 판매량 / 月均销量</div><div class="kv">662</div><div class="ks">대 / 월 (33개월)</div></div>
+  <div class="kpi"><div class="kl">활성 거래처 / 活跃客户数</div><div class="kv">46</div><div class="ks">渠道 / 파트너</div></div>
+  <div class="kpi"><div class="kl">SKU 모델 수 / 产品型号数</div><div class="kv">14</div><div class="ks">RX Styler + Styler</div></div>
+</div>
+
+<div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
+<div class="ins-grid">
+  <div class="ins" style="border-top:4px solid #2563eb">
+    <div class="it">🏆 최다 판매 모델 / 最畅销型号 — SC5GMR80H</div>
+    <div class="ib">누적 <b>5,247대(24.0%)</b>，ASP <b>17,059 RMB/대</b>，수량+단가 모두 최상위，핵심 제품은 계속 집중 지원 필요.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #16a34a">
+    <div class="it">💡 RX Styler 시리즈 매출 기여도 더 높음</div>
+    <div class="ib">RX 시리즈 수량 7,771대(35.6%)，매출 비중 <b>46.8%</b>，RX 시리즈 ASP <b>15,921 RMB/대</b>，Styler ASP <b>9,998 RMB/대</b>.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #16a34a">
+    <div class="it">📈 최대 판매 분기 / 销量最高季度 — 2025Q2</div>
+    <div class="ib">2025Q2 판매량 <b>2,495대</b>，금액 <b>32,780 KRMB</b>로 전체 기간 중 최고.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #d97706">
+    <div class="it">⚠️ 2025Q3 뚜렷한 비수기 / 2025Q3 为明显淡季</div>
+    <div class="ib">2025Q3 판매량 <b>1,422대</b>，2025Q2 대비 <b>43%↓</b>，비수기 특별 판촉 및 채널 인센티브 계획 수립 필요.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #2563eb">
+    <div class="it">🥇 주요 거래처 집중도가 높음 / 大客户高度集中</div>
+    <div class="ib">天津鸿雁百大商贸 1위，新七天电子，盛世恒隆 등 Top 3 합산 <b>38.4%</b> 차지，대형 거래처 관리 중요.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #6b7280">
+    <div class="it">📊 S3MF + S3IF 물량 견인 / S3系列走量主力</div>
+    <div class="ib">두 중가 모델 합계 <b>8,516대(39.0%)</b>，중가 라인 물량 확대를 담당하며 유통망 확장에 적합.</div>
+  </div>
+</div>
+
+<div class="sec-label">03 / 월별 추이 / 月度趋势</div>
+<div class="card">
+  <h3>월별 판매량(Q 대) 및 매출(KRMB) / 月度销量与销售额</h3>
+  <div class="sub">막대 = 판매량대(좌축) / 线 = 매출액 KRMB(우축)</div>
+  <canvas id="c_m_so" height="100"></canvas>
+</div>
+<div class="card">
+  <h3>월별 평균판매단가(ASP) / 月度平均售价走势</h3>
+  <div class="sub">단위：RMB/대</div>
+  <canvas id="c_am_so" height="80"></canvas>
+</div>
+<div class="card">
+  <h3>월별 상세 데이터 / 月度明细数据</h3>
+  <div class="tw"><table><thead><tr><th>월/月</th><th>판매량 Q(대/台)</th><th>同期对比%</th><th>매출액 A(KRMB)</th><th>同期对比%</th><th>ASP(RMB/대)</th><th>同期对比%</th></tr></thead><tbody id="t_m_so"></tbody></table></div>
+</div>
+
+<div class="sec-label">04 / 모델 분석 / 型号分析</div>
+<div class="card">
+  <h3>모델별 누적 판매량 순위 / 各型号累计销量排行</h3>
+  <div class="sub">단위：대 / Unit: 台</div>
+  <canvas id="c_mq_so" height="140"></canvas>
+</div>
+<div class="card">
+  <h3>모델별 평균판매단가(ASP) / 各型号平均售价对比</h3>
+  <div class="sub">ASP 높을수록 고가 제품 / Higher ASP = Premium · RMB/대</div>
+  <canvas id="c_ma_so" height="70"></canvas>
+</div>
+<div class="card">
+  <h3>Top 4 모델 월별 추이 / 主力型号月度趋势</h3>
+  <div class="sub">SC5GMR80H / S3MF / S3IF / SC5MSR40</div>
+  <canvas id="c_mt_so" height="100"></canvas>
+</div>
+<div class="card">
+  <h3>모델 판매 요약 / 型号销售汇总</h3>
+  <div class="tw"><table><thead><tr><th>#</th><th>모델/型号</th><th>시리즈</th><th>판매량 Q(대)</th><th>비중</th><th>매출액 A(KRMB)</th><th>ASP(RMB/대)</th><th>비중그래프</th></tr></thead><tbody id="t_mdl_so"></tbody></table></div>
+</div>
+
+<div class="sec-label">05 / 거래처 분석 / 渠道客户分析</div>
+<div class="card">
+  <h3>거래처 Top 15 누적 판매량 / Top15 客户累计销量</h3>
+  <div class="sub">단위：대 / Unit: 台</div>
+  <canvas id="c_c_so" height="160"></canvas>
+</div>
+<div class="card">
+  <h3>거래처 Top 10 월별 판매량 추이 / Top10 客户月度趋势</h3>
+  <div class="sub">각 핵심 거래처 월별 수량 비교</div>
+  <canvas id="c_ct_so" height="110"></canvas>
+</div>
+<div class="card">
+  <h3>전체 거래처 판매 순위 / 全渠道销售排行</h3>
+  <div class="tw"><table><thead><tr><th>#</th><th>거래처/渠道</th><th>판매량 Q(대)</th><th>비중</th><th>매출액 A(KRMB)</th><th>ASP(RMB/대)</th><th>비중그래프</th></tr></thead><tbody id="t_c_so"></tbody></table></div>
+</div>
+<div class="card">
+  <h3>고객별 연도별 판매량 비교 / 各客户年度销量对比</h3>
+  <div class="tw"><table><thead><tr><th>#</th><th>고객/渠道</th><th>25年 Q</th><th>25年 A</th><th>25年 ASP</th><th>26年 Q</th><th>26年 A</th><th>26年 ASP</th><th>25年 비중</th><th>26年 비중</th></tr></thead><tbody id="t_cy_so"></tbody></table></div>
+</div>
+
+<div class="sec-label">06 / 거래처별 ASP 분석 / 客户ASP分析</div>
+<div class="card">
+  <h3>주요 거래처 ASP 순위(판매량 ≥20대) / 客户ASP排行(销量≥20)</h3>
+  <div class="sub">ASP 높은 거래처 = 고가 제품 선호</div>
+  <canvas id="c_ca_so" height="80"></canvas>
+</div>
+
+<div class="sec-label">07 / 히트맵 매트릭스 / 热力矩阵</div>
+<div class="card">
+  <h3>모델 × 월 판매량 히트맵 / 型号×月度销量热力图</h3>
+  <div class="sub">색상이 진할수록 해당 월 해당 모델 판매량이 높음</div>
+  <div class="tw"><table class="hm" id="t_hm_so"></table></div>
+</div>
+
+<div class="sec-label">08 / 분기 집계 / 季度汇总</div>
+<div class="card">
+  <h3>분기별 판매량 추이 및 ASP 변화 / 季度销量趋势与ASP变化</h3>
+  <div class="sub">막대 = 분기 판매량 / 线 = ASP RMB/대</div>
+  <canvas id="c_q_so" height="70"></canvas>
+</div>
+<div class="card">
+  <h3>분기별 집계표 / 季度汇总表</h3>
+  <div class="tw"><table><thead><tr><th>분기/季度</th><th>판매량 Q(대)</th><th>매출액 A(KRMB)</th><th>ASP(RMB/대)</th></tr></thead><tbody id="t_q_so"></tbody></table></div>
+</div>
+
+</div><!-- end tab-so -->
+
+<!-- ==================== SELL IN CONTENT ==================== -->
+<div class="tab-content" id="tab-si">
+
+<div class="card" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
+  <div>
+    <p style="font-size:13px;color:#888;line-height:1.8">
+      데이터 범위：2026년 1월 — 2026년 9월 (共9个月)<br>
+      Sell-in = LG → 거래처 출하량 / 厂商出货量
+    </p>
+  </div>
+</div>
+
+<div class="sec-label">01 / 핵심 지표 / 核心指标 (Sell In)</div>
+<div class="kpi-row" id="kpi-si">
+</div>
+
+<div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
+<div class="ins-grid">
+  <div class="ins" style="border-top:4px solid #2563eb">
+    <div class="it">🏆 최다 출하 모델 / 最畅销型号 — SC5GMR80H</div>
+    <div class="ib">누적 <b>2,713대(38.0%)</b>，ASP <b>16,336 RMB/대</b>，RX 고가 라인이 Sell In 주도.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #16a34a">
+    <div class="it">💡 RX Styler 시리즈가 출하량의 과반 차지</div>
+    <div class="ib">RX 시리즈 수량 <b>4,135대(57.9%)</b>，매출 <b>60,746 KRMB(69.7%)</b>，RX Styler ASP <b>14,691 RMB/대</b> vs Styler ASP <b>8,813 RMB/대</b>.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #16a34a">
+    <div class="it">📉 2월 출하 급감 (설 연휴 영향)</div>
+    <div class="ib">2월 출하량 <b>554대</b>，1월 1,466대 대비 <b>62%↓</b>，3월 회복 1,175대. 설 연휴 계절성 뚜렷.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #d97706">
+    <div class="it">📦 7월 출하 / 7月出货</div>
+    <div class="ib">7월 출하량 <b>855대</b>，출하금액 <b>11,513 KRMB</b>，ASP <b>13,466 RMB/대</b>.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #2563eb">
+    <div class="it">📊 S3MF + S3IF 중가 라인</div>
+    <div class="ib">S3MF <b>1,368대(19.2%)</b>，S3IF <b>926대(13.0%)</b>，중가 라인이 Styler 출하 견인.</div>
+  </div>
+  <div class="ins" style="border-top:4px solid #6b7280">
+    <div class="it">🔍 Sell In vs Sell Out 비교 (2026년 1–7월)</div>
+    <div class="ib">Sell In(7,137대) vs Sell Out(6,076대)，Sell In ASP(12,218 RMB) vs Sell Out ASP(12,220 RMB). 채널 재고 관리 지속 필요.</div>
+  </div>
+</div>
+
+<div class="sec-label">03 / 월별 추이 / 月度趋势</div>
+<div class="card">
+  <h3>월별 출하량(Q 대) 및 출하금액(KRMB) / 月度出货量与出货额</h3>
+  <div class="sub">막대 = 출하량대(좌축) / 线 = 출하금액 KRMB(우축)</div>
+  <canvas id="c_m_si" height="100"></canvas>
+</div>
+<div class="card">
+  <h3>월별 평균출하단가(ASP) / 月度平均出货单价走势</h3>
+  <div class="sub">단위：RMB/대</div>
+  <canvas id="c_am_si" height="80"></canvas>
+</div>
+<div class="card">
+  <h3>월별 상세 데이터 / 月度明细数据</h3>
+  <div class="tw"><table><thead><tr><th>월/月</th><th>출하량 Q(대/台)</th><th>同期对比%</th><th>출하금액 A(KRMB)</th><th>同期对比%</th><th>ASP(RMB/대)</th><th>同期对比%</th></tr></thead><tbody id="t_m_si"></tbody></table></div>
+</div>
+
+<div class="sec-label">04 / 모델 분석 / 型号分析</div>
+<div class="card">
+  <h3>모델별 누적 출하량 순위 / 各型号累计出货量排行</h3>
+  <div class="sub">단위：대 / Unit: 台</div>
+  <canvas id="c_mq_si" height="140"></canvas>
+</div>
+<div class="card">
+  <h3>모델별 평균출하단가(ASP) / 各型号ASP对比</h3>
+  <div class="sub">ASP 높을수록 고가 제품 · RMB/대</div>
+  <canvas id="c_ma_si" height="70"></canvas>
+</div>
+<div class="card">
+  <h3>Top 4 모델 월별 출하 추이 / 主力型号月度出货趋势</h3>
+  <div class="sub">SC5GMR80H / S3MF / S3IF / SC5MSR40</div>
+  <canvas id="c_mt_si" height="100"></canvas>
+</div>
+<div class="card">
+  <h3>모델 출하 요약 / 型号出货汇总</h3>
+  <div class="tw"><table><thead><tr><th>#</th><th>모델/型号</th><th>시리즈</th><th>출하량 Q(대)</th><th>비중</th><th>출하금액 A(KRMB)</th><th>ASP(RMB/대)</th><th>비중그래프</th></tr></thead><tbody id="t_mdl_si"></tbody></table></div>
+</div>
+
+<div class="sec-label">05 / 히트맵 매트릭스 / 热力矩阵</div>
+<div class="card">
+  <h3>모델 × 월 출하량 히트맵 / 型号×月度出货热力图</h3>
+  <div class="sub">색상이 진할수록 해당 월 해당 모델 출하량이 높음</div>
+  <div class="tw"><table class="hm" id="t_hm_si"></table></div>
+</div>
+
+<div class="sec-label">06 / 분기 집계 / 季度汇总</div>
+<div class="card">
+  <h3>분기별 출하량 추이 및 ASP 변화 / 季度出货趋势与ASP变化</h3>
+  <div class="sub">막대 = 분기 출하량 / 线 = ASP RMB/대</div>
+  <canvas id="c_q_si" height="70"></canvas>
+</div>
+<div class="card">
+  <h3>분기별 집계표 / 季度汇总表</h3>
+  <div class="tw"><table><thead><tr><th>분기/季度</th><th>출하량 Q(대)</th><th>출하금액 A(KRMB)</th><th>ASP(RMB/대)</th></tr></thead><tbody id="t_q_si"></tbody></table></div>
+</div>
+
+</div><!-- end tab-si -->
+
+</div><!-- end page -->
+
+<script>
+// ======================== SHARED TOOLS ========================
+const P = ['#2563eb','#16a34a','#d97706','#dc2625','#7c3aed','#0891b2','#db2777','#65a30d','#ea580c','#9333ea','#0284c7','#ca8a04','#15803d','#b91c1c'];
+const GRID='#f0f0f0',TICK='#999';
+Chart.defaults.color=TICK;
+Chart.defaults.borderColor=GRID;
+Chart.defaults.font.family="'Helvetica Neue','PingFang SC',Arial,sans-serif";
+
+function fmt(k){return parseInt(k).toLocaleString();}
+
+function mkBar(id,labels,datasets,extra){
+  extra=extra||{};
+  var plugins=[];
+  if(extra.datalabels){
+    plugins.push({
+      afterDatasetsDraw:function(chart){
+        var ctx=chart.ctx;
+        chart.data.datasets.forEach(function(ds,i){
+          var meta=chart.getDatasetMeta(i);
+          meta.data.forEach(function(bar){
+            var val=ds.data[bar.index];
+            if(!val&&val!==0)return;
+            var txt=typeof val==='number'?val.toLocaleString():val;
+            ctx.save();
+            ctx.font='bold 11px Helvetica Neue,Arial,sans-serif';
+            ctx.fillStyle='#fff';
+            ctx.textAlign=chart.options.indexAxis==='y'?'right':'center';
+            ctx.textBaseline='middle';
+            var px=chart.options.indexAxis==='y'?bar.x-6:bar.x;
+            var py=chart.options.indexAxis==='y'?bar.y:bar.y-6;
+            ctx.fillText(txt,px,py);
+            ctx.restore();
+          });
+        });
+      }
+    });
+  }
+  return new Chart(document.getElementById(id),{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      plugins:{legend:extra.noLeg?{display:false}:{labels:{color:'#555',font:{size:11}}}},
+      scales:{
+        x:{grid:{color:GRID},ticks:{color:TICK,font:{size:10}},stacked:!!extra.stk},
+        y:{grid:{color:GRID},ticks:{color:TICK},stacked:!!extra.stk},
+        ...(extra.y2?{y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:TICK}}}:{})
+      }
+    },
+    plugins:plugins
+  });
+}
+
+function mkLine(id,labels,datasets){
+  return new Chart(document.getElementById(id),{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      plugins:{legend:{labels:{color:'#555',font:{size:11}}}},
+      scales:{x:{grid:{color:GRID},ticks:{color:TICK,font:{size:10}}},y:{grid:{color:GRID},ticks:{color:TICK}}}
+    }
+  });
+}
+
+// Keep track of charts for cleanup
+var allCharts={so:[],si:[]};
+var siRendered=false;
+
+function switchTab(t){
+  var soEl=document.getElementById('tab-so');
+  var siEl=document.getElementById('tab-si');
+  var btnSo=document.getElementById('btn-so');
+  var btnSi=document.getElementById('btn-si');
+  if(t==='so'){
+    soEl.classList.add('active'); siEl.classList.remove('active');
+    btnSo.classList.add('active'); btnSi.classList.remove('active');
+  } else {
+    siEl.classList.add('active'); soEl.classList.remove('active');
+    btnSi.classList.add('active'); btnSo.classList.remove('active');
+    if(!siRendered){ renderSI(); siRendered=true; }
+  }
+}
+
+// ======================== SELL OUT DATA ========================
+const D_SO = {"total_q":21839,"total_a":264375.38,"total_asp":12106,"months":["202401","202402","202403","202404","202405","202406","202407","202408","202409","202410","202411","202412","202501","202502","202503","202504","202505","202506","202507","202508","202509","202510","202511","202512","202601","202602","202603","202604","202605","202606","202607","202608","202609"],"month_labels":["24.1","24.2","24.3","24.4","24.5","24.6","24.7","24.8","24.9","24.10","24.11","24.12","25.1","25.2","25.3","25.4","25.5","25.6","25.7","25.8","25.9","25.10","25.11","25.12","26.1","26.2","26.3","26.4","26.5","26.6","26.7","26.8","26.9"],"monthly_q":[982,476,1009,477,377,636,357,335,547,506,721,485,948,533,971,699,727,1069,472,474,476,664,1261,561,671,528,1138,388,608,820,481,610,832],"monthly_a":[9970.63,4994.52,9749.7,5419.91,4171.58,7148.89,3691.92,3630.83,5771.62,6272.14,7993.43,6131.43,11127.69,6542.25,11761.18,7762.03,10276.29,14742.14,6186.81,6301.08,6638.01,9281.33,17498.17,7060.5,8916.71,6692.55,13845.13,4486.64,7025.98,10009.17,5635.88,6316.61,11322.62],"monthly_asp":[10153,10493,9663,11362,11065,11240,10342,10838,10551,12396,11087,12642,11738,12274,12112,11104,14135,13791,13108,13293,13945,13978,13876,12586,13289,12675,12166,11563,11556,12206,11717,10355,13609],"models":["SC5GMR80H","S3MF","S3IF","S3BF","SC5MSR40","S5MB","SC5GMR4G","S5BOC","S5GOC","S5BB","S3CW","S3GHM","S5WOC","SC5MBR80H"],"model_q":[5247,4369,4147,1764,1534,1203,968,810,717,465,313,194,108,22],"model_a":[89508.26,44481.17,38607.64,16358.81,21937.03,12756.45,11918.97,10464.12,9436.26,4000.9,1960.46,1485.08,1297.39,361.12],"model_asp":[17059,10181,9310,9274,14301,10604,12313,12919,13161,8604,6263,7655,12013,16415],"model_q_share":[24.0,20.0,19.0,8.1,7.0,5.5,4.4,3.7,3.3,2.1,1.4,0.9,0.5,0.1],"customers":["天津鸿雁百大商贸","新七天电子","盛世恒隆","上海亦晶实业","江苏赛夫","沈阳世纪创新","华中营业Team B2B","Others_华北营业Team","四川品之尚","Others_华南营业Team","浙江百诚 - 浙江","深圳顺电","深圳聚虎","Others_华中营业Team","广州荷花","福州腾旭（建材）","广东金誉电子","汕头振乐","OBS","至诚志远","东北经贸","亲水商贸","广州君求","贵州永泰盛","武汉泰欣","湖南航启","Others_东北营业Team","北国商城","梦界科技","青岛宇恒","Others_D2C营业Team","华南营业Team B2B","黑龙江广汇","合肥塞翁","方柏时代","唐山百大","延吉百大","包头同利","温州盛鸿","昆百家电","百业慧通","Others_CE平台营业Team","昆明际洲","广州广百（穗）","深圳驰铭","武汉乐聚天"],"customer_q":[3995,2231,2169,1985,1957,1060,743,725,666,602,564,493,456,435,400,347,332,317,310,292,277,197,166,138,127,122,113,101,81,77,61,52,45,41,40,33,24,18,17,7,6,5,4,3,3,2],"customer_a":[47629.78,27707.52,24664.65,25006.17,24227.2,14627.5,6713.81,8122.25,7979.5,6607.28,6364.05,7012.01,5548.77,4208.1,5461.27,4899.15,4142.85,3947.41,3092.47,3935.38,4053.42,2664.76,2135.55,1714.35,1546.79,1471.47,1138.37,1384.9,1038.07,926.49,456.07,609.55,698.72,554.38,509.49,438.71,353.32,209.25,258.73,83.94,45.62,36.72,35.13,42.07,36.44,35.93],"customer_asp":[11922,12419,11371,12598,12380,13800,9036,11203,11981,10976,11284,14223,12168,9674,13653,14119,12478,12452,9976,13477,14633,13527,12865,12423,12179,12061,10074,13712,12816,12032,7477,11722,15527,13522,12737,13294,14721,11625,15219,11991,7603,7345,8784,14024,12147,17964],"customer_q_share":[18.3,10.2,9.9,9.1,9.0,4.9,3.4,3.3,3.0,2.8,2.6,2.3,2.1,2.0,1.8,1.6,1.5,1.5,1.4,1.3,1.3,0.9,0.8,0.6,0.6,0.6,0.5,0.5,0.4,0.4,0.3,0.2,0.2,0.2,0.2,0.2,0.1,0.1,0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"top10_customers":["天津鸿雁百大商贸","新七天电子","盛世恒隆","上海亦晶实业","江苏赛夫","沈阳世纪创新","华中营业Team B2B","Others_华北营业Team","四川品之尚","Others_华南营业Team"],"top10_monthly_q":{"天津鸿雁百大商贸":[156,86,144,65,47,180,112,77,73,81,252,40,186,168,321,80,109,221,89,70,68,94,260,165,120,124,314,17,91,0,9,6,170],"新七天电子":[81,55,69,34,86,97,26,25,27,135,101,81,53,29,53,35,47,83,33,47,62,147,188,113,33,48,55,48,53,103,56,70,58],"盛世恒隆":[100,50,50,150,100,100,100,90,61,0,0,0,224,87,110,80,51,40,40,45,80,30,20,19,42,39,83,90,10,79,119,80,0],"上海亦晶实业":[85,15,68,13,28,34,20,24,30,54,94,57,70,44,71,0,37,143,41,17,6,56,208,61,138,53,118,0,53,85,66,90,106],"江苏赛夫":[38,21,33,40,4,63,27,25,18,31,38,33,30,30,46,28,43,33,25,44,29,91,83,65,13,35,50,54,173,324,92,128,170],"沈阳世纪创新":[14,24,65,9,0,-3,20,0,14,19,13,7,42,7,41,29,33,44,50,50,36,36,51,41,47,58,66,51,44,60,30,28,34],"华中营业Team B2B":[1,0,0,0,5,2,1,0,181,1,0,4,1,3,3,331,11,2,0,2,2,1,8,2,106,5,22,17,15,10,1,4,2],"Others_华北营业Team":[127,57,47,41,-1,30,1,23,22,29,54,69,11,13,39,6,14,16,26,48,2,8,15,5,16,1,0,9,0,0,-3,0,0],"四川品之尚":[71,9,87,12,10,1,1,4,2,4,6,7,4,11,24,6,17,35,21,16,19,16,29,9,21,20,83,6,8,22,16,18,51],"Others_华南营业Team":[116,76,83,25,11,51,2,4,15,15,37,50,26,27,34,2,2,2,5,6,0,0,2,0,0,0,0,0,0,0,11,0,0]},"model_monthly_heatmap":{"SC5GMR80H":[0,0,0,0,0,9,12,11,49,122,77,140,201,118,210,143,317,406,152,144,159,253,479,124,251,184,307,147,201,315,133,168,415],"S3MF":[151,143,128,71,81,184,63,64,62,155,307,68,146,101,287,53,62,229,58,62,68,166,423,164,40,52,294,49,130,211,63,85,149],"S3IF":[307,102,395,40,50,93,100,73,53,98,143,106,208,109,193,72,152,185,111,127,92,102,138,148,123,119,257,42,77,74,65,78,115],"S3BF":[80,41,191,14,25,54,25,30,32,37,72,70,108,50,64,38,56,97,50,38,39,44,53,53,62,41,113,23,31,21,31,41,40],"SC5MSR40":[0,0,0,0,0,0,3,2,5,39,30,33,45,51,58,21,92,110,47,45,38,68,141,47,148,57,68,33,65,98,40,54,96],"S5MB":[100,50,50,150,100,100,100,90,61,0,0,0,204,57,81,50,11,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0],"SC5GMR4G":[0,0,0,0,0,0,0,0,0,0,0,0,20,30,30,30,40,40,40,45,80,30,21,20,42,39,83,90,10,79,119,80,0],"S5BOC":[197,71,121,46,43,83,21,40,57,31,33,15,11,6,19,4,-3,1,9,8,1,-1,-1,-1,0,0,-1,-1,1,0,0,0,0],"S5GOC":[108,38,103,97,58,82,21,23,44,29,46,11,7,11,28,3,0,1,4,7,-1,0,-3,1,1,0,0,-1,0,0,-1,0,0],"S5BB":[2,0,0,0,0,0,0,0,179,0,0,0,0,0,0,285,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0],"S3CW":[31,10,21,34,21,36,13,2,5,1,3,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,0,0,66,0],"S3GHM":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,10,7,5,36,17,6,15,18,22,37,18],"S5WOC":[5,19,0,26,0,0,0,0,0,0,10,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"SC5MBR80H":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,5,9,2,-1]},"quarters":["2024Q1","2024Q2","2024Q3","2024Q4","2025Q1","2025Q2","2025Q3","2025Q4","2026Q1","2026Q2","2026Q3"],"quarter_q":[2467,1490,1239,1712,2452,2495,1422,2486,2337,1816,1923],"quarter_a":[24714.85,16740.38,13094.38,20397.0,29431.12,32780.47,19125.9,33839.99,29454.39,21521.79,23275.11],"quarter_asp":[10018,11235,10569,11914,12003,13138,13450,13612,12604,11851,12104],"tool_q":[7771,14068],"tool_a":[123725.38,140650.0],"tool_asp":[15921,9998]};
+
+// ======================== SELL IN DATA ========================
+const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202601","202602","202603","202604","202605","202606","202607","202608","202609"],"month_labels":["26.1","26.2","26.3","26.4","26.5","26.6","26.7","26.8","26.9"],"monthly_q":[1466,554,1175,814,1038,637,330,268,855],"monthly_a":[19646.82,6611.39,15015.11,9478.53,11455.69,7119.21,3326.69,3034.42,11513.29],"monthly_asp":[13402,11934,12779,11644,11036,11176,10081,11322,13466],"models":["SC5GMR80H","S3MF","S3IF","SC5MSR40","SC5GMR4G","S3BF","S3GHM","S3CW","SC5MBR80H","S3RF","S3WF","S5BB","S5BOC","S5GOC"],"model_q":[2713,1368,926,837,548,393,184,137,37,-1,-1,-1,-1,-2],"model_a":[44319.83,12302.26,8631.15,10800.49,5085.91,3626.7,1293.3,666.81,539.56,-8.5,-4.22,-12.69,-14.22,-25.23],"model_asp":[16336,8993,9321,12904,9281,9228,7029,4867,14583,0,0,0,0,0],"model_q_share":[38.0,19.2,13.0,11.7,7.7,5.5,2.6,1.9,0.5,0.0,0.0,0.0,0.0,0.0],"model_monthly_heatmap":{"SC5GMR80H":[583,149,436,283,373,153,88,121,527],"S3MF":[259,175,202,317,238,96,18,12,51],"S3IF":[154,128,180,97,96,73,119,9,70],"SC5MSR40":[252,36,111,92,97,82,22,13,132],"SC5GMR4G":[134,9,100,0,53,199,0,20,33],"S3BF":[40,54,139,22,37,13,60,13,15],"S3GHM":[44,3,8,5,66,17,16,9,16],"S3CW":[0,0,0,0,71,0,0,66,0],"SC5MBR80H":[0,0,0,0,7,5,8,6,11],"S3RF":[0,0,0,0,0,-1,0,0,0],"S3WF":[-1,0,0,0,0,0,0,0,0],"S5BB":[0,0,0,0,0,0,0,-1,0],"S5BOC":[1,0,-1,-1,0,0,0,0,0],"S5GOC":[0,0,0,-1,0,0,-1,0,0]},"quarters":["2026Q1","2026Q2","2026Q3"],"quarter_q":[3195,2489,1453],"quarter_a":[41273.32,28053.43,17874.4],"quarter_asp":[12918,11271,12302],"tool_q":[4135,3002],"tool_a":[60745.79,26455.36],"tool_asp":[14691,8813]};
+
+// ======================== RENDER SO ========================
+(function renderSO(){
+  var D=D_SO;
+  var ML=D.month_labels;
+
+  // KPI + info already in HTML (hardcoded)
+
+  // monthly bar+line
+  allCharts.so.push(mkBar('c_m_so',ML,[
+    {label:'판매량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(37,99,235,0.75)',yAxisID:'y',borderRadius:5},
+    {label:'매출액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.06)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:5,pointBackgroundColor:'#d97706'}
+  ],{y2:{},datalabels:true}));
+
+  // monthly asp line
+  allCharts.so.push(mkLine('c_am_so',ML,[
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.07)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'#16a34a'}
+  ]));
+
+  // monthly table — 同期对比 (YoY) · 24년 skip (underlying arrays kept for calc)
+  var mT=document.getElementById('t_m_so');
+  D.monthly_q.forEach(function(q,i){
+    if(ML[i].startsWith('24.')) return;
+    var yoyQ='-',yoyA='-',yoyASP='-';
+    if(i>=12){
+      var py=i-12;
+      if(D.monthly_q[py]&&D.monthly_q[py]>0){
+        var qChg=((q-D.monthly_q[py])/Math.abs(D.monthly_q[py])*100).toFixed(1);
+        var qCls=parseFloat(qChg)>=0?'up':'dn';
+        yoyQ='<span class="'+qCls+'" style="'+(parseFloat(qChg)>=0?'color:#16a34a':'color:#dc2626')+';font-weight:600">'+(parseFloat(qChg)>=0?'▲':'▼')+Math.abs(qChg)+'%</span>';
+      }
+      if(D.monthly_a[py]&&D.monthly_a[py]>0){
+        var aChg=((D.monthly_a[i]-D.monthly_a[py])/Math.abs(D.monthly_a[py])*100).toFixed(1);
+        var aCls=parseFloat(aChg)>=0?'up':'dn';
+        yoyA='<span class="'+aCls+'" style="'+(parseFloat(aChg)>=0?'color:#16a34a':'color:#dc2626')+';font-weight:600">'+(parseFloat(aChg)>=0?'▲':'▼')+Math.abs(aChg)+'%</span>';
+      }
+      if(D.monthly_asp[py]&&D.monthly_asp[py]>0){
+        var aspChg=((D.monthly_asp[i]-D.monthly_asp[py])/Math.abs(D.monthly_asp[py])*100).toFixed(1);
+        var aspCls=parseFloat(aspChg)>=0?'up':'dn';
+        yoyASP='<span class="'+aspCls+'" style="'+(parseFloat(aspChg)>=0?'color:#16a34a':'color:#dc2626')+';font-weight:600">'+(parseFloat(aspChg)>=0?'▲':'▼')+Math.abs(aspChg)+'%</span>';
+      }
+    }
+    mT.innerHTML+='<tr><td class="n">'+ML[i]+'</td><td class="n">'+q.toLocaleString()+'</td><td style="font-size:11px">'+yoyQ+'</td><td>'+fmt(D.monthly_a[i])+'</td><td style="font-size:11px">'+yoyA+'</td><td class="asp">'+D.monthly_asp[i].toLocaleString()+'</td><td style="font-size:11px">'+yoyASP+'</td></tr>';
+  });
+
+  // model q bar
+  allCharts.so.push(mkBar('c_mq_so',D.models,[{label:'누적판매량(대)',data:D.model_q,backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
+
+  // model asp sorted
+  var aspSrt=D.models.map(function(m,i){return{m:m,a:D.model_asp[i]};}).filter(function(x){return x.a>0;}).sort(function(a,b){return b.a-a.a;});
+  allCharts.so.push(mkBar('c_ma_so',aspSrt.map(function(x){return x.m;}),[{label:'ASP(RMB/대)',data:aspSrt.map(function(x){return x.a;}),backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
+
+  // model trend
+  allCharts.so.push(mkLine('c_mt_so',ML,D.models.slice(0,4).map(function(m,i){
+    return{label:m,data:D.model_monthly_heatmap[m]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2};
+  })));
+
+  // model table
+  var tmap={SC5GMR4G:'RX Styler',SC5GMR80H:'RX Styler',SC5MSR40:'RX Styler',SC5MBR80H:'RX Styler'};
+  var tmQ=Math.max.apply(null,D.model_q);
+  var mTbl=document.getElementById('t_mdl_so');
+  D.models.forEach(function(m,i){
+    var tag=tmap[m]?'<span class="bd b-rx">RX Styler</span>':'<span class="bd b-st">Styler</span>';
+    var bw=Math.max(4,Math.round(D.model_q[i]/tmQ*80));
+    mTbl.innerHTML+='<tr><td class="rk">'+(i+1)+'</td><td class="n">'+m+'</td><td>'+tag+'</td><td class="n">'+D.model_q[i].toLocaleString()+'</td><td>'+D.model_q_share[i]+'%</td><td>'+fmt(D.model_a[i])+'</td><td class="asp">'+D.model_asp[i].toLocaleString()+'</td><td><span class="bp" style="width:'+bw+'px;background:'+P[i%14]+'"></span> '+D.model_q_share[i]+'%</td></tr>';
+  });
+
+  // customer bar
+  allCharts.so.push(mkBar('c_c_so',D.customers.slice(0,15),[{label:'누적판매량(대)',data:D.customer_q.slice(0,15),backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
+
+  // customer trend
+  allCharts.so.push(mkLine('c_ct_so',ML,D.top10_customers.map(function(c,i){
+    return{label:c,data:D.top10_monthly_q[c]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:'transparent',tension:0.3,pointRadius:2,borderWidth:1.8};
+  })));
+
+  // customer table
+  var tcQ=Math.max.apply(null,D.customer_q);
+  var cTbl=document.getElementById('t_c_so');
+  D.customers.forEach(function(c,i){
+    var bw=Math.max(4,Math.round(D.customer_q[i]/tcQ*80));
+    cTbl.innerHTML+='<tr><td class="rk">'+(i+1)+'</td><td class="n">'+c+'</td><td class="n">'+D.customer_q[i].toLocaleString()+'</td><td>'+D.customer_q_share[i]+'%</td><td>'+fmt(D.customer_a[i])+'</td><td class="asp">'+D.customer_asp[i].toLocaleString()+'</td><td><span class="bp" style="width:'+bw+'px;background:'+P[i%14]+'"></span> '+D.customer_q_share[i]+'%</td></tr>';
+  });
+
+  // customer asp
+  var cAsp=D.customers.map(function(c,i){return{c:c,asp:D.customer_asp[i],q:D.customer_q[i]};}).filter(function(x){return x.q>=20;}).sort(function(a,b){return b.asp-a.asp;}).slice(0,20);
+  allCharts.so.push(mkBar('c_ca_so',cAsp.map(function(x){return x.c;}),[{label:'ASP(RMB/대)',data:cAsp.map(function(x){return x.asp;}),backgroundColor:cAsp.map(function(_,i){return P[i%14];}),borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'}}));
+
+  // heatmap
+  var hmT=document.getElementById('t_hm_so');
+  var allV=[];
+  D.models.forEach(function(m){(D.model_monthly_heatmap[m]||[]).forEach(function(v){if(v>0)allV.push(v);});});
+  var mxV=allV.length?Math.max.apply(null,allV):1;
+  var h='<thead><tr><th>모델/型号</th>'+ML.map(function(m){return'<th>'+m+'</th>';}).join('')+'<th>합계</th></tr></thead><tbody>';
+  D.models.forEach(function(m){
+    var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
+    var tot=row.reduce(function(a,b){return a+b;},0);
+    var cells=row.map(function(v){
+      if(!v||v<=0)return'<td style="background:#f9fafb;color:#ddd">'+(v<0?v:'')+'</td>';
+      var t=Math.min(1,v/mxV);
+      var r=Math.round(100+(1-t)*155),g=Math.round(0+(1-t)*120),b=Math.round(210+(1-t)*210);
+      var tc=t>0.55?'#fff':'#1a1a1a',fw=t>0.3?'600':'400';
+      return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
+    }).join('');
+    h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
+  });
+  h+='</tbody>';hmT.innerHTML=h;
+
+  // quarter chart
+  allCharts.so.push(mkBar('c_q_so',D.quarters,[
+    {label:'판매량 Q(대)',data:D.quarter_q,backgroundColor:D.quarter_q.map(function(v,i){var cs=['rgba(37,99,235,0.78)','rgba(22,163,74,0.78)','rgba(217,119,6,0.78)','rgba(168,85,247,0.78)'];return cs[i%4];}),yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#d97706',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:7,pointBackgroundColor:'#d97706'}
+  ],{y2:{}}));
+
+  // quarter table
+  var qT=document.getElementById('t_q_so');
+  D.quarters.forEach(function(q,i){
+    qT.innerHTML+='<tr><td class="n">'+q+'</td><td class="n">'+D.quarter_q[i].toLocaleString()+'</td><td>'+fmt(D.quarter_a[i])+'</td><td class="asp">'+D.quarter_asp[i].toLocaleString()+'</td></tr>';
+  });
+
+  // customer year table
+  var CY=[{"name":"天津鸿雁百大商贸","q25":1831,"a25":22692.3,"asp25":12393,"q26":851,"a26":11587.58,"asp26":13616},{"name":"新七天电子","q25":890,"a25":11912.69,"asp25":13385,"q26":524,"a26":6681.21,"asp26":12750},{"name":"盛世恒隆","q25":826,"a25":10455.06,"asp25":12657,"q26":542,"a26":5362.85,"asp26":9895},{"name":"上海亦晶实业","q25":754,"a25":10651.54,"asp25":14127,"q26":709,"a26":8782.09,"asp26":12387},{"name":"江苏赛夫","q25":547,"a25":7719.56,"asp25":14113,"q26":1039,"a26":12099.3,"asp26":11645},{"name":"沈阳世纪创新","q25":460,"a25":6233.67,"asp25":13551,"q26":418,"a26":6196.62,"asp26":14824},{"name":"华中营业Team B2B","q25":366,"a25":3412.02,"asp25":9322,"q26":182,"a26":1571.93,"asp26":8637},{"name":"Others_华北营业Team","q25":203,"a25":2394.13,"asp25":11794,"q26":23,"a26":299.26,"asp26":13011},{"name":"四川品之尚","q25":207,"a25":2671.85,"asp25":12907,"q26":245,"a26":3339.53,"asp26":13631},{"name":"Others_华南营业Team","q25":106,"a25":1264.65,"asp25":11931,"q26":11,"a26":123.05,"asp26":11186},{"name":"浙江百诚 - 浙江","q25":204,"a25":2553.5,"asp25":12517,"q26":258,"a26":2753.35,"asp26":10672},{"name":"深圳顺电","q25":200,"a25":2934.45,"asp25":14672,"q26":107,"a26":1695.72,"asp26":15848},{"name":"深圳聚虎","q25":269,"a25":3632.8,"asp25":13505,"q26":98,"a26":976.9,"asp26":9968},{"name":"Others_华中营业Team","q25":69,"a25":770.6,"asp25":11168,"q26":79,"a26":458.36,"asp26":5802},{"name":"广州荷花","q25":326,"a25":4429.0,"asp25":13586,"q26":20,"a26":302.15,"asp26":15108},{"name":"福州腾旭（建材）","q25":197,"a25":3005.85,"asp25":15258,"q26":25,"a26":336.12,"asp26":13445},{"name":"广东金誉电子","q25":225,"a25":2848.24,"asp25":12659,"q26":107,"a26":1294.61,"asp26":12099},{"name":"汕头振乐","q25":169,"a25":2322.36,"asp25":13742,"q26":59,"a26":631.37,"asp26":10701},{"name":"OBS","q25":27,"a25":286.63,"asp25":10616,"q26":271,"a26":2687.33,"asp26":9916},{"name":"至诚志远","q25":167,"a25":2448.76,"asp25":14663,"q26":56,"a26":792.48,"asp26":14151},{"name":"东北经贸","q25":188,"a25":2679.13,"asp25":14251,"q26":64,"a26":1044.72,"asp26":16324},{"name":"亲水商贸","q25":111,"a25":1520.36,"asp25":13697,"q26":23,"a26":326.92,"asp26":14214},{"name":"广州君求","q25":84,"a25":1101.88,"asp25":13118,"q26":38,"a26":565.69,"asp26":14887},{"name":"贵州永泰盛","q25":40,"a25":456.54,"asp25":11414,"q26":63,"a26":867.69,"asp26":13773},{"name":"武汉泰欣","q25":54,"a25":657.12,"asp25":12169,"q26":35,"a26":432.3,"asp26":12351},{"name":"湖南航启","q25":56,"a25":687.62,"asp25":12279,"q26":13,"a26":201.07,"asp26":15467},{"name":"Others_东北营业Team","q25":34,"a25":390.35,"asp25":11481,"q26":-1,"a26":-12.1,"asp26":0},{"name":"北国商城","q25":38,"a25":530.45,"asp25":13959,"q26":35,"a26":490.63,"asp26":14018},{"name":"梦界科技","q25":35,"a25":426.87,"asp25":12196,"q26":32,"a26":475.68,"asp26":14865},{"name":"青岛宇恒","q25":15,"a25":196.97,"asp25":13132,"q26":53,"a26":620.65,"asp26":11710},{"name":"Others_D2C营业Team","q25":40,"a25":251.47,"asp25":6287,"q26":4,"a26":20.39,"asp26":5098},{"name":"华南营业Team B2B","q25":28,"a25":332.57,"asp25":11878,"q26":24,"a26":276.98,"asp26":11541},{"name":"黑龙江广汇","q25":27,"a25":421.01,"asp25":15593,"q26":10,"a26":179.64,"asp26":17964},{"name":"合肥塞翁","q25":12,"a25":197.84,"asp25":16487,"q26":8,"a26":126.62,"asp26":15828},{"name":"方柏时代","q25":14,"a25":210.88,"asp25":15063,"q26":4,"a26":71.86,"asp26":17964},{"name":"唐山百大","q25":10,"a25":149.16,"asp25":14916,"q26":16,"a26":187.66,"asp26":11729},{"name":"延吉百大","q25":10,"a25":139.16,"asp25":13916,"q26":9,"a26":152.24,"asp26":16916},{"name":"包头同利","q25":1,"a25":-5.24,"asp25":-5240,"q26":0,"a26":0.0,"asp26":0},{"name":"温州盛鸿","q25":8,"a25":136.39,"asp25":17048,"q26":0,"a26":0.0,"asp26":0},{"name":"昆百家电","q25":2,"a25":20.57,"asp25":10285,"q26":4,"a26":55.63,"asp26":13907},{"name":"百业慧通","q25":0,"a25":0.0,"asp25":0,"q26":6,"a26":45.62,"asp26":7603},{"name":"Others_CE平台营业Team","q25":5,"a25":36.72,"asp25":7345,"q26":0,"a26":0.0,"asp26":0},{"name":"昆明际洲","q25":0,"a25":0.0,"asp25":0,"q26":4,"a26":35.13,"asp26":8784},{"name":"广州广百（穗）","q25":0,"a25":0.0,"asp25":0,"q26":3,"a26":42.07,"asp26":14024},{"name":"深圳驰铭","q25":0,"a25":0.0,"asp25":0,"q26":3,"a26":36.44,"asp26":12147},{"name":"武汉乐聚天","q25":0,"a25":0.0,"asp25":0,"q26":2,"a26":35.93,"asp26":17964}];
+  CY.sort(function(a,b){return (b.q25+b.q26)-(a.q25+a.q26);});
+  var totalQ25=0,totalQ26=0;
+  CY.forEach(function(r){totalQ25+=r.q25;totalQ26+=r.q26;});
+  var cyT=document.getElementById('t_cy_so');
+  CY.forEach(function(r,i){
+    var sh25=totalQ25>0?(r.q25/totalQ25*100).toFixed(1):'0';
+    var sh26=totalQ26>0?(r.q26/totalQ26*100).toFixed(1):'0';
+    var asp25=r.asp25>0?'<td class="asp">'+r.asp25.toLocaleString()+'</td>':'<td class="asp" style="color:#ccc">-</td>';
+    var asp26=r.asp26>0?'<td class="asp">'+r.asp26.toLocaleString()+'</td>':'<td class="asp" style="color:#ccc">-</td>';
+    var q26disp=r.q26>0?r.q26.toLocaleString():'<span style="color:#ccc">-</span>';
+    var a26disp=r.a26>0?fmt(r.a26):'<span style="color:#ccc">-</span>';
+    var sh26disp=r.q26>0?sh26+'%':'<span style="color:#ccc">-</span>';
+    cyT.innerHTML+='<tr><td class="rk">'+(i+1)+'</td><td class="n">'+r.name+'</td><td class="n">'+r.q25.toLocaleString()+'</td><td>'+fmt(r.a25)+'</td>'+asp25+'<td class="n">'+q26disp+'</td><td>'+a26disp+'</td>'+asp26+'<td>'+sh25+'%</td><td>'+sh26disp+'</td></tr>';
+  });
+})();
+
+// ======================== RENDER SI ========================
+function renderSI(){
+  var D=D_SI;
+  var ML=D.month_labels;
+
+  // KPI cards
+  var kpiEl=document.getElementById('kpi-si');
+  kpiEl.innerHTML=''+
+    '<div class="kpi"><div class="kl">누적 출하량 / 累计出货量</div><div class="kv">'+D.total_q.toLocaleString()+'</div><div class="ks">대 / 台 (Sell In Q)</div></div>'+
+    '<div class="kpi"><div class="kl">누적 출하금액 / 累计出货额</div><div class="kv">'+Math.round(D.total_a).toLocaleString()+'</div><div class="ks">KRMB</div></div>'+
+    '<div class="kpi"><div class="kl">평균출하단가 ASP / 平均出货价</div><div class="kv">'+D.total_asp.toLocaleString()+'</div><div class="ks">RMB/대</div></div>'+
+    '<div class="kpi"><div class="kl">월평균 출하량 / 月均出货量</div><div class="kv">'+Math.round(D.total_q/D.months.length).toLocaleString()+'</div><div class="ks">대 / 월 ('+D.months.length+'개월)</div></div>'+
+    '<div class="kpi"><div class="kl">RX Styler 출하량 / RX出货量</div><div class="kv">'+D.tool_q[0].toLocaleString()+'</div><div class="ks">대 ('+(D.tool_q[0]/D.total_q*100).toFixed(1)+'%)</div></div>'+
+    '<div class="kpi"><div class="kl">Styler 출하량 / Styler出货量</div><div class="kv">'+D.tool_q[1].toLocaleString()+'</div><div class="ks">대 ('+(D.tool_q[1]/D.total_q*100).toFixed(1)+'%)</div></div>';
+
+  // monthly bar+line
+  allCharts.si.push(mkBar('c_m_si',ML,[
+    {label:'출하량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(37,99,235,0.75)',yAxisID:'y',borderRadius:5},
+    {label:'출하금액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.06)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:5,pointBackgroundColor:'#d97706'}
+  ],{y2:{},datalabels:true}));
+
+  // monthly asp line
+  allCharts.si.push(mkLine('c_am_si',ML,[
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.07)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'#16a34a'}
+  ]));
+
+  // monthly table — 同期对比 (SI only 2026, no prior year)
+  var mT=document.getElementById('t_m_si');
+  D.monthly_q.forEach(function(q,i){
+    mT.innerHTML+='<tr><td class="n">'+ML[i]+'</td><td class="n">'+q.toLocaleString()+'</td><td style="font-size:11px;color:#aaa">-</td><td>'+fmt(D.monthly_a[i])+'</td><td style="font-size:11px;color:#aaa">-</td><td class="asp">'+D.monthly_asp[i].toLocaleString()+'</td><td style="font-size:11px;color:#aaa">-</td></tr>';
+  });
+
+  // model q bar
+  allCharts.si.push(mkBar('c_mq_si',D.models,[{label:'누적출하량(대)',data:D.model_q,backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
+
+  // model asp sorted
+  var aspSrt=D.models.map(function(m,i){return{m:m,a:D.model_asp[i]};}).filter(function(x){return x.a>0;}).sort(function(a,b){return b.a-a.a;});
+  allCharts.si.push(mkBar('c_ma_si',aspSrt.map(function(x){return x.m;}),[{label:'ASP(RMB/대)',data:aspSrt.map(function(x){return x.a;}),backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
+
+  // model trend (top 4)
+  var top4=modelsTop4(D);
+  allCharts.si.push(mkLine('c_mt_si',ML,top4.map(function(m,i){
+    return{label:m,data:D.model_monthly_heatmap[m],borderColor:P[i],backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2};
+  })));
+
+  // model table
+  var tmap={SC5GMR4G:'RX Styler',SC5GMR80H:'RX Styler',SC5MSR40:'RX Styler',SC5MBR80H:'RX Styler'};
+  var tmQ=Math.max.apply(null,D.model_q);
+  var mTbl=document.getElementById('t_mdl_si');
+  D.models.forEach(function(m,i){
+    var tag=tmap[m]?'<span class="bd b-rx">RX Styler</span>':'<span class="bd b-st">Styler</span>';
+    var bw=Math.max(4,Math.round(Math.max(0,D.model_q[i])/Math.max(1,tmQ)*80));
+    var qDisp=D.model_q[i]>0?D.model_q[i].toLocaleString():'<span style="color:#ccc">'+D.model_q[i]+'</span>';
+    var shr=D.model_q[i]>0?D.model_q_share[i]+'%':'<span style="color:#ccc">-</span>';
+    var aDisp=D.model_a[i]!==0?fmt(Math.abs(D.model_a[i])):'<span style="color:#ccc">0</span>';
+    if(D.model_a[i]<0) aDisp='<span style="color:#dc2626">-'+aDisp+'</span>';
+    var aspDisp=D.model_asp[i]>0?D.model_asp[i].toLocaleString():'<span style="color:#ccc">-</span>';
+    mTbl.innerHTML+='<tr><td class="rk">'+(i+1)+'</td><td class="n">'+m+'</td><td>'+tag+'</td><td class="n">'+qDisp+'</td><td>'+shr+'</td><td>'+aDisp+'</td><td class="asp">'+aspDisp+'</td><td><span class="bp" style="width:'+bw+'px;background:'+P[i%14]+'"></span> '+(D.model_q[i]>0?D.model_q_share[i]+'%':'<span style="color:#ccc">-</span>')+'</td></tr>';
+  });
+
+  // heatmap
+  var hmT=document.getElementById('t_hm_si');
+  var allV=[];
+  D.models.forEach(function(m){(D.model_monthly_heatmap[m]||[]).forEach(function(v){if(v>0)allV.push(v);});});
+  var mxV=allV.length?Math.max.apply(null,allV):1;
+  var h='<thead><tr><th>모델/型号</th>'+ML.map(function(m){return'<th>'+m+'</th>';}).join('')+'<th>합계</th></tr></thead><tbody>';
+  D.models.forEach(function(m){
+    var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
+    var tot=row.reduce(function(a,b){return a+b;},0);
+    var cells=row.map(function(v){
+      if(!v||v<=0)return'<td style="background:#f9fafb;color:#ddd">'+(v<0?v:'')+'</td>';
+      var t=Math.min(1,v/mxV);
+      var r=Math.round(100+(1-t)*155),g=Math.round(0+(1-t)*120),b=Math.round(210+(1-t)*210);
+      var tc=t>0.55?'#fff':'#1a1a1a',fw=t>0.3?'600':'400';
+      return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
+    }).join('');
+    h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
+  });
+  h+='</tbody>';hmT.innerHTML=h;
+
+  // quarter chart
+  allCharts.si.push(mkBar('c_q_si',D.quarters,[
+    {label:'출하량 Q(대)',data:D.quarter_q,backgroundColor:['rgba(37,99,235,0.78)','rgba(22,163,74,0.78)'],yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#d97706',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:7,pointBackgroundColor:'#d97706'}
+  ],{y2:{}}));
+
+  // quarter table
+  var qT=document.getElementById('t_q_si');
+  D.quarters.forEach(function(q,i){
+    qT.innerHTML+='<tr><td class="n">'+q+'</td><td class="n">'+D.quarter_q[i].toLocaleString()+'</td><td>'+fmt(D.quarter_a[i])+'</td><td class="asp">'+D.quarter_asp[i].toLocaleString()+'</td></tr>';
+  });
+}
+
+function modelsTop4(D){
+  var arr=D.models.map(function(m,i){return{m:m,q:D.model_q[i]};});
+  arr.sort(function(a,b){return b.q-a.q;});
+  return arr.slice(0,4).map(function(x){return x.m;});
+}
+</script>
+</body>
+</html>
