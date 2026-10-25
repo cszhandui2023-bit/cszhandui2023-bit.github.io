@@ -7,7 +7,10 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Styler Sellout / Sellin 销售分析报告 / Sales Analysis Report 2025-2026</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- Chart.js 自托管（根治：不再硬依赖境外 CDN，避免国内/防火墙环境加载失败导致全页空白）。
+     主用本地 ./chart.umd.min.js；若本地缺失则自动回退到 CDN，保证双保险。 -->
+<script src="./chart.umd.min.js"></script>
+<script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
 <style>
   :root{
     --heritage:#A50034;        /* LG Heritage Red */
@@ -390,6 +393,9 @@ function fmt(k){return parseInt(k).toLocaleString();}
 
 function mkBar(id,labels,datasets,extra){
   extra=extra||{};
+  // 容错：图表库缺失时跳过绘制并返回 null，绝不抛出错误，
+  // 以免中断后续表格填充逻辑（这是此前整页空白的根因）。
+  if(typeof Chart==='undefined'){console.warn('Chart.js 未加载，跳过图表:',id);return null;}
   var plugins=[];
   if(extra.datalabels){
     plugins.push({
@@ -432,6 +438,7 @@ function mkBar(id,labels,datasets,extra){
 }
 
 function mkLine(id,labels,datasets){
+  if(typeof Chart==='undefined'){console.warn('Chart.js 未加载，跳过图表:',id);return null;}
   return new Chart(document.getElementById(id),{
     type:'line',
     data:{labels,datasets},
@@ -701,6 +708,14 @@ function modelsTop4(D){
   var arr=D.models.map(function(m,i){return{m:m,q:D.model_q[i]};});
   arr.sort(function(a,b){return b.q-a.q;});
   return arr.slice(0,4).map(function(x){return x.m;});
+}
+
+// 兜底提示：若图表库最终仍不可用，顶部给出明确说明，不再静默空白（表格数据始终保持完整）。
+if(typeof Chart==='undefined'){
+  var nb=document.createElement('div');
+  nb.style.cssText='margin:14px 0;padding:12px 16px;border:1px solid #f3d4dc;background:#fdf2f4;color:#A50034;border-radius:10px;font-size:13px;font-weight:600';
+  nb.textContent='⚠ Chart.js 未能加载，图表暂时不可见，但所有表格数据已正常显示。请确认 chart.umd.min.js 已与页面一同部署。';
+  var pg=document.querySelector('.page'); if(pg) pg.insertBefore(nb,pg.firstChild);
 }
 </script>
 </body>
