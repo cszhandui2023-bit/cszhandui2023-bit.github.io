@@ -12,142 +12,164 @@
 <script src="./chart.umd.min.js"></script>
 <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
 <style>
-  :root{
-    --heritage:#A50034;        /* LG Heritage Red */
-    --heritage-soft:#fdf2f4;
-    --heritage-border:#f3d4dc;
-    --ink:#1a1a1a;
-    --dark-grey:#595959;
-    --mid-grey:#8a8a8a;
-    --border:#e7e3db;
-    --border-soft:#eeece7;
-    --cream:#f3f1ec;
-    --cream-deep:#e8e3d7;
-    --page-bg:#f6f5f2;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'LG Smart_H Regular','Pretendard','Noto Sans KR','Noto Sans SC','PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:var(--page-bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  .page{max-width:1360px;margin:0 auto;padding:36px 36px 80px}
+:root{
+  --bg:#f5f6fa;
+  --surface:#ffffff;
+  --ink:#1b1c26;
+  --slate:#6b7280;
+  --muted:#aab0bd;
+  --line:#eceef4;
+  --line-soft:#f5f7fb;
+  --primary:#6366f1;
+  --primary-soft:#f1f0ff;
+  --primary-line:#dcdaff;
+  --emerald:#10b981;
+  --mint:#34d399;
+  --amber:#fbbf24;
+  --coral:#fb7185;
+  --sky:#38bdf8;
+  --violet:#a855f7;
+  --rose:#ec4899;
+  --grad:linear-gradient(135deg,#6366f1 0%,#a855f7 52%,#ec4899 100%);
+  --grad-line:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);
+  --grad-soft:linear-gradient(135deg,#f4f3ff 0%,#fdf2fb 100%);
+  --shadow:0 2px 5px rgba(30,27,75,.05), 0 22px 48px -30px rgba(99,102,241,.5);
+  --shadow-sm:0 1px 3px rgba(30,27,75,.06), 0 10px 26px -18px rgba(99,102,241,.42);
+  --radius:20px;
+  --radius-sm:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard','Noto Sans KR','Noto Sans SC','PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:#f5f6fa;background-image:radial-gradient(1100px 520px at 50% -240px,#eceaff 0%,#f5f6fa 58%);background-attachment:fixed;color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 
-  /* ===== Header (LG bracket + eyebrow style) ===== */
-  .report-header{position:relative;padding:24px 0 0 18px;margin-bottom:24px}
-  .lge-internal{text-align:center;font-size:9px;color:var(--mid-grey);letter-spacing:.3px;margin-bottom:8px}
-  .lbracket{position:absolute;top:18px;left:0}
-  .lbracket .v{position:absolute;left:0;top:0;width:7px;height:54px;background:var(--heritage)}
-  .lbracket .h{position:absolute;left:0;top:0;width:34px;height:7px;background:var(--heritage)}
-  .report-header .eyebrow{font-size:11px;font-weight:700;color:var(--dark-grey);letter-spacing:.6px;margin-bottom:4px}
-  .report-header .htitle{font-size:30px;font-weight:800;color:var(--ink);letter-spacing:-.5px;line-height:1.12}
-  .report-header .hsub-en{font-size:16px;font-weight:600;color:var(--mid-grey);margin-top:5px;letter-spacing:.3px}
-  .report-header .hsub-kr{font-size:14px;font-weight:600;color:var(--heritage);margin-top:2px}
-  .report-header .sep{height:2px;background:var(--ink);margin:13px 0 12px}
-  .report-header .hbadges{display:flex;gap:8px;flex-wrap:wrap}
-  .badge-red{display:inline-block;font-size:11px;font-weight:700;color:var(--heritage);background:var(--heritage-soft);border:1px solid var(--heritage-border);border-radius:5px;padding:4px 12px}
-  .badge-grey{display:inline-block;font-size:11px;font-weight:700;color:var(--dark-grey);background:var(--cream);border:1px solid var(--cream-deep);border-radius:5px;padding:4px 12px}
-  .update-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--heritage);background:#fff;border:1.5px solid var(--heritage);border-radius:20px;padding:7px 15px;letter-spacing:.2px;box-shadow:0 1px 2px rgba(165,0,52,0.08)}
-  .update-badge::before{content:'';width:7px;height:7px;background:var(--heritage);border-radius:50%}
+/* ===== Topbar (sticky) ===== */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);box-shadow:0 2px 0 rgba(30,27,75,.03)}
+.topbar::before{content:'';display:block;height:3px;background:var(--grad-line)}
+.topbar-inner{max-width:1340px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{min-width:44px;height:44px;padding:0 18px;border-radius:999px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px -8px rgba(168,85,247,.7);letter-spacing:.5px}
+.brand-text .bt-title{font-size:19px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.2}
+.brand-text .bt-sub{font-size:12px;color:var(--muted);margin-top:2px;letter-spacing:.2px}
+.conf-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.6px;color:#8b5cf6;border:1px solid #e9d5ff;border-radius:999px;padding:2px 9px;margin-top:6px;text-transform:uppercase;background:#faf5ff}
+.topbar-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.date-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px;box-shadow:var(--shadow-sm)}
+.tab-bar{display:inline-flex;background:#eef0f7;border-radius:999px;padding:5px;gap:4px}
+.tab-bar .tb{border:0;background:transparent;color:var(--slate);font-size:13.5px;font-weight:700;padding:9px 26px;border-radius:999px;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.tab-bar .tb:hover{color:var(--primary)}
+.tab-bar .tb.active{background:var(--surface);color:var(--primary);box-shadow:0 4px 12px -4px rgba(99,102,241,.5)}
 
-  /* ===== Cards ===== */
-  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px 28px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-  h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px;letter-spacing:-.2px}
-  .sub{font-size:12px;color:var(--mid-grey);margin-bottom:16px}
-  .sub em{font-style:normal;color:var(--heritage)}
+/* ===== Layout ===== */
+.page{max-width:1340px;margin:0 auto;padding:34px 32px 60px}
 
-  /* ===== Section labels ===== */
-  .sec-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark-grey);margin:38px 0 14px;padding-left:13px;position:relative}
-  .sec-label::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:15px;background:var(--heritage);border-radius:2px}
+/* ===== Info card ===== */
+.info-card{background:linear-gradient(135deg,#ffffff,#faf9ff);border:1px solid var(--line);border-radius:var(--radius);padding:18px 24px;margin-bottom:24px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--grad)}
+.info-card p{font-size:13px;color:var(--slate);line-height:1.95}
 
-  /* ===== KPI ===== */
-  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
-  .kpi{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,0.04);position:relative;overflow:hidden}
-  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--heritage)}
-  .kpi .kl{font-size:11px;color:var(--mid-grey);letter-spacing:.3px;margin-bottom:9px;font-weight:600}
-  .kpi .kv{font-size:30px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:5px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
-  .kpi .ks{font-size:11px;color:var(--mid-grey)}
+/* ===== Section label — 韩式渐变药丸 ===== */
+.sec-label{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#fff;background:var(--grad);padding:8px 18px 8px 15px;border-radius:999px;box-shadow:0 10px 22px -12px rgba(168,85,247,.75);margin:44px 0 18px}
 
-  /* ===== Insights ===== */
-  .ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
-  .ins{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-  .ins .it{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:-.2px}
-  .ins .ib{font-size:12px;color:#555;line-height:1.8}
-  .ins .ib b{color:var(--ink);font-weight:700}
+/* ===== Card ===== */
+.card{background:linear-gradient(160deg,#ffffff 0%,#fbfcff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px 22px;margin-bottom:18px;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(30,27,75,.06),0 26px 54px -30px rgba(99,102,241,.55)}
+h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px;letter-spacing:-.2px}
+.sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+.sub em{font-style:normal;color:var(--primary)}
 
-  /* ===== Tables ===== */
-  .tw{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-  thead th{background:var(--dark-grey);color:#fff;font-size:11px;font-weight:700;letter-spacing:.4px;padding:10px 13px;text-align:left;border-bottom:2px solid var(--dark-grey);white-space:nowrap}
-  tbody tr{border-bottom:1px solid var(--border-soft);transition:background .1s}
-  tbody tr:hover{background:var(--cream)}
-  tbody td{padding:9px 13px;color:#333;white-space:nowrap}
-  td.n{font-weight:700;color:var(--ink)}
-  td.rk{color:var(--mid-grey);font-size:12px}
-  td.asp{color:#b45309;font-weight:700}
-  td.up{color:#16a34a;font-weight:600}
-  td.dn{color:#dc2626;font-weight:600}
+/* ===== KPI ===== */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.kpi{background:linear-gradient(160deg,#ffffff 0%,#fafbff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(30,27,75,.06),0 26px 54px -30px rgba(99,102,241,.55)}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--grad-line)}
+.kpi .kl{display:inline-block;font-size:11px;color:var(--primary);background:var(--primary-soft);letter-spacing:.3px;margin-bottom:12px;font-weight:700;padding:4px 11px;border-radius:999px}
+.kpi .kv{font-size:32px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:7px;letter-spacing:-.8px;font-variant-numeric:tabular-nums}
+.kpi .ks{font-size:11.5px;color:var(--slate)}
 
-  /* ===== Heatmap ===== */
-  .hm{border-collapse:collapse;font-size:11px;width:100%}
-  .hm th{font-size:10px;font-weight:700;color:var(--mid-grey);padding:7px 9px;text-align:center;white-space:nowrap;background:var(--cream);border-bottom:1px solid var(--border)}
-  .hm .rl{text-align:left;color:var(--ink);font-weight:700;background:#fff;padding:6px 11px;white-space:nowrap;font-size:12px;border-right:1px solid var(--border-soft)}
-  .hm td{padding:5px 8px;text-align:center;border:1px solid #fff;font-size:11px}
-  .hm-tot{background:var(--cream)!important;color:#b45309!important;font-weight:700}
-  /* sticky first column (모델/型号) in heatmap */
-  .hm thead th:first-child,.hm tbody td:first-child{position:sticky;left:0;z-index:3}
-  .hm thead th:first-child{box-shadow:2px 0 4px rgba(0,0,0,.06)}
-  .hm tbody td:first-child{box-shadow:2px 0 4px rgba(0,0,0,.06)}
+/* ===== Insights ===== */
+.ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.ins{background:linear-gradient(160deg,#ffffff 0%,#fbfcff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);border-top:3px solid var(--primary);transition:transform .18s,box-shadow .18s}
+.ins:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.ins .it{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-.2px}
+.ins .ib{font-size:12.5px;color:var(--slate);line-height:1.85}
+.ins .ib b{color:var(--ink);font-weight:700}
 
-  /* ===== Bars / badges ===== */
-  .bp{height:6px;border-radius:3px;display:inline-block;vertical-align:middle}
-  .bd{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700}
-  .b-rx{background:var(--heritage-soft);color:var(--heritage)}
-  .b-st{background:#f0fdf4;color:#16a34a}
+/* ===== Tables ===== */
+.tw{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+thead th{background:#27264d;color:#fff;font-size:11px;font-weight:700;letter-spacing:.4px;padding:13px 14px;text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--line-soft);transition:background .12s}
+tbody tr:hover{background:#f8f9ff}
+tbody td{padding:11px 14px;color:#3b4254;white-space:nowrap}
+td.n{font-weight:700;color:var(--ink)}
+td.rk{color:var(--muted);font-size:12px}
+td.asp{color:#b45309;font-weight:700}
+td.up{color:var(--mint);font-weight:600}
+td.dn{color:#ef4444;font-weight:600}
 
-  /* ===== Tabs ===== */
-  .tab-bar{display:flex;gap:10px;justify-content:center;margin-bottom:34px}
-  .tb{flex:0 0 auto;padding:13px 42px;border-radius:10px;border:1px solid var(--border);font-size:16px;font-weight:700;cursor:pointer;transition:all .18s;background:#fff;color:var(--dark-grey);letter-spacing:.5px}
-  .tb:hover{color:var(--heritage);background:var(--heritage-soft);border-color:var(--heritage-border)}
-  #btn-si{background:var(--cream);border-color:var(--cream-deep);color:var(--heritage)}
-  #btn-si:hover{background:var(--heritage-soft);border-color:var(--heritage-border)}
-  #btn-si.active{background:var(--heritage);color:#fff;border-color:var(--heritage);box-shadow:0 5px 16px rgba(165,0,52,0.25)}
-  .tb.active{background:var(--heritage);color:#fff;border-color:var(--heritage);box-shadow:0 5px 16px rgba(165,0,52,0.25)}
-  .tb .ico{font-size:19px;display:block;margin-bottom:4px}
-  /* header actions (tabs + update badge) top-right */
-  .header-actions{position:absolute;bottom:70px;right:0;top:auto;display:flex;flex-direction:column;align-items:center;gap:16px;z-index:10}
-  .report-header .tab-bar{position:static;margin-bottom:0;gap:8px;z-index:10}
-  .report-header .tab-bar .tb{padding:7px 16px;font-size:12px;border-radius:8px;box-shadow:none;letter-spacing:.3px}
-  .report-header .tab-bar .tb .ico{font-size:13px;margin:0 4px 0 0;display:inline-block}
-  .report-header .tab-bar .tb.active{box-shadow:0 2px 8px rgba(165,0,52,0.18)}
-  .tab-content{display:none}
-  .tab-content.active{display:block}
-  @media(max-width:768px){.page{padding:24px 16px}.report-header{padding-top:24px}.header-actions{position:static;align-items:center;margin-bottom:14px}.report-header .tab-bar{justify-content:center}.update-badge{font-size:11px;padding:5px 11px}.report-header .tab-bar .tb{flex:0 0 auto;padding:9px 16px;font-size:12px}.kpi-row,.ins-grid{grid-template-columns:1fr}.tb{flex:1;padding:12px 20px;font-size:14px}}
+/* ===== Heatmap — 韩式暖珊瑚圆角 ===== */
+.hm{border-collapse:separate;border-spacing:3px;font-size:11px;width:100%}
+.hm th{font-size:10px;font-weight:700;color:var(--slate);padding:9px 9px;text-align:center;white-space:nowrap;background:#f3f1ff;border-radius:9px}
+.hm .rl{text-align:left;color:var(--ink);font-weight:700;background:var(--surface);padding:6px 12px;white-space:nowrap;font-size:12px;border-radius:9px;box-shadow:var(--shadow-sm)}
+.hm td{padding:5px 8px;text-align:center;border-radius:9px;font-size:11px}
+.hm-tot{background:#f3f1ff!important;color:#9d174d!important;font-weight:700}
+.hm thead th:first-child,.hm tbody td:first-child{position:sticky;left:0;z-index:3}
+.hm thead th:first-child{box-shadow:3px 0 7px rgba(30,27,75,.10)}
+.hm tbody td:first-child{box-shadow:3px 0 7px rgba(30,27,75,.10)}
+
+/* ===== Bars / badges ===== */
+.bp{height:8px;border-radius:999px;display:inline-block;vertical-align:middle}
+.bd{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:700}
+.b-rx{background:var(--primary-soft);color:var(--primary)}
+.b-st{background:#ecfdf5;color:var(--emerald)}
+
+/* ===== Tabs content ===== */
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ===== Footer ===== */
+.foot{max-width:1340px;margin:0 auto;padding:24px 32px 50px;color:var(--muted);font-size:12px;text-align:center;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.foot .f-sep{opacity:.5}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .ins-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .page{padding:20px 16px}
+  .topbar-inner{padding:12px 16px}
+  .kpi-row{grid-template-columns:1fr}
+  .brand-text .bt-sub{display:none}
+  .tab-bar .tb{padding:8px 16px;font-size:12.5px}
+}
 </style>
 </head>
 <body>
-<div class="page">
-
-<!-- HEADER BANNER -->
-<div class="report-header">
-  <div class="header-actions">
-    <div class="tab-bar">
-      <button class="tb active" id="btn-so" onclick="switchTab('so')"><span class="ico">📤</span>Sell Out</button>
-      <button class="tb" id="btn-si" onclick="switchTab('si')"><span class="ico">📥</span>Sell In</button>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">Styler</div>
+      <div class="brand-text">
+        <div class="bt-title">Styler 销售分析报告</div>
+        <div class="bt-sub">Styler Sales Analysis Report · Styler 매출 분석 보고서</div>
+        <div class="conf-tag">LGE Internal · Confidential</div>
+      </div>
     </div>
-    <div class="update-badge">업데이트: 2026-10-08</div>
+    <div class="topbar-right">
+      <span class="date-pill">📅 2026.10.25</span>
+      <div class="tab-bar">
+        <button class="tb active" id="btn-so" onclick="switchTab('so')">Sell Out</button>
+        <button class="tb" id="btn-si" onclick="switchTab('si')">Sell In</button>
+      </div>
+    </div>
   </div>
-  <div class="lge-internal">LGE Internal Use Only</div>
-  <div class="lbracket"><span class="v"></span><span class="h"></span></div>
-  <div class="htitle">Styler 销售分析报告</div>
-  <div class="hsub-en">Styler Sales Analysis Report</div>
-  <div class="hsub-kr">Styler 매출 분석 보고서</div>
-  <div class="sep"></div>
-  <div class="hbadges">
-    <span class="badge-grey">Created by BI Team</span>
-  </div>
-</div>
+</header>
+<div class="page">
 
 <!-- ==================== SELL OUT CONTENT ==================== -->
 <div class="tab-content active" id="tab-so">
 
-<div class="card" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
+<div class="info-card">
   <div>
     <p style="font-size:13px;color:#888;line-height:1.8">
       데이터 범위：2024년 1월 — 2026년 9월 (共33个月)<br>
@@ -168,27 +190,27 @@
 
 <div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
 <div class="ins-grid">
-  <div class="ins" style="border-top:4px solid #2563eb">
+  <div class="ins" style="border-top:3px solid #6366f1">
     <div class="it">🏆 최다 판매 모델 / 最畅销型号 — SC5GMR80H</div>
     <div class="ib">누적 <b>5,247대(24.0%)</b>，ASP <b>17,059 RMB/대</b>，수량+단가 모두 최상위，핵심 제품은 계속 집중 지원 필요.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #16a34a">
+  <div class="ins" style="border-top:3px solid #10b981">
     <div class="it">💡 RX Styler 시리즈 매출 기여도 더 높음</div>
     <div class="ib">RX 시리즈 수량 7,771대(35.6%)，매출 비중 <b>46.8%</b>，RX 시리즈 ASP <b>15,921 RMB/대</b>，Styler ASP <b>9,998 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #16a34a">
+  <div class="ins" style="border-top:3px solid #10b981">
     <div class="it">📈 최대 판매 분기 / 销量最高季度 — 2025Q2</div>
     <div class="ib">2025Q2 판매량 <b>2,495대</b>，금액 <b>32,780 KRMB</b>로 전체 기간 중 최고.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #d97706">
+  <div class="ins" style="border-top:3px solid #fb7185">
     <div class="it">⚠️ 2025Q3 뚜렷한 비수기 / 2025Q3 为明显淡季</div>
     <div class="ib">2025Q3 판매량 <b>1,422대</b>，2025Q2 대비 <b>43%↓</b>，비수기 특별 판촉 및 채널 인센티브 계획 수립 필요.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #2563eb">
+  <div class="ins" style="border-top:3px solid #6366f1">
     <div class="it">🥇 주요 거래처 집중도가 높음 / 大客户高度集中</div>
     <div class="ib">天津鸿雁百大商贸 1위，新七天电子，盛世恒隆 등 Top 3 합산 <b>38.4%</b> 차지，대형 거래처 관리 중요.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #6b7280">
+  <div class="ins" style="border-top:3px solid #64748b">
     <div class="it">📊 S3MF + S3IF 물량 견인 / S3系列走量主力</div>
     <div class="ib">두 중가 모델 합계 <b>8,516대(39.0%)</b>，중가 라인 물량 확대를 담당하며 유통망 확장에 적합.</div>
   </div>
@@ -281,7 +303,7 @@
 <!-- ==================== SELL IN CONTENT ==================== -->
 <div class="tab-content" id="tab-si">
 
-<div class="card" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
+<div class="info-card">
   <div>
     <p style="font-size:13px;color:#888;line-height:1.8">
       데이터 범위：2026년 1월 — 2026년 9월 (共9个月)<br>
@@ -296,27 +318,27 @@
 
 <div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
 <div class="ins-grid">
-  <div class="ins" style="border-top:4px solid #2563eb">
+  <div class="ins" style="border-top:3px solid #6366f1">
     <div class="it">🏆 최다 출하 모델 / 最畅销型号 — SC5GMR80H</div>
     <div class="ib">누적 <b>2,713대(38.0%)</b>，ASP <b>16,336 RMB/대</b>，RX 고가 라인이 Sell In 주도.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #16a34a">
+  <div class="ins" style="border-top:3px solid #10b981">
     <div class="it">💡 RX Styler 시리즈가 출하량의 과반 차지</div>
     <div class="ib">RX 시리즈 수량 <b>4,135대(57.9%)</b>，매출 <b>60,746 KRMB(69.7%)</b>，RX Styler ASP <b>14,691 RMB/대</b> vs Styler ASP <b>8,813 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #16a34a">
+  <div class="ins" style="border-top:3px solid #10b981">
     <div class="it">📉 2월 출하 급감 (설 연휴 영향)</div>
     <div class="ib">2월 출하량 <b>554대</b>，1월 1,466대 대비 <b>62%↓</b>，3월 회복 1,175대. 설 연휴 계절성 뚜렷.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #d97706">
+  <div class="ins" style="border-top:3px solid #fb7185">
     <div class="it">📦 7월 출하 / 7月出货</div>
     <div class="ib">7월 출하량 <b>855대</b>，출하금액 <b>11,513 KRMB</b>，ASP <b>13,466 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #2563eb">
+  <div class="ins" style="border-top:3px solid #6366f1">
     <div class="it">📊 S3MF + S3IF 중가 라인</div>
     <div class="ib">S3MF <b>1,368대(19.2%)</b>，S3IF <b>926대(13.0%)</b>，중가 라인이 Styler 출하 견인.</div>
   </div>
-  <div class="ins" style="border-top:4px solid #6b7280">
+  <div class="ins" style="border-top:3px solid #64748b">
     <div class="it">🔍 Sell In vs Sell Out 비교 (2026년 1–7월)</div>
     <div class="ib">Sell In(7,137대) vs Sell Out(6,076대)，Sell In ASP(12,218 RMB) vs Sell Out ASP(12,220 RMB). 채널 재고 관리 지속 필요.</div>
   </div>
@@ -380,16 +402,25 @@
 </div><!-- end tab-si -->
 
 </div><!-- end page -->
+<footer class="foot">
+  <span>BI Team · LG Electronics China</span>
+  <span class="f-sep">|</span>
+  <span>Styler Sellout / Sellin Dashboard</span>
+  <span class="f-sep">|</span>
+  <span>Data range 2024.01 – 2026.09</span>
+</footer>
 
 <script>
 // ======================== SHARED TOOLS ========================
-const P = ['#2563eb','#16a34a','#d97706','#dc2625','#7c3aed','#0891b2','#db2777','#65a30d','#ea580c','#9333ea','#0284c7','#ca8a04','#15803d','#b91c1c'];
-const GRID='#f0f0f0',TICK='#999';
+const P = ['#6366f1','#38bdf8','#34d399','#fb7185','#f472b6','#a78bfa','#818cf8','#2dd4bf','#fdba74','#c084fc','#a3e635','#fcd34d','#67e8f9','#f9a8d4'];
+const GRID='#eef2f7',TICK='#94a3b8';
 Chart.defaults.color=TICK;
 Chart.defaults.borderColor=GRID;
-Chart.defaults.font.family="'Helvetica Neue','PingFang SC',Arial,sans-serif";
+Chart.defaults.font.family="'Pretendard','Noto Sans KR','Helvetica Neue','PingFang SC',Arial,sans-serif";
 
 function fmt(k){return parseInt(k).toLocaleString();}
+// Y 轴紧凑刻度：1000 以上显示为 k（手机上不再拥挤）
+function kcB(v){return (typeof v==='number'&&Math.abs(v)>=1000)?(Math.round(v/100)/10)+'k':v;}
 
 function mkBar(id,labels,datasets,extra){
   extra=extra||{};
@@ -400,6 +431,7 @@ function mkBar(id,labels,datasets,extra){
   if(extra.datalabels){
     plugins.push({
       afterDatasetsDraw:function(chart){
+        if(chart.data.labels.length>16)return; // 柱子过多时不画数字，避免手机上糊成一团
         var ctx=chart.ctx;
         chart.data.datasets.forEach(function(ds,i){
           var meta=chart.getDatasetMeta(i);
@@ -421,31 +453,47 @@ function mkBar(id,labels,datasets,extra){
       }
     });
   }
+  var idxY=!!(extra.extra&&extra.extra.indexAxis==='y'); // 横向条形图：名称轴在 y
+  var xTicks={color:TICK,font:{size:10},autoSkip:true,maxRotation:0,autoSkipPadding:8};
+  var yTicks={color:TICK};
+  if(idxY){
+    xTicks.callback=kcB;   // 横向图：x 是数值轴 → 紧凑刻度
+    yTicks.autoSkip=false; // 每个条目都要显示名称
+  } else {
+    yTicks.callback=kcB;   // 竖向图：y 是数值轴 → 紧凑刻度；类目轴(x)用默认格式化
+  }
   return new Chart(document.getElementById(id),{
     type:'bar',
     data:{labels,datasets},
-    options:{
+    options:Object.assign({
       responsive:true,
-      plugins:{legend:extra.noLeg?{display:false}:{labels:{color:'#555',font:{size:11}}}},
+      // 手机端自动加高；横向排行图需要更高以容纳每条名称
+      aspectRatio:idxY?(window.innerWidth<640?0.85:1.7):(window.innerWidth<640?1.5:2.3),
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:extra.noLeg?{display:false}:{labels:{color:'#555',font:{size:11},usePointStyle:true,boxWidth:8,boxHeight:8,padding:14}}},
       scales:{
-        x:{grid:{color:GRID},ticks:{color:TICK,font:{size:10}},stacked:!!extra.stk},
-        y:{grid:{color:GRID},ticks:{color:TICK},stacked:!!extra.stk},
-        ...(extra.y2?{y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:TICK}}}:{})
+        x:{grid:{color:GRID},ticks:xTicks,stacked:!!extra.stk},
+        y:{grid:{color:GRID},ticks:yTicks,stacked:!!extra.stk},
+        ...(extra.y2?{y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:TICK,callback:kcB}}}:{})
       }
-    },
+    }, extra.extra||{}) // 应用 extra.extra（indexAxis 等），修复排行图一直是竖向的历史 bug
+    ,
     plugins:plugins
   });
 }
 
-function mkLine(id,labels,datasets){
+function mkLine(id,labels,datasets,extra){
+  extra=extra||{};
   if(typeof Chart==='undefined'){console.warn('Chart.js 未加载，跳过图表:',id);return null;}
   return new Chart(document.getElementById(id),{
     type:'line',
     data:{labels,datasets},
     options:{
       responsive:true,
-      plugins:{legend:{labels:{color:'#555',font:{size:11}}}},
-      scales:{x:{grid:{color:GRID},ticks:{color:TICK,font:{size:10}}},y:{grid:{color:GRID},ticks:{color:TICK}}}
+      aspectRatio:window.innerWidth<640?1.6:2.6,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#555',font:{size:11},usePointStyle:true,boxWidth:8,boxHeight:8,padding:14}}},
+      scales:{x:{grid:{color:GRID},ticks:{color:TICK,font:{size:10},autoSkip:true,maxRotation:0,autoSkipPadding:8}},y:{grid:{color:GRID},ticks:{color:TICK,callback:kcB},beginAtZero:true,stacked:!!extra.stk}}
     }
   });
 }
@@ -484,13 +532,13 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
 
   // monthly bar+line
   allCharts.so.push(mkBar('c_m_so',ML,[
-    {label:'판매량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(37,99,235,0.75)',yAxisID:'y',borderRadius:5},
-    {label:'매출액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.06)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:5,pointBackgroundColor:'#d97706'}
+    {label:'판매량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(99,102,241,0.78)',yAxisID:'y',borderRadius:5},
+    {label:'매출액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#fb7185',backgroundColor:'rgba(251,113,133,0.10)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
   ],{y2:{},datalabels:true}));
 
   // monthly asp line
   allCharts.so.push(mkLine('c_am_so',ML,[
-    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.07)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'#16a34a'}
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#10b981'}
   ]));
 
   // monthly table — 同期对比 (YoY) · 24년 skip (underlying arrays kept for calc)
@@ -527,9 +575,10 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
   allCharts.so.push(mkBar('c_ma_so',aspSrt.map(function(x){return x.m;}),[{label:'ASP(RMB/대)',data:aspSrt.map(function(x){return x.a;}),backgroundColor:P,borderRadius:5}],{noLeg:true,extra:{indexAxis:'y'},datalabels:true}));
 
   // model trend
+  // model trend — 堆叠面积图：手机上远比多折线清晰，且能同时看出结构占比
   allCharts.so.push(mkLine('c_mt_so',ML,D.models.slice(0,4).map(function(m,i){
-    return{label:m,data:D.model_monthly_heatmap[m]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2};
-  })));
+    return{label:m,data:D.model_monthly_heatmap[m]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:P[i]+'30',fill:true,tension:0.35,pointRadius:0,pointHoverRadius:4,borderWidth:2.2};
+  }),{stk:1}));
 
   // model table
   var tmap={SC5GMR4G:'RX Styler',SC5GMR80H:'RX Styler',SC5MSR40:'RX Styler',SC5MBR80H:'RX Styler'};
@@ -546,7 +595,7 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
 
   // customer trend
   allCharts.so.push(mkLine('c_ct_so',ML,D.top10_customers.map(function(c,i){
-    return{label:c,data:D.top10_monthly_q[c]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:'transparent',tension:0.3,pointRadius:2,borderWidth:1.8};
+    return{label:c,data:D.top10_monthly_q[c]||new Array(ML.length).fill(0),borderColor:P[i],backgroundColor:'transparent',tension:0.35,pointRadius:0,pointHoverRadius:4,borderWidth:2};
   })));
 
   // customer table
@@ -571,10 +620,10 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
     var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
     var tot=row.reduce(function(a,b){return a+b;},0);
     var cells=row.map(function(v){
-      if(!v||v<=0)return'<td style="background:#f9fafb;color:#ddd">'+(v<0?v:'')+'</td>';
+      if(!v||v<=0)return'<td style="background:#f8fafc;color:#e2e8f0">'+(v<0?v:'')+'</td>';
       var t=Math.min(1,v/mxV);
-      var r=Math.round(100+(1-t)*155),g=Math.round(0+(1-t)*120),b=Math.round(210+(1-t)*210);
-      var tc=t>0.55?'#fff':'#1a1a1a',fw=t>0.3?'600':'400';
+      var r=Math.round(255-4*t),g=Math.round(243-130*t),b=Math.round(248-115*t);
+      var tc=t>0.5?'#ffffff':'#9d174d',fw=t>0.3?'600':'400';
       return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
     }).join('');
     h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
@@ -583,8 +632,8 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
 
   // quarter chart
   allCharts.so.push(mkBar('c_q_so',D.quarters,[
-    {label:'판매량 Q(대)',data:D.quarter_q,backgroundColor:D.quarter_q.map(function(v,i){var cs=['rgba(37,99,235,0.78)','rgba(22,163,74,0.78)','rgba(217,119,6,0.78)','rgba(168,85,247,0.78)'];return cs[i%4];}),yAxisID:'y',borderRadius:7},
-    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#d97706',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:7,pointBackgroundColor:'#d97706'}
+    {label:'판매량 Q(대)',data:D.quarter_q,backgroundColor:D.quarter_q.map(function(v,i){var cs=['rgba(99,102,241,0.78)','rgba(16,185,129,0.78)','rgba(251,113,133,0.82)','rgba(236,72,153,0.78)'];return cs[i%4];}),yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#fb7185',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
   ],{y2:{}}));
 
   // quarter table
@@ -628,13 +677,13 @@ function renderSI(){
 
   // monthly bar+line
   allCharts.si.push(mkBar('c_m_si',ML,[
-    {label:'출하량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(37,99,235,0.75)',yAxisID:'y',borderRadius:5},
-    {label:'출하금액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.06)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:5,pointBackgroundColor:'#d97706'}
+    {label:'출하량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(99,102,241,0.78)',yAxisID:'y',borderRadius:5},
+    {label:'출하금액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#fb7185',backgroundColor:'rgba(251,113,133,0.10)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
   ],{y2:{},datalabels:true}));
 
   // monthly asp line
   allCharts.si.push(mkLine('c_am_si',ML,[
-    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.07)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'#16a34a'}
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#10b981'}
   ]));
 
   // monthly table — 同期对比 (SI only 2026, no prior year)
@@ -653,8 +702,8 @@ function renderSI(){
   // model trend (top 4)
   var top4=modelsTop4(D);
   allCharts.si.push(mkLine('c_mt_si',ML,top4.map(function(m,i){
-    return{label:m,data:D.model_monthly_heatmap[m],borderColor:P[i],backgroundColor:'transparent',tension:0.4,pointRadius:3,borderWidth:2};
-  })));
+    return{label:m,data:D.model_monthly_heatmap[m],borderColor:P[i],backgroundColor:P[i]+'30',fill:true,tension:0.35,pointRadius:0,pointHoverRadius:4,borderWidth:2.2};
+  }),{stk:1}));
 
   // model table
   var tmap={SC5GMR4G:'RX Styler',SC5GMR80H:'RX Styler',SC5MSR40:'RX Styler',SC5MBR80H:'RX Styler'};
@@ -681,10 +730,10 @@ function renderSI(){
     var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
     var tot=row.reduce(function(a,b){return a+b;},0);
     var cells=row.map(function(v){
-      if(!v||v<=0)return'<td style="background:#f9fafb;color:#ddd">'+(v<0?v:'')+'</td>';
+      if(!v||v<=0)return'<td style="background:#f8fafc;color:#e2e8f0">'+(v<0?v:'')+'</td>';
       var t=Math.min(1,v/mxV);
-      var r=Math.round(100+(1-t)*155),g=Math.round(0+(1-t)*120),b=Math.round(210+(1-t)*210);
-      var tc=t>0.55?'#fff':'#1a1a1a',fw=t>0.3?'600':'400';
+      var r=Math.round(255-4*t),g=Math.round(243-130*t),b=Math.round(248-115*t);
+      var tc=t>0.5?'#ffffff':'#9d174d',fw=t>0.3?'600':'400';
       return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
     }).join('');
     h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
@@ -693,8 +742,8 @@ function renderSI(){
 
   // quarter chart
   allCharts.si.push(mkBar('c_q_si',D.quarters,[
-    {label:'출하량 Q(대)',data:D.quarter_q,backgroundColor:['rgba(37,99,235,0.78)','rgba(22,163,74,0.78)'],yAxisID:'y',borderRadius:7},
-    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#d97706',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:7,pointBackgroundColor:'#d97706'}
+    {label:'출하량 Q(대)',data:D.quarter_q,backgroundColor:['rgba(99,102,241,0.78)','rgba(16,185,129,0.78)'],yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#fb7185',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
   ],{y2:{}}));
 
   // quarter table
@@ -713,7 +762,7 @@ function modelsTop4(D){
 // 兜底提示：若图表库最终仍不可用，顶部给出明确说明，不再静默空白（表格数据始终保持完整）。
 if(typeof Chart==='undefined'){
   var nb=document.createElement('div');
-  nb.style.cssText='margin:14px 0;padding:12px 16px;border:1px solid #f3d4dc;background:#fdf2f4;color:#A50034;border-radius:10px;font-size:13px;font-weight:600';
+  nb.style.cssText='margin:14px 0;padding:12px 16px;border:1px solid #c7d2fe;background:#eef0ff;color:#6366f1;border-radius:10px;font-size:13px;font-weight:600';
   nb.textContent='⚠ Chart.js 未能加载，图表暂时不可见，但所有表格数据已正常显示。请确认 chart.umd.min.js 已与页面一同部署。';
   var pg=document.querySelector('.page'); if(pg) pg.insertBefore(nb,pg.firstChild);
 }
