@@ -13,73 +13,73 @@
 <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>');</script>
 <style>
 :root{
-  --bg:#f5f6fa;
+  --bg:#F3F1EC;
   --surface:#ffffff;
-  --ink:#1b1c26;
-  --slate:#6b7280;
-  --muted:#aab0bd;
-  --line:#eceef4;
-  --line-soft:#f5f7fb;
-  --primary:#6366f1;
-  --primary-soft:#f1f0ff;
-  --primary-line:#dcdaff;
-  --emerald:#10b981;
-  --mint:#34d399;
-  --amber:#fbbf24;
-  --coral:#fb7185;
-  --sky:#38bdf8;
-  --violet:#a855f7;
-  --rose:#ec4899;
-  --grad:linear-gradient(135deg,#6366f1 0%,#a855f7 52%,#ec4899 100%);
-  --grad-line:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);
-  --grad-soft:linear-gradient(135deg,#f4f3ff 0%,#fdf2fb 100%);
-  --shadow:0 2px 5px rgba(30,27,75,.05), 0 22px 48px -30px rgba(99,102,241,.5);
-  --shadow-sm:0 1px 3px rgba(30,27,75,.06), 0 10px 26px -18px rgba(99,102,241,.42);
-  --radius:20px;
-  --radius-sm:14px;
+  --ink:#212529;
+  --slate:#595959;
+  --muted:#919191;
+  --line:#E6E3DC;
+  --line-soft:#F0EDE6;
+  --primary:#A50034;
+  --primary-soft:#FCEEF1;
+  --primary-line:#F3D2DA;
+  --emerald:#1B5E20;
+  --mint:#2E7D32;
+  --amber:#FF8C00;
+  --coral:#C2185B;
+  --sky:#0066B3;
+  --violet:#6F42C1;
+  --rose:#9C5D7A;
+  --grad:linear-gradient(135deg,#A50034 0%,#7A0026 100%);
+  --grad-line:linear-gradient(90deg,#A50034,#C2185B,#E0A0B0);
+  --grad-soft:linear-gradient(135deg,#FBF8F3 0%,#F3EEE6 100%);
+  --shadow:0 1px 2px rgba(33,37,41,.04), 0 14px 34px -26px rgba(33,37,41,.22);
+  --shadow-sm:0 1px 2px rgba(33,37,41,.04), 0 8px 20px -16px rgba(33,37,41,.16);
+  --radius:16px;
+  --radius-sm:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Pretendard','Noto Sans KR','Noto Sans SC','PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:#f5f6fa;background-image:radial-gradient(1100px 520px at 50% -240px,#eceaff 0%,#f5f6fa 58%);background-attachment:fixed;color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:'LG Smart_H','Pretendard','Noto Sans KR','Noto Sans SC','PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:var(--bg);background-image:radial-gradient(1200px 560px at 50% -260px,#EDE7DC 0%,#F3F1EC 60%);background-attachment:fixed;color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 
 /* ===== Topbar (sticky) ===== */
 .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);box-shadow:0 2px 0 rgba(30,27,75,.03)}
 .topbar::before{content:'';display:block;height:3px;background:var(--grad-line)}
 .topbar-inner{max-width:1340px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:14px}
-.brand-mark{min-width:44px;height:44px;padding:0 18px;border-radius:999px;background:var(--grad);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px -8px rgba(168,85,247,.7);letter-spacing:.5px}
+.brand-mark{min-width:44px;height:44px;padding:0 18px;border-radius:12px;background:#A50034;color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px -8px rgba(165,0,52,.55);letter-spacing:.4px}
 .brand-text .bt-title{font-size:19px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.2}
 .brand-text .bt-sub{font-size:12px;color:var(--muted);margin-top:2px;letter-spacing:.2px}
-.conf-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.6px;color:#8b5cf6;border:1px solid #e9d5ff;border-radius:999px;padding:2px 9px;margin-top:6px;text-transform:uppercase;background:#faf5ff}
+.conf-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.6px;color:#5b6675;border:1px solid #e2e8f0;border-radius:999px;padding:2px 9px;margin-top:6px;text-transform:uppercase;background:#f1f5f9}
 .topbar-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .date-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px;box-shadow:var(--shadow-sm)}
-.tab-bar{display:inline-flex;background:#eef0f7;border-radius:999px;padding:5px;gap:4px}
+.tab-bar{display:inline-flex;background:#eef1f6;border-radius:999px;padding:5px;gap:4px}
 .tab-bar .tb{border:0;background:transparent;color:var(--slate);font-size:13.5px;font-weight:700;padding:9px 26px;border-radius:999px;cursor:pointer;transition:all .2s;letter-spacing:.3px}
 .tab-bar .tb:hover{color:var(--primary)}
-.tab-bar .tb.active{background:var(--surface);color:var(--primary);box-shadow:0 4px 12px -4px rgba(99,102,241,.5)}
+.tab-bar .tb.active{background:var(--surface);color:var(--primary);box-shadow:0 4px 12px -4px rgba(165,0,52,.30)}
 
 /* ===== Layout ===== */
 .page{max-width:1340px;margin:0 auto;padding:34px 32px 60px}
 
 /* ===== Info card ===== */
-.info-card{background:linear-gradient(135deg,#ffffff,#faf9ff);border:1px solid var(--line);border-radius:var(--radius);padding:18px 24px;margin-bottom:24px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;overflow:hidden}
-.info-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--grad)}
+.info-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 24px;margin-bottom:24px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--primary)}
 .info-card p{font-size:13px;color:var(--slate);line-height:1.95}
 
 /* ===== Section label — 韩式渐变药丸 ===== */
-.sec-label{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#fff;background:var(--grad);padding:8px 18px 8px 15px;border-radius:999px;box-shadow:0 10px 22px -12px rgba(168,85,247,.75);margin:44px 0 18px}
+.sec-label{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#fff;background:var(--primary);padding:7px 16px 7px 14px;border-radius:8px;box-shadow:0 6px 16px -10px rgba(165,0,52,.45);margin:44px 0 18px}
 
 /* ===== Card ===== */
-.card{background:linear-gradient(160deg,#ffffff 0%,#fbfcff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px 22px;margin-bottom:18px;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(30,27,75,.06),0 26px 54px -30px rgba(99,102,241,.55)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px 22px;margin-bottom:18px;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(15,23,42,.05),0 18px 40px -28px rgba(15,23,42,.30)}
 h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px;letter-spacing:-.2px}
 .sub{font-size:12px;color:var(--muted);margin-bottom:16px}
 .sub em{font-style:normal;color:var(--primary)}
 
 /* ===== KPI ===== */
 .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
-.kpi{background:linear-gradient(160deg,#ffffff 0%,#fafbff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s}
-.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(30,27,75,.06),0 26px 54px -30px rgba(99,102,241,.55)}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(15,23,42,.05),0 18px 40px -28px rgba(15,23,42,.30)}
 .kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--grad-line)}
 .kpi .kl{display:inline-block;font-size:11px;color:var(--primary);background:var(--primary-soft);letter-spacing:.3px;margin-bottom:12px;font-weight:700;padding:4px 11px;border-radius:999px}
 .kpi .kv{font-size:32px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:7px;letter-spacing:-.8px;font-variant-numeric:tabular-nums}
@@ -87,7 +87,7 @@ h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px;letter-spac
 
 /* ===== Insights ===== */
 .ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-.ins{background:linear-gradient(160deg,#ffffff 0%,#fbfcff 100%);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);border-top:3px solid var(--primary);transition:transform .18s,box-shadow .18s}
+.ins{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);border-top:3px solid var(--primary);transition:transform .18s,box-shadow .18s}
 .ins:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .ins .it{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-.2px}
 .ins .ib{font-size:12.5px;color:var(--slate);line-height:1.85}
@@ -96,25 +96,25 @@ h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px;letter-spac
 /* ===== Tables ===== */
 .tw{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm)}
 table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-thead th{background:#27264d;color:#fff;font-size:11px;font-weight:700;letter-spacing:.4px;padding:13px 14px;text-align:left;white-space:nowrap}
+thead th{background:#1A1A2E;color:#fff;font-size:11px;font-weight:700;letter-spacing:.4px;padding:13px 14px;text-align:left;white-space:nowrap}
 tbody tr{border-bottom:1px solid var(--line-soft);transition:background .12s}
-tbody tr:hover{background:#f8f9ff}
-tbody td{padding:11px 14px;color:#3b4254;white-space:nowrap}
+tbody tr:hover{background:#f5f8fd}
+tbody td{padding:11px 14px;color:#475569;white-space:nowrap}
 td.n{font-weight:700;color:var(--ink)}
 td.rk{color:var(--muted);font-size:12px}
-td.asp{color:#b45309;font-weight:700}
+td.asp{color:#b07a12;font-weight:700}
 td.up{color:var(--mint);font-weight:600}
 td.dn{color:#ef4444;font-weight:600}
 
 /* ===== Heatmap — 韩式暖珊瑚圆角 ===== */
 .hm{border-collapse:separate;border-spacing:3px;font-size:11px;width:100%}
-.hm th{font-size:10px;font-weight:700;color:var(--slate);padding:9px 9px;text-align:center;white-space:nowrap;background:#f3f1ff;border-radius:9px}
+.hm th{font-size:10px;font-weight:700;color:var(--slate);padding:9px 9px;text-align:center;white-space:nowrap;background:#F3EDE3;border-radius:9px}
 .hm .rl{text-align:left;color:var(--ink);font-weight:700;background:var(--surface);padding:6px 12px;white-space:nowrap;font-size:12px;border-radius:9px;box-shadow:var(--shadow-sm)}
 .hm td{padding:5px 8px;text-align:center;border-radius:9px;font-size:11px}
-.hm-tot{background:#f3f1ff!important;color:#9d174d!important;font-weight:700}
+.hm-tot{background:#FBEFF2!important;color:#A50034!important;font-weight:700}
 .hm thead th:first-child,.hm tbody td:first-child{position:sticky;left:0;z-index:3}
-.hm thead th:first-child{box-shadow:3px 0 7px rgba(30,27,75,.10)}
-.hm tbody td:first-child{box-shadow:3px 0 7px rgba(30,27,75,.10)}
+.hm thead th:first-child{box-shadow:3px 0 7px rgba(26,26,46,.10)}
+.hm tbody td:first-child{box-shadow:3px 0 7px rgba(26,26,46,.10)}
 
 /* ===== Bars / badges ===== */
 .bp{height:8px;border-radius:999px;display:inline-block;vertical-align:middle}
@@ -190,23 +190,23 @@ td.dn{color:#ef4444;font-weight:600}
 
 <div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
 <div class="ins-grid">
-  <div class="ins" style="border-top:3px solid #6366f1">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">🏆 최다 판매 모델 / 最畅销型号 — SC5GMR80H</div>
     <div class="ib">누적 <b>5,247대(24.0%)</b>，ASP <b>17,059 RMB/대</b>，수량+단가 모두 최상위，핵심 제품은 계속 집중 지원 필요.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #10b981">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">💡 RX Styler 시리즈 매출 기여도 더 높음</div>
     <div class="ib">RX 시리즈 수량 7,771대(35.6%)，매출 비중 <b>46.8%</b>，RX 시리즈 ASP <b>15,921 RMB/대</b>，Styler ASP <b>9,998 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #10b981">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">📈 최대 판매 분기 / 销量最高季度 — 2025Q2</div>
     <div class="ib">2025Q2 판매량 <b>2,495대</b>，금액 <b>32,780 KRMB</b>로 전체 기간 중 최고.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #fb7185">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">⚠️ 2025Q3 뚜렷한 비수기 / 2025Q3 为明显淡季</div>
     <div class="ib">2025Q3 판매량 <b>1,422대</b>，2025Q2 대비 <b>43%↓</b>，비수기 특별 판촉 및 채널 인센티브 계획 수립 필요.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #6366f1">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">🥇 주요 거래처 집중도가 높음 / 大客户高度集中</div>
     <div class="ib">天津鸿雁百大商贸 1위，新七天电子，盛世恒隆 등 Top 3 합산 <b>38.4%</b> 차지，대형 거래처 관리 중요.</div>
   </div>
@@ -318,23 +318,23 @@ td.dn{color:#ef4444;font-weight:600}
 
 <div class="sec-label">02 / 핵심 인사이트 / 核心洞察</div>
 <div class="ins-grid">
-  <div class="ins" style="border-top:3px solid #6366f1">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">🏆 최다 출하 모델 / 最畅销型号 — SC5GMR80H</div>
     <div class="ib">누적 <b>2,713대(38.0%)</b>，ASP <b>16,336 RMB/대</b>，RX 고가 라인이 Sell In 주도.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #10b981">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">💡 RX Styler 시리즈가 출하량의 과반 차지</div>
     <div class="ib">RX 시리즈 수량 <b>4,135대(57.9%)</b>，매출 <b>60,746 KRMB(69.7%)</b>，RX Styler ASP <b>14,691 RMB/대</b> vs Styler ASP <b>8,813 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #10b981">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">📉 2월 출하 급감 (설 연휴 영향)</div>
     <div class="ib">2월 출하량 <b>554대</b>，1월 1,466대 대비 <b>62%↓</b>，3월 회복 1,175대. 설 연휴 계절성 뚜렷.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #fb7185">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">📦 7월 출하 / 7月出货</div>
     <div class="ib">7월 출하량 <b>855대</b>，출하금액 <b>11,513 KRMB</b>，ASP <b>13,466 RMB/대</b>.</div>
   </div>
-  <div class="ins" style="border-top:3px solid #6366f1">
+  <div class="ins" style="border-top:3px solid #A50034">
     <div class="it">📊 S3MF + S3IF 중가 라인</div>
     <div class="ib">S3MF <b>1,368대(19.2%)</b>，S3IF <b>926대(13.0%)</b>，중가 라인이 Styler 출하 견인.</div>
   </div>
@@ -412,7 +412,7 @@ td.dn{color:#ef4444;font-weight:600}
 
 <script>
 // ======================== SHARED TOOLS ========================
-const P = ['#6366f1','#38bdf8','#34d399','#fb7185','#f472b6','#a78bfa','#818cf8','#2dd4bf','#fdba74','#c084fc','#a3e635','#fcd34d','#67e8f9','#f9a8d4'];
+const P = ['#A50034','#0066B3','#1B5E20','#E08A00','#6F42C1','#5B6B7B','#C2185B','#00897B','#8A6D3B','#546E7A','#7A0026','#37474F','#B26A00','#9C5D7A'];
 const GRID='#eef2f7',TICK='#94a3b8';
 Chart.defaults.color=TICK;
 Chart.defaults.borderColor=GRID;
@@ -532,13 +532,13 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
 
   // monthly bar+line
   allCharts.so.push(mkBar('c_m_so',ML,[
-    {label:'판매량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(99,102,241,0.78)',yAxisID:'y',borderRadius:5},
-    {label:'매출액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#fb7185',backgroundColor:'rgba(251,113,133,0.10)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
+    {label:'판매량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(165,0,52,0.85)',yAxisID:'y',borderRadius:5},
+    {label:'매출액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#C2185B',backgroundColor:'rgba(194,24,91,0.08)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#C2185B'}
   ],{y2:{},datalabels:true}));
 
   // monthly asp line
   allCharts.so.push(mkLine('c_am_so',ML,[
-    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#10b981'}
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#1B5E20',backgroundColor:'rgba(27,94,32,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#1B5E20'}
   ]));
 
   // monthly table — 同期对比 (YoY) · 24년 skip (underlying arrays kept for calc)
@@ -620,10 +620,10 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
     var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
     var tot=row.reduce(function(a,b){return a+b;},0);
     var cells=row.map(function(v){
-      if(!v||v<=0)return'<td style="background:#f8fafc;color:#e2e8f0">'+(v<0?v:'')+'</td>';
+      if(!v||v<=0)return'<td style="background:#f3f5f9;color:#dfe4ec">'+(v<0?v:'')+'</td>';
       var t=Math.min(1,v/mxV);
-      var r=Math.round(255-4*t),g=Math.round(243-130*t),b=Math.round(248-115*t);
-      var tc=t>0.5?'#ffffff':'#9d174d',fw=t>0.3?'600':'400';
+      var r=Math.round(253-131*t),g=Math.round(238-238*t),b=Math.round(241-203*t);
+      var tc=t>0.5?'#ffffff':'#7A0026',fw=t>0.3?'600':'400';
       return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
     }).join('');
     h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
@@ -632,8 +632,8 @@ const D_SI = {"total_q":7137,"total_a":87201.15,"total_asp":12218,"months":["202
 
   // quarter chart
   allCharts.so.push(mkBar('c_q_so',D.quarters,[
-    {label:'판매량 Q(대)',data:D.quarter_q,backgroundColor:D.quarter_q.map(function(v,i){var cs=['rgba(99,102,241,0.78)','rgba(16,185,129,0.78)','rgba(251,113,133,0.82)','rgba(236,72,153,0.78)'];return cs[i%4];}),yAxisID:'y',borderRadius:7},
-    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#fb7185',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
+    {label:'판매량 Q(대)',data:D.quarter_q,backgroundColor:D.quarter_q.map(function(v,i){var cs=['rgba(165,0,52,0.85)','rgba(0,102,179,0.85)','rgba(27,94,32,0.85)','rgba(255,140,0,0.85)'];return cs[i%4];}),yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#C2185B',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#C2185B'}
   ],{y2:{}}));
 
   // quarter table
@@ -677,13 +677,13 @@ function renderSI(){
 
   // monthly bar+line
   allCharts.si.push(mkBar('c_m_si',ML,[
-    {label:'출하량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(99,102,241,0.78)',yAxisID:'y',borderRadius:5},
-    {label:'출하금액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#fb7185',backgroundColor:'rgba(251,113,133,0.10)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
+    {label:'출하량 Q(대)',data:D.monthly_q,backgroundColor:'rgba(165,0,52,0.85)',yAxisID:'y',borderRadius:5},
+    {label:'출하금액 A(KRMB)',data:D.monthly_a,type:'line',borderColor:'#C2185B',backgroundColor:'rgba(194,24,91,0.08)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#C2185B'}
   ],{y2:{},datalabels:true}));
 
   // monthly asp line
   allCharts.si.push(mkLine('c_am_si',ML,[
-    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#10b981'}
+    {label:'ASP(RMB/대)',data:D.monthly_asp,borderColor:'#1B5E20',backgroundColor:'rgba(27,94,32,0.07)',fill:true,tension:0.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,pointBackgroundColor:'#1B5E20'}
   ]));
 
   // monthly table — 同期对比 (SI only 2026, no prior year)
@@ -730,10 +730,10 @@ function renderSI(){
     var row=D.model_monthly_heatmap[m]||new Array(ML.length).fill(0);
     var tot=row.reduce(function(a,b){return a+b;},0);
     var cells=row.map(function(v){
-      if(!v||v<=0)return'<td style="background:#f8fafc;color:#e2e8f0">'+(v<0?v:'')+'</td>';
+      if(!v||v<=0)return'<td style="background:#f3f5f9;color:#dfe4ec">'+(v<0?v:'')+'</td>';
       var t=Math.min(1,v/mxV);
-      var r=Math.round(255-4*t),g=Math.round(243-130*t),b=Math.round(248-115*t);
-      var tc=t>0.5?'#ffffff':'#9d174d',fw=t>0.3?'600':'400';
+      var r=Math.round(253-131*t),g=Math.round(238-238*t),b=Math.round(241-203*t);
+      var tc=t>0.5?'#ffffff':'#7A0026',fw=t>0.3?'600':'400';
       return'<td style="background:rgb('+r+','+g+','+b+');color:'+tc+';font-weight:'+fw+'">'+v+'</td>';
     }).join('');
     h+='<tr><td class="rl">'+m+'</td>'+cells+'<td class="hm-tot">'+tot+'</td></tr>';
@@ -742,8 +742,8 @@ function renderSI(){
 
   // quarter chart
   allCharts.si.push(mkBar('c_q_si',D.quarters,[
-    {label:'출하량 Q(대)',data:D.quarter_q,backgroundColor:['rgba(99,102,241,0.78)','rgba(16,185,129,0.78)'],yAxisID:'y',borderRadius:7},
-    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#fb7185',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#fb7185'}
+    {label:'출하량 Q(대)',data:D.quarter_q,backgroundColor:['rgba(165,0,52,0.85)','rgba(27,94,32,0.85)'],yAxisID:'y',borderRadius:7},
+    {label:'ASP(RMB/대)',data:D.quarter_asp,type:'line',borderColor:'#C2185B',backgroundColor:'transparent',yAxisID:'y2',tension:0.4,pointRadius:0,pointHoverRadius:6,borderWidth:2.5,pointBackgroundColor:'#C2185B'}
   ],{y2:{}}));
 
   // quarter table
@@ -762,7 +762,7 @@ function modelsTop4(D){
 // 兜底提示：若图表库最终仍不可用，顶部给出明确说明，不再静默空白（表格数据始终保持完整）。
 if(typeof Chart==='undefined'){
   var nb=document.createElement('div');
-  nb.style.cssText='margin:14px 0;padding:12px 16px;border:1px solid #c7d2fe;background:#eef0ff;color:#6366f1;border-radius:10px;font-size:13px;font-weight:600';
+  nb.style.cssText='margin:14px 0;padding:12px 16px;border:1px solid #F3D2DA;background:#FCEEF1;color:#A50034;border-radius:10px;font-size:13px;font-weight:600';
   nb.textContent='⚠ Chart.js 未能加载，图表暂时不可见，但所有表格数据已正常显示。请确认 chart.umd.min.js 已与页面一同部署。';
   var pg=document.querySelector('.page'); if(pg) pg.insertBefore(nb,pg.firstChild);
 }
