@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LGECH 손익 대시보드 v2 · 2020년 ~ 2026년 9월</title>
+<title>LGECH C.O.I · 통합 손익 대시보드 · 2026.09</title>
 <style>
 :root{
-  --bg:#ffffff;--surface:#f3f5f8;--ink:#14181f;--ink2:#4b5563;--ink3:#7b8494;--line:#dde2ea;--line2:#c3c8d2;--navy:#1b2b4a;--brand:#c8102e;--brand-rgb:200,16,46;
+  --bg:#ffffff;--surface:#f3f5f8;--ink:#14181f;--ink2:#4b5563;--ink3:#7b8494;--line:#dde2ea;--line2:#c3c8d2;--navy:#1b2b4a;
   --pos:#2a78d6;--neg:#d03b3b;--pos-rgb:42,120,214;--neg-rgb:208,59,59;--navy-rgb:27,43,74;--warn:#b7791f;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
-  :root{--bg:#0f1218;--surface:#181c25;--ink:#eceef2;--ink2:#a6adbb;--ink3:#7d8696;--line:#2a303c;--line2:#414856;--navy:#9fb4de;--brand:#ff3b52;--brand-rgb:255,59,82;
+  :root{--bg:#0f1218;--surface:#181c25;--ink:#eceef2;--ink2:#a6adbb;--ink3:#7d8696;--line:#2a303c;--line2:#414856;--navy:#9fb4de;
   --pos:#5aa0f0;--neg:#ee7373;--pos-rgb:77,149,234;--neg-rgb:230,103,103;--navy-rgb:159,180,222;--warn:#e0b050;color-scheme:dark}
 }
 *{box-sizing:border-box}
@@ -25,9 +25,9 @@ p{margin:0 0 10px}
 .meta{color:var(--ink2);font-size:13px;margin-bottom:14px}
 section{margin-top:38px}
 .sub{color:var(--ink2);font-size:13.5px;margin:0 0 14px;max-width:56em}
-.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--brand);margin:18px 0 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--navy);margin:18px 0 0}
 .tab{border:0;background:transparent;font:inherit;font-size:15px;font-weight:600;color:var(--ink2);padding:9px 18px;cursor:pointer;border-radius:8px 8px 0 0}
-.tab[aria-selected=true]{background:var(--brand);color:#fff}
+.tab[aria-selected=true]{background:var(--navy);color:var(--bg)}
 .gctl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;position:sticky;top:0;z-index:6;background:var(--bg);padding:9px 0;border-bottom:0.5px solid var(--line)}
 .grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
 .lbl{font-size:12.5px;color:var(--ink2);margin-right:2px}
@@ -37,9 +37,9 @@ section{margin-top:38px}
 select.sel{font:inherit;font-size:12.5px;padding:3px 6px;border-radius:6px;border:0.5px solid var(--line2);background:var(--bg);color:var(--ink)}
 :focus-visible{outline:2px solid var(--pos);outline-offset:2px}
 .vdiv{width:1px;height:18px;background:var(--line);margin:0 2px}
-.headline{font-size:19px;font-weight:700;line-height:1.55;margin:20px 0 14px;padding:14px 18px;border-left:5px solid var(--brand);background:var(--surface);border-radius:0 8px 8px 0;word-break:keep-all
-.headline .scope{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;margin-right:8px;border-radius:12px;background:var(--brand);color:#fff;vertical-align:middle}
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--brand);border-bottom:0.5px solid var(--line)}
+.headline{font-size:19px;font-weight:700;line-height:1.55;margin:20px 0 14px;padding:14px 18px;border-left:5px solid var(--navy);background:var(--surface);border-radius:0 8px 8px 0;word-break:keep-all}
+.headline .scope{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;margin-right:8px;border-radius:12px;background:var(--navy);color:var(--bg);vertical-align:middle}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--navy);border-bottom:0.5px solid var(--line)}
 .kpi{padding:14px 14px 14px 0}
 .kpi+.kpi{padding-left:14px;border-left:0.5px solid var(--line)}
 .kpi .l{font-size:12.5px;color:var(--ink2)}
@@ -66,9 +66,9 @@ table.hm{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed
 .hm td.rl.ind{padding-left:24px;font-weight:500}
 .hm td.gh{background:var(--surface);color:var(--ink2);font-size:11.5px;font-weight:600;padding:3px 12px;border-bottom:0.5px solid var(--line)}
 .hm td.c{padding:2px 3px;height:34px;border-bottom:0.5px solid var(--line);text-align:center}
-.hm tr.tot td.rl,.hm tr.tot td.c{border-bottom:1.5px solid var(--brand);background:var(--surface)}
+.hm tr.tot td.rl,.hm tr.tot td.c{border-bottom:1.5px solid var(--navy);background:var(--surface)}
 .hm tr.sgt td.rl,.hm tr.sgt td.c{background:var(--surface)}
-.hm td.sep,.hm th.sep{border-left:1.5px solid var(--brand)}
+.hm td.sep,.hm th.sep{border-left:1.5px solid var(--navy)}
 .cell{display:flex;align-items:center;justify-content:center;width:100%;height:28px;border:0;border-radius:5px;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;padding:0 3px;font-variant-numeric:tabular-nums;background:transparent}
 .cell:hover{box-shadow:inset 0 0 0 2px var(--ink)}
 .cell.lb{opacity:.5}
@@ -110,7 +110,7 @@ table.dt tr.strong td{font-weight:700;color:var(--ink)}
 .tree{border:0.5px solid var(--line);border-radius:10px;overflow:hidden}
 .tr{display:grid;grid-template-columns:52px minmax(0,1.3fr) 96px minmax(0,1.6fr);align-items:center;gap:10px;padding:6px 12px;border-bottom:0.5px solid var(--line);cursor:pointer}
 .tr:hover{background:var(--surface)}
-.tr.on{background:rgba(var(--brand-rgb),.10)}
+.tr.on{background:rgba(var(--navy-rgb),.10)}
 .tr:last-child{border-bottom:0}
 .tr .lv{display:inline-block;min-width:28px;text-align:center;font-size:11px;font-weight:700;padding:1px 6px;border-radius:9px;background:var(--navy);color:var(--bg)}
 .tr.l2 .lv{opacity:.75}.tr.l3 .lv{opacity:.55}.tr.l4 .lv{opacity:.4}
@@ -134,53 +134,36 @@ table.yt tr.cur td{background:var(--surface)}
 .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:14px;background:var(--surface);border-radius:6px;padding:6px 10px;margin:4px 0}
 .hidden{display:none!important}
 @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.twocol,.contrib{grid-template-columns:1fr}.msg{grid-template-columns:1fr}.tr{grid-template-columns:44px 1fr 80px}.tr .chg{grid-column:2/4}}
-
-  /* ===== Fused: access gate (from COI dashboard) ===== */
-  #auth-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0b1220 0%,#060b14 100%)}
-  #auth-gate.hidden{display:none!important}
-  #auth-gate .auth-box{width:340px;max-width:calc(100% - 40px);padding:40px 34px;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:20px;box-shadow:0 30px 80px -24px rgba(0,0,0,.55);text-align:center}
-  #auth-gate .auth-box h2{margin:0 0 4px;color:#0f172a;font-size:21px;letter-spacing:-.01em}
-  #auth-gate .auth-box p{margin:0 0 22px;color:#64748b;font-size:12.5px}
-  #auth-gate .auth-box input{width:100%;box-sizing:border-box;padding:12px 14px;background:#f4f6f9;border:1px solid rgba(15,23,42,.14);color:#0f172a;font-size:16px;text-align:center;letter-spacing:.35em;border-radius:10px;outline:none;transition:.18s}
-  #auth-gate .auth-box input:focus{border-color:#c8102e;box-shadow:0 0 0 3px rgba(200,16,46,.12)}
-  #auth-gate .auth-box button{margin-top:16px;width:100%;padding:12px;color:#fff;background:linear-gradient(180deg,#e11d36,#c8102e);border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;transition:.18s}
-  #auth-gate .auth-box button:hover{filter:brightness(1.06);box-shadow:0 12px 28px -12px rgba(200,16,46,.6)}
-  #auth-gate .auth-box .auth-err{margin-top:12px;color:#dc2626;font-size:12px;min-height:16px}
-  #auth-gate .auth-box .auth-en{margin:0 0 18px;color:#94a3b8;font-size:11px;letter-spacing:.04em}
-  #auth-gate .auth-box .auth-ko{margin-top:18px;color:#94a3b8;font-size:11px;letter-spacing:.04em}
-  /* ===== Fused: brand bar + premium card hover ===== */
-  .brandbar{display:flex;align-items:center;gap:12px;padding:6px 0 16px;border-bottom:2px solid var(--brand);margin-bottom:10px}
-  .brandbar .bw{font-weight:800;letter-spacing:.02em;color:var(--brand);font-size:18px}
-  .brandbar .bs{font-size:12px;color:var(--muted)}
-  .brandbar .bd{margin-left:auto;font-size:12px;color:var(--muted)}
-  .card{transition:box-shadow .2s ease,transform .2s ease}
-  .card:hover{box-shadow:0 10px 30px -16px rgba(15,23,42,.35);transform:translateY(-2px)}
-
 </style>
-</head>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%23a50034%27/%3E%3Cpath d=%27M17 43V29h7v14zm12 0V20h7v23zm12 0V12h7v31z%27 fill=%27white%27/%3E%3C/svg%3E"><style id="merged-design">/* Integrated presentation. Original data model and analysis remain embedded. */
+.rank-panel .rank-list{min-height:455px}.rank-pagination{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}.rank-pagination span{font-size:10px;color:var(--ink3);white-space:nowrap;text-align:center}.rank-pagination button{min-width:62px}.rank-pagination button:disabled{opacity:.4;cursor:default;pointer-events:none}
+.dashboard-card .card-unit-note{font-size:9px;line-height:1.6;color:var(--ink3);font-weight:500;margin:5px 0 0}.rank-panel .rank-list{height:auto;max-height:none;overflow:visible;padding-right:0}.rank-panel .rank-row{grid-template-columns:21px minmax(0,1fr) max-content;gap:10px;min-height:65px}.rank-panel .rank-description{min-width:0}.rank-panel .rank-name{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}.rank-panel .rank-metrics{display:flex;gap:2px 9px;flex-wrap:wrap}.rank-panel .rank-metrics span{white-space:nowrap}.rank-panel .rank-result{min-width:74px;white-space:nowrap;flex-shrink:0}.rank-panel .rank-amount{display:block;white-space:nowrap;line-height:1.5}.dashboard-card .amount-currency{display:inline;font-size:9px;font-weight:600;letter-spacing:0;margin-left:4px;white-space:nowrap}.rank-panel .card-footer{flex-wrap:wrap;align-items:flex-start;line-height:1.7}.rank-panel .card-footer .text-btn{flex-shrink:0;white-space:nowrap}.rank-panel .card-heading{align-items:flex-start}.rank-panel .mini-label{white-space:normal;text-align:right;flex-shrink:0}.channel-panel .channel-top{flex-wrap:wrap;align-items:flex-start;gap:3px 8px}.channel-panel .channel-name{min-width:0;overflow-wrap:anywhere;flex:1 1 105px}.channel-panel .channel-amount{white-space:nowrap;flex:0 0 auto}.channel-panel .channel-meta{gap:3px 9px;flex-wrap:wrap}.channel-panel .channel-meta span{white-space:nowrap}.risk-panel .risk-stat{min-width:0}.risk-panel .risk-money{white-space:nowrap}.risk-panel .loss-team-row{gap:10px}.risk-panel .loss-team-row span{min-width:0;overflow-wrap:anywhere}.risk-panel .loss-team-row b{white-space:nowrap;flex-shrink:0}
+.trend-panel .trend-period{display:grid;gap:3px;text-align:right}.pulse-table .amount-unit{display:block;font-size:8px;font-weight:500;line-height:1.5;color:var(--ink3)}.mini-chart .chart-unit{font-size:9px;line-height:1.5;color:var(--ink2);font-weight:600;padding:0 4px 6px}
+:root{--bg:#fff;--surface:#f5f7fa;--ink:#142238;--ink2:#5e6b80;--ink3:#8491a4;--line:#e2e7ef;--line2:#ced6e2;--navy:#263b5d;--navy-rgb:38,59,93;--pos:#059669;--neg:#d83950;--pos-rgb:5,150,105;--neg-rgb:216,57,80;--warn:#b77e20;--canvas:#f4f6fa;--accent:#a50034;--accent-light:#fff1f4;--shadow:0 3px 6px rgba(20,34,56,.025),0 14px 32px -22px rgba(20,34,56,.22);color-scheme:light}
+html[data-theme=dark]{--bg:#172033;--surface:#1e2a40;--ink:#ecf1fa;--ink2:#a5b3c9;--ink3:#8293ac;--line:#2b3950;--line2:#3c4d67;--navy:#aec1e1;--navy-rgb:174,193,225;--pos:#42d6a6;--neg:#ff8192;--pos-rgb:66,214,166;--neg-rgb:255,129,146;--warn:#e3b65c;--canvas:#101828;--accent:#f0648d;--accent-light:#342136;color-scheme:dark}
+body{background:var(--canvas);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden}button,input,select{font:inherit}button{touch-action:manipulation}button:disabled{cursor:default}.wrap{max-width:1600px;margin:auto;padding:24px 30px 44px}h1{font-size:26px;letter-spacing:-.035em}h1 span{font-weight:600}h2{font-size:18px;letter-spacing:-.025em}h3{letter-spacing:-.018em}.eyebrow{font-size:10px;line-height:1.4;letter-spacing:.15em;font-weight:800;color:var(--ink3);display:block;margin-bottom:5px}.masthead{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 25px;background:var(--bg);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.brand-lockup{display:flex;gap:16px;align-items:center}.brand-mark{width:53px;height:53px;background:#a50034;color:#fff;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:800;letter-spacing:-.08em;box-shadow:0 8px 18px -9px #a50034}.brand-mark span{font-size:9px;margin:6px 0 0 2px;letter-spacing:0}.brand-sub{font-size:11px;color:var(--ink2);margin:1px 0 0}.brand-sub span{padding-left:10px;color:var(--ink3)}.mast-actions{display:flex;align-items:center;gap:9px}.data-status{font-size:11px;border:1px solid var(--line);border-radius:100px;padding:5px 12px;font-weight:700;white-space:nowrap}.data-status i{display:inline-block;width:6px;height:6px;background:var(--pos);border-radius:50%;margin-right:7px}.icon-button{border:1px solid var(--line);border-radius:9px;width:32px;height:32px;background:var(--bg);color:var(--ink2);font-size:18px;cursor:pointer}.utility-btn{border:1px solid var(--line2);border-radius:7px;background:var(--bg);color:var(--ink2);padding:5px 10px;font-size:11px;cursor:pointer;white-space:nowrap}.utility-btn:hover,.icon-button:hover{border-color:var(--accent);color:var(--accent)}.meta{font-size:10px;color:var(--ink3);margin:10px 3px 18px}.tabs{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;border:1px solid var(--line);padding:6px;border-radius:13px;background:var(--bg);box-shadow:var(--shadow)}.tab{font-size:13px;font-weight:750;line-height:1.6;padding:10px 8px;text-align:left;border-radius:9px;white-space:nowrap;display:flex;align-items:center;gap:8px}.tab small{display:block;color:var(--ink3);font-size:9px;font-weight:500;margin-left:auto;letter-spacing:.01em}.tab-num{font-size:10px;color:var(--ink3);font-weight:800}.tab[aria-selected=true]{background:var(--accent);color:white;box-shadow:0 5px 14px -9px var(--accent)}.tab[aria-selected=true] small,.tab[aria-selected=true] .tab-num{color:#fff9}.tab:hover{background:var(--surface)}.tab[aria-selected=true]:hover{background:var(--accent)}.gctl{margin:12px 0 0;padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-radius:12px;gap:8px 12px;top:8px;box-shadow:var(--shadow)}.lbl{font-size:10px;color:var(--ink3);font-weight:700}.grp{gap:6px}.seg{font-size:11px;border:1px solid var(--line2);padding:4px 9px;background:var(--bg);color:var(--ink2);border-radius:6px}.seg[aria-pressed=true]{background:var(--navy);color:var(--bg);border-color:var(--navy)}select.sel{font-size:11px;padding:5px 25px 5px 8px;max-width:165px;border:1px solid var(--line2);height:29px;background:var(--bg)}.reset-btn{margin-left:auto}.filter-context{font-size:10px;padding:8px 4px 0;color:var(--ink3);display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}.context-value{color:var(--ink2)}.context-flag{color:var(--warn)}.page-intro{display:flex;align-items:flex-end;justify-content:space-between;margin:26px 0 18px;gap:16px}.page-intro h2{font-size:25px;line-height:1.4;letter-spacing:-.04em}.page-intro p{font-size:11px;color:var(--ink2);margin:4px 0 0}.intro-right{display:grid;text-align:right;white-space:nowrap}.intro-right>span{font-size:9px;letter-spacing:.12em;font-weight:750;color:var(--ink3)}.intro-right b{font-size:14px;font-weight:750}.intro-right small{font-size:10px;color:var(--ink3)}.overview-controls{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:0 0 15px}.month-group{display:flex;gap:5px;flex-wrap:wrap}.month-pill{background:var(--bg);color:var(--ink2);border:1px solid var(--line);font-size:11px;font-weight:650;min-width:46px;padding:7px 10px;border-radius:9px;cursor:pointer}.month-pill[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:white;box-shadow:0 6px 12px -9px var(--accent)}.month-pill:hover{border-color:var(--accent)}.overview-utility{display:flex;gap:7px;align-items:center}.overview-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}.overview-kpi{padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);min-width:0}.overview-kpi.featured{border-top:3px solid var(--accent);padding-top:14px}.overview-kpi .kpi-label{font-size:10px;font-weight:650;color:var(--ink2);margin-bottom:7px;white-space:nowrap}.overview-kpi .kpi-value{font-size:27px;font-weight:800;letter-spacing:-.05em;line-height:1.2;white-space:nowrap}.overview-kpi .kpi-unit{font-size:10px;font-weight:550;letter-spacing:0;color:var(--ink3);margin-left:5px}.overview-kpi .kpi-desc{font-size:10px;color:var(--ink3);margin-top:7px;white-space:nowrap}.executive-note{margin:15px 0 20px;display:flex;align-items:center;gap:12px;padding:11px 15px;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--bg);border-radius:9px;font-size:11px;color:var(--ink2)}.executive-note .note-tag{font-size:9px;letter-spacing:.08em;color:var(--accent);font-weight:800;white-space:nowrap}.executive-note b{color:var(--ink)}.executive-note .text-btn{margin-left:auto;white-space:nowrap}.text-btn{border:0;background:transparent;color:var(--accent);font-size:10px;cursor:pointer;font-weight:750}.executive-grid{display:grid;grid-template-columns:1.04fr 1.27fr 1fr;gap:16px;align-items:stretch}.dashboard-card{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:15px;padding:19px;box-shadow:var(--shadow);min-width:0;overflow:hidden}.card-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 17px}.card-heading h2{font-size:15px;font-weight:800;margin:0}.card-heading .eyebrow{font-size:8px;letter-spacing:.11em;margin-bottom:4px}.mini-label{font-size:9px;line-height:1.5;color:var(--ink3);white-space:nowrap}.pulse-table{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}.pulse-table th{font-size:9px;font-weight:650;color:var(--ink3);padding:8px 5px;background:var(--surface);text-align:right;white-space:nowrap}.pulse-table th:first-child,.pulse-table td:first-child{text-align:left;padding-left:10px}.pulse-table td{padding:9px 5px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;font-size:11px}.pulse-table tbody tr{cursor:pointer}.pulse-table tbody tr:hover{background:var(--surface)}.pulse-table .selected td{background:var(--accent-light);font-weight:750}.pulse-table .total td{background:var(--surface);font-weight:800;border:0}.mini-chart{background:var(--surface);border-radius:9px;padding:10px 8px 0;margin-top:14px}.mini-chart svg{width:100%;height:auto;display:block}.mini-foot{font-size:9px;color:var(--ink3);margin:9px 0 0}.rank-controls{display:flex;gap:8px;justify-content:space-between;align-items:center;margin:0 0 12px}.small-segment{display:flex;gap:4px;flex-wrap:wrap}.small-segment .seg{font-size:10px;padding:4px 8px}.rank-controls input{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:5px 8px;font-size:10px;width:125px;min-width:70px}.rank-list{height:463px;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--line2) transparent;padding-right:5px}.rank-row{display:grid;grid-template-columns:21px minmax(0,1fr) 95px;gap:8px;align-items:center;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 0;text-align:left;cursor:pointer;color:var(--ink)}.rank-row:hover{background:var(--surface)}.rank-no{color:var(--ink3);font-size:11px;text-align:center;font-weight:700}.rank-row:first-child .rank-no{color:var(--accent)}.rank-name{font-size:11px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-metrics{font-size:9px;color:var(--ink3);margin-top:2px}.rank-result{text-align:right;font-size:13px;font-weight:800}.rank-result small{display:block;font-size:9px;font-weight:550;color:var(--ink3)}.rank-track{height:5px;border-radius:4px;background:var(--surface);margin:5px 0 0;overflow:hidden}.rank-track i{display:block;height:100%;min-width:1px;border-radius:4px;background:linear-gradient(90deg,#2b9ebd,var(--pos))}.rank-track i.loss{background:linear-gradient(90deg,#ed9e85,var(--neg))}.card-footer{display:flex;justify-content:space-between;gap:6px;padding-top:12px;font-size:9px;color:var(--ink3)}.channel-list{display:grid;gap:17px;margin:28px 0 25px}.channel-row{width:100%;border:0;background:none;color:var(--ink);padding:0;text-align:left;cursor:pointer}.channel-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;font-weight:750}.channel-top span{font-size:10px}.channel-row .channel-meta{display:flex;justify-content:space-between;font-size:9px;color:var(--ink3);margin-top:5px}.channel-track{height:8px;background:var(--surface);border-radius:10px;margin-top:7px;position:relative;overflow:hidden}.channel-track i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#2b9ebd,var(--pos))}.channel-track i.loss{background:linear-gradient(90deg,#e5a58c,var(--neg))}.channel-summary{padding-top:15px;border-top:1px solid var(--line);font-size:10px;color:var(--ink2)}.channel-summary b{color:var(--ink);font-size:19px;display:block;margin:4px 0}.channel-summary .share-track{display:flex;gap:2px;height:7px;border-radius:9px;overflow:hidden;margin:11px 0 8px}.channel-summary .share-track i{display:block;min-width:1px;height:100%}.secondary-grid{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(300px,1fr);gap:16px;margin:16px 0}.product-panel .card-heading{margin-bottom:8px}.matrix-wrap{border:0;border-radius:0;margin-top:12px}.product-matrix{table-layout:fixed;min-width:680px}.product-matrix th{background:var(--surface);padding:8px 4px;font-size:9px;white-space:nowrap}.product-matrix th:first-child{width:112px}.product-matrix td{padding:5px 3px;border:0;font-size:10px}.product-matrix .product-label{width:112px;font-size:10px;font-weight:750;white-space:nowrap;position:sticky;left:0;background:var(--bg);z-index:2}.product-matrix .product-cell{padding:6px 2px;width:100%;border:0;border-radius:4px;font-size:10px;font-weight:650;cursor:pointer;font-variant-numeric:tabular-nums;background:transparent;color:var(--ink)}.product-matrix .product-cell:hover{outline:1px solid var(--accent)}.product-matrix .active-month{color:var(--accent);font-weight:800}.product-matrix .total-col{border-left:1px solid var(--line)}.matrix-legend{display:flex;gap:12px;align-items:center;font-size:9px;color:var(--ink3);margin-top:15px;flex-wrap:wrap}.matrix-legend>span:last-child{margin-left:auto}.legend-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px}.positive{background:var(--pos)}.negative{background:var(--neg)}.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.risk-stat{background:var(--surface);border-radius:9px;padding:12px}.risk-stat .risk-lbl{font-size:9px;color:var(--ink3)}.risk-stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.04em;line-height:1.4}.risk-stat b.risk-name{font-size:13px;line-height:2.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.risk-stat small{font-size:8px;color:var(--ink3)}.team-loss{margin-top:17px;padding-top:13px;border-top:1px solid var(--line)}.team-loss h3{font-size:11px;margin-bottom:6px}.loss-team-row{display:flex;align-items:center;justify-content:space-between;width:100%;gap:6px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink2);font-size:10px;text-align:left;padding:8px 0;cursor:pointer}.loss-team-row b{font-size:11px}.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.focus-item{border-right:1px solid var(--line);padding-right:18px}.focus-item:last-child{border:0;padding-right:0}.focus-no{font-size:9px;letter-spacing:.06em;color:var(--accent);font-weight:800}.focus-item h3{font-size:12px;margin:6px 0}.focus-item p{font-size:10px;line-height:1.8;color:var(--ink2);margin:0}.focus-item .amount{font-weight:750;color:var(--ink)}.overview-foot{font-size:9px;line-height:1.7;color:var(--ink3);margin:13px 3px}.empty-state{font-size:11px;text-align:center;color:var(--ink3);padding:45px 12px}.section-jumps{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}.section-jumps a{color:var(--ink2);font-size:10px;border:1px solid var(--line);padding:5px 11px;border-radius:7px;background:var(--bg);text-decoration:none}.section-jumps a:hover{color:var(--accent);border-color:var(--accent)}.headline{font-size:15px;line-height:1.85;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--accent);margin:14px 0;border-radius:10px;padding:15px 18px}.headline .scope{font-size:10px;color:white;background:var(--accent);padding:3px 9px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;border:0;margin-top:14px}.kpi,.kpi+.kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:17px 15px;box-shadow:var(--shadow)}.kpi .v{font-size:28px;letter-spacing:-.04em;margin:7px 0 3px}.kpi .l{font-size:11px}.kpi .d{font-size:11px}.kpi .p{font-size:10px;margin-top:4px}.foot{font-size:10px;color:var(--ink3);line-height:1.8}.card{border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:18px;box-shadow:var(--shadow)}#viewC>section,#viewA>section,#viewB>section{padding:20px;background:var(--bg);border:1px solid var(--line);border-radius:15px;margin-top:20px;scroll-margin-top:90px}.sub{font-size:11px;line-height:1.8;max-width:90em;margin:5px 0 14px}.twocol{gap:15px}.hm-wrap{border:1px solid var(--line);background:var(--bg);scrollbar-width:thin}table.yt{font-size:11px}table.yt td{font-size:11px;padding:7px 7px;white-space:nowrap}table.yt th{font-size:10px;padding:8px 7px;white-space:nowrap}table.hm{font-size:11px}table.hm th,table.hm td.rl{font-size:11px}.hm .cell{font-size:11px}.note,.flag{font-size:11px}.note{padding:10px 12px}.brg div{padding:10px 12px}.brg .k{font-size:10px}.brg .v{font-size:18px}.source-section{border-top:1px solid var(--line);padding:24px 3px 0;margin:30px 0 0}.source-section>h2{font-size:13px;cursor:pointer}.source-section .notes{font-size:10px;line-height:1.8}.source-section .note{background:transparent;border:1px dashed var(--line2);font-size:10px}.source-section:not(.expanded) .notes,.source-section:not(.expanded) .note{display:none}.source-section h2:after{content:' ＋';font-size:13px;color:var(--ink3)}.source-section.expanded h2:after{content:' −'}.msg h3{font-size:13px}.msg p{font-size:12px}.auth-gate{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 10% 10%,rgba(165,0,52,.08),transparent 55%),var(--canvas);display:flex;align-items:center;justify-content:center;padding:20px}.auth-card{width:380px;padding:38px;background:var(--bg);border:1px solid var(--line);border-radius:21px;box-shadow:0 25px 80px -40px #1a2549;text-align:center}.auth-monogram{display:inline-flex;align-items:center;justify-content:center;width:58px;height:58px;background:#a50034;color:white;border-radius:17px;font-size:25px;font-weight:800;letter-spacing:-.07em;margin-bottom:20px}.auth-monogram>span{font-size:11px;margin:8px 0 0 3px}.auth-card h2{font-size:25px;margin:9px 0}.auth-card>p{font-size:12px;color:var(--ink2);line-height:1.9}.auth-card>p small{font-size:10px;color:var(--ink3)}.auth-card input{width:100%;margin:14px 0 10px;border:1px solid var(--line2);border-radius:8px;padding:12px 14px;background:var(--surface);color:var(--ink)}.auth-submit{width:100%;border:0;border-radius:8px;background:#a50034;color:white;padding:12px;cursor:pointer;font-size:12px;font-weight:750;display:flex;justify-content:space-between}.auth-card .auth-error{min-height:20px;font-size:11px;color:var(--neg);margin:8px 0}.auth-footer{font-size:9px;color:var(--ink3)}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);z-index:100000;background:var(--navy);color:var(--bg);font-size:12px;border-radius:9px;padding:12px 22px;box-shadow:var(--shadow)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}html[data-locked=true] .wrap{visibility:hidden}html[data-locked=true] body{overflow:hidden}svg{max-width:100%}section h2[id],section p[id],section table[id]{scroll-margin-top:120px}
+@media(min-width:1600px){.rank-list{height:470px}.overview-kpi .kpi-value{font-size:31px}}
+@media(max-width:1280px){.wrap{padding:18px}.tab small{display:none}.gctl{position:relative;top:0;gap:9px}.overview-kpis{gap:8px}.overview-kpi{padding:12px}.overview-kpi .kpi-value{font-size:24px}.overview-kpi.featured{padding-top:10px}.executive-grid{grid-template-columns:1fr 1.15fr}.channel-panel{grid-column:1/3}.channel-list{grid-template-columns:repeat(5,1fr);gap:18px;margin:15px 0}.channel-top{display:block}.channel-top span{display:block;margin:4px 0}.channel-summary{display:none}.secondary-grid{grid-template-columns:minmax(0,1fr) 320px}.rank-list{height:465px}}
+@media(max-width:1000px){.overview-kpis{grid-template-columns:repeat(3,1fr)}.secondary-grid{grid-template-columns:minmax(0,1fr)}.risk-panel .risk-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.team-loss{display:none}.kpis{grid-template-columns:repeat(3,1fr)}.executive-note{align-items:flex-start}.action-grid{grid-template-columns:repeat(2,1fr);gap:15px}.focus-item:nth-child(2){border:0}.overview-kpi .kpi-value{font-size:28px}.overview-controls{align-items:flex-start}.brand-mark{width:45px;height:45px}.masthead h1{font-size:23px}}
+@media(max-width:700px){.wrap{padding:12px}.masthead{padding:17px 14px;gap:8px;border-radius:13px}.brand-lockup{gap:9px}.brand-mark{width:36px;height:39px;font-size:17px;border-radius:10px;flex-shrink:0}.brand-mark span{font-size:7px}.masthead h1{font-size:18px}.masthead .eyebrow{font-size:7px;letter-spacing:.06em}.brand-sub{font-size:9px}.brand-sub span{display:none}.mast-actions{gap:5px}.mast-actions .data-status,.mast-actions #printReport,.mast-actions #lockDashboard{display:none}.icon-button{width:29px;height:29px}.meta{font-size:8px;line-height:1.7;margin:8px 3px 12px}.tabs{gap:3px;padding:4px;border-radius:10px}.tab{font-size:9px;display:block;text-align:center;line-height:1.5;padding:8px 2px;white-space:normal}.tab-num{font-size:8px;margin-right:3px}.gctl{padding:10px;border-radius:10px;gap:8px}.gctl .grp{gap:5px}.gctl .onlyC{flex-basis:100%;display:grid;grid-template-columns:42px 1fr 62px 1fr}.gctl .onlyC .lbl{margin:0!important}.gctl .onlyC select{width:100%;max-width:none}.gctl .onlyC .lbl:nth-last-of-type(1){grid-column:1}.gctl .onlyC select:last-child{grid-column:2/5}.gctl .vdiv{display:none}.gctl .seg{font-size:10px;padding:4px 8px}.gctl select.sel{max-width:140px;font-size:10px}.gctl .reset-btn{font-size:9px;padding:4px 8px}.filter-context{font-size:8px;gap:4px}.page-intro{margin:21px 0 15px;align-items:flex-start}.page-intro h2{font-size:21px}.page-intro p{font-size:10px;line-height:1.8;max-width:30em}.intro-right{display:none}.page-intro .eyebrow{font-size:8px}.overview-controls{flex-direction:column;gap:10px;margin-bottom:12px}.month-group{width:100%;display:grid;grid-template-columns:repeat(9,1fr);gap:4px}.month-pill{min-width:0;font-size:10px;padding:7px 3px}.overview-utility{align-self:flex-end}.overview-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.overview-kpi{padding:13px}.overview-kpi.featured{padding-top:11px}.overview-kpi .kpi-value{font-size:27px}.overview-kpi .kpi-label{font-size:10px}.overview-kpi .kpi-desc{font-size:9px}.executive-note{font-size:10px;gap:8px;flex-wrap:wrap;margin:12px 0}.executive-note .note-tag{font-size:8px}.executive-note .text-btn{display:none}.executive-grid{grid-template-columns:minmax(0,1fr);gap:12px}.dashboard-card{padding:16px;border-radius:12px}.channel-panel{grid-column:auto}.rank-list{height:370px}.rank-controls{gap:6px}.rank-controls input{width:110px}.rank-row{grid-template-columns:20px minmax(0,1fr) 90px}.channel-list{display:grid;grid-template-columns:minmax(0,1fr);gap:15px}.channel-top{display:flex}.channel-top span{margin:0}.channel-summary{display:block}.secondary-grid{gap:12px;margin:12px 0}.risk-panel .risk-grid{grid-template-columns:repeat(2,1fr)}.team-loss{display:block}.action-grid{grid-template-columns:1fr;gap:14px}.focus-item,.focus-item:nth-child(2){border:0;border-bottom:1px solid var(--line);padding:0 0 14px}.focus-item:last-child{padding-bottom:0}.overview-foot{font-size:8px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi,.kpi+.kpi{padding:13px}.kpi .v{font-size:26px}.kpi .d,.kpi .p{font-size:9px}.headline{font-size:12px;padding:13px}.headline .scope{font-size:9px}#viewC>section,#viewA>section,#viewB>section{padding:14px;margin-top:14px}table.yt{min-width:750px}.twocol,.contrib{grid-template-columns:1fr}.brg{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hm-wrap .hm{min-width:800px}.tr{gap:6px;grid-template-columns:34px minmax(0,1fr) 70px}.tr .chg{grid-column:2/4}.tr .nm{font-size:11px}.tr .val{font-size:12px}.cb{grid-template-columns:90px 1fr 55px}.msg{grid-template-columns:1fr;gap:6px}.msg p{font-size:11px}.source-section{padding-top:18px}.source-section>h2{font-size:12px}.auth-card{padding:30px}.section-jumps{gap:5px}.section-jumps a{font-size:9px;padding:4px 8px}}
+@media print{body{background:#fff!important;color:#111}.wrap{max-width:none;padding:0}.masthead{box-shadow:none}.gctl,.tabs,.meta,.mast-actions,.overview-controls,.section-jumps,.source-section,.auth-gate,.filter-context,.text-btn,.card-footer{display:none!important}.dashboard-card,.kpi{break-inside:avoid;box-shadow:none}.executive-grid{display:block}.executive-grid>section{margin-bottom:15px}.rank-list{height:auto;max-height:none;overflow:visible}.channel-summary{display:block}.secondary-grid{display:block}.secondary-grid>section{margin-top:15px}.hm-wrap{overflow:visible}.overview-kpis{grid-template-columns:repeat(3,1fr)}.risk-panel .risk-grid{grid-template-columns:repeat(4,1fr)}}
+</style></head>
 <body>
-<div id="auth-gate">
-  <div class="auth-box">
-    <h2>LGECH PnL Dashboard</h2>
-    <div class="auth-en">Confidential · Internal Use Only</div>
-    <p>请输入访问密码 / 비밀번호를 입력하세요</p>
-    <input id="authPw" type="password" inputmode="numeric" placeholder="••••" autocomplete="off" onkeydown="if(event.key==='Enter')__tryAuth()">
-    <button onclick="__tryAuth()">확인 / Enter</button>
-    <div class="auth-err" id="authErr"></div>
-    <div class="auth-ko">2020–2026.9 · Reinvent Task Dept · BI/AX</div>
-  </div>
-</div>
+<div id="mergedAuth" class="auth-gate"><form id="unlockForm" class="auth-card"><span class="auth-monogram">LG<span>CH</span></span><p class="eyebrow">CHINA · FINANCIAL INTELLIGENCE</p><h2>C.O.I Dashboard</h2><p>통합 손익 대시보드 · 2026.09<br><small>请输入访问密码 / 비밀번호를 입력하세요</small></p><label class="sr-only" for="unlockPassword">访问密码</label><input id="unlockPassword" type="password" placeholder="Password" autocomplete="current-password" required><button class="auth-submit" type="submit">대시보드 열기 <span>→</span></button><p id="unlockError" class="auth-error" role="alert"></p><small class="auth-footer">Offline ready · All data embedded</small></form></div><div id="appMessage" class="toast" role="status" hidden></div>
 <div class="wrap">
-<div class="brandbar"><span class="bw">LGECH</span><span class="bs">Reinvent Task Dept · BI / AX</span><span class="bd">PnL Dashboard · 2020–2026.9</span></div>
-<h1>LGECH 손익 대시보드 · 2020년 ~ 2026년 9월</h1>
-<div class="meta">거래선별 손익 로데이터 기준 · 단위: 백만 USD(불함세, 별도 표기 제외) · 2020~2025년 연간 확정 실적 + 2026년 1~9월 실적 · 파란색은 개선, 빨간색은 악화</div>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" id="tabC" aria-selected="true" data-tab="C">① 2026 월별·고정비·Key Account</button>
-  <button class="tab" role="tab" id="tabA" aria-selected="false" data-tab="A">② 7개년 성과 히트맵</button>
-  <button class="tab" role="tab" id="tabB" aria-selected="false" data-tab="B">③ 영업이익 브리지</button>
-</div>
-<div class="gctl" id="gctl">
+<header class="masthead">
+  <div class="brand-lockup"><span class="brand-mark" aria-hidden="true">LG<span>CH</span></span><div><div class="eyebrow">CHINA · PERFORMANCE INTELLIGENCE</div><h1>LGECH <span>C.O.I Dashboard</span></h1><p class="brand-sub">중국 손익 통합 대시보드 <span>2020 — 2026.09</span></p></div></div>
+  <div class="mast-actions"><span class="data-status"><i></i> Actual · 2026.09</span><button class="icon-button" id="themeToggle" aria-label="어두운 테마 전환" title="테마 전환">◐</button><button class="icon-button" id="printReport" aria-label="현재 보고서 인쇄" title="현재 보고서 인쇄">↗</button><button class="utility-btn" id="lockDashboard" title="잠금">잠금</button></div>
+</header>
+<div class="meta">실적 기준 2026년 9월 · 금액: <b>백만 USD</b> · 수량: 대 · 초록은 수익/개선, 빨강은 손실/악화 · 원본 데이터와 계산식 내장</div>
+
+<nav class="tabs" role="tablist" aria-label="분석 페이지"><button class="tab" role="tab" id="tabO" aria-controls="viewO" aria-selected="true" data-tab="O"><span class="tab-num">01</span> 경영 총괄 <small>Executive overview</small></button>
+  <button class="tab" role="tab" id="tabC" aria-controls="viewC" aria-selected="true" data-tab="C"><span class="tab-num">02</span> 월별 심층 분석 <small>Monthly &amp; accounts</small></button>
+  <button class="tab" role="tab" id="tabA" aria-controls="viewA" aria-selected="false" data-tab="A"><span class="tab-num">03</span> 7개년 성과 <small>Historical performance</small></button>
+  <button class="tab" role="tab" id="tabB" aria-controls="viewB" aria-selected="false" data-tab="B"><span class="tab-num">04</span> 영업이익 브리지 <small>Profit drivers</small></button>
+</nav>
+<div class="gctl" id="gctl" aria-label="공통 분석 필터">
   <div class="grp"><span class="lbl">제품</span><select class="sel" id="gProd"></select></div>
   <span class="vdiv"></span>
   <div class="grp onlyAB"><span class="lbl">기간 기준</span>
@@ -200,11 +183,28 @@ table.yt tr.cur td{background:var(--surface)}
   <div class="grp"><span class="lbl">26년 구조조정비</span>
     <button class="seg" data-g="restr" data-v="inc" aria-pressed="true">포함(실적)</button>
     <button class="seg" data-g="restr" data-v="exc" aria-pressed="false">제외(펀더멘털)</button>
+  </div><button class="utility-btn reset-btn" id="resetFilters" title="공통 필터와 월 선택 초기화">필터 초기화 ↺</button></div><div id="filterContext" class="filter-context" role="status"></div>
+
+<div id="viewO" role="tabpanel" aria-labelledby="tabO">
+  <div class="page-intro"><div><span class="eyebrow">EXECUTIVE OVERVIEW</span><h2>핵심을 먼저, 원인은 더 깊게.</h2><p>월별 실적 · 채널 수익성 · 고객 리스크를 한 화면에 연결합니다.</p></div><div class="intro-right"><span>REPORTING PERIOD</span><b>2026.01 — 09</b><small>금액 단위: 백만 USD</small></div></div>
+  <div class="overview-controls"><div class="month-group" id="overviewMonths" aria-label="월 선택"></div><div class="overview-utility"><label class="sr-only" for="overviewPeriod">집계 기간</label><select id="overviewPeriod" class="sel"><option value="month">선택 월</option><option value="ytd">선택 월까지 누적</option></select><button id="downloadOverview" class="utility-btn">CSV 내보내기 ↓</button></div></div>
+  <div id="overviewKpis" class="overview-kpis"></div>
+  <div class="executive-note" id="overviewNote" role="status"></div>
+  <div class="executive-grid">
+    <section class="dashboard-card trend-panel"><div class="card-heading"><div><span class="eyebrow">MONTHLY PULSE</span><h2>월별 실적 추세</h2></div><span class="mini-label trend-period"><span>1–9월</span><span>단위: 백만 USD</span></span></div><div class="trend-table-wrap"><table class="pulse-table" id="overviewTrend"></table></div><div class="mini-chart" id="overviewMiniChart"></div><p class="mini-foot">행을 선택하면 월별 분석이 함께 바뀝니다.</p></section>
+    <section class="dashboard-card rank-panel"><div class="card-heading"><div><span class="eyebrow">KEY ACCOUNT CONTRIBUTION</span><h2 id="overviewRankTitle">핵심 고객 COI</h2><p class="card-unit-note">금액: 백만 USD (M$) · 수량: 대</p></div><span class="mini-label" id="overviewRankCount"></span></div><div class="rank-controls"><div class="small-segment" aria-label="고객 정렬"><button class="seg" data-rank="oi" aria-pressed="true">COI 순</button><button class="seg" data-rank="ns" aria-pressed="false">매출 순</button><button class="seg" data-rank="loss" aria-pressed="false">손실 순</button></div><label class="sr-only" for="customerSearch">거래선 검색</label><input type="search" id="customerSearch" placeholder="거래선 검색…" autocomplete="off"></div><div id="overviewRanks" class="rank-list"></div><nav class="rank-pagination" aria-label="고객 순위 페이지"><button type="button" class="utility-btn" id="rankPrevPage" aria-label="이전 고객 페이지">← 이전</button><span id="rankPageStatus" role="status" aria-live="polite"></span><button type="button" class="utility-btn" id="rankNextPage" aria-label="다음 고객 페이지">다음 →</button></nav><div class="card-footer"><span>고객을 선택하면 전체 분석에 필터 적용</span><button class="text-btn" data-go="C">고정비까지 보기 ↗</button></div></section>
+    <section class="dashboard-card channel-panel"><div class="card-heading"><div><span class="eyebrow">CHANNEL PROFITABILITY</span><h2 id="overviewChannelTitle">채널 손익</h2><p class="card-unit-note">금액: 백만 USD (M$)</p></div><span class="mini-label">COI / COI%</span></div><div id="overviewChannels" class="channel-list"></div><div class="channel-summary" id="overviewChannelSummary"></div></section>
   </div>
+  <div class="secondary-grid">
+    <section class="dashboard-card product-panel"><div class="card-heading"><div><span class="eyebrow">PRODUCT MIX &amp; PROFITABILITY</span><h2>제품별 손익 구조</h2></div><div class="small-segment"><button class="seg" data-pmetric="oi" aria-pressed="true">COI</button><button class="seg" data-pmetric="ns" aria-pressed="false">매출</button><button class="seg" data-pmetric="rate" aria-pressed="false">COI%</button></div></div><p class="mini-foot">제품 × 월 · 셀을 누르면 상세 손익과 월별 추이가 열립니다.</p><div class="hm-wrap matrix-wrap"><table id="overviewProductMatrix" class="yt product-matrix"></table></div><div class="matrix-legend"><span><i class="legend-dot positive"></i>수익 / 개선</span><span><i class="legend-dot negative"></i>손실 / 악화</span><span>단위: 백만 USD · COI%는 매출 대비</span></div></section>
+    <section class="dashboard-card risk-panel"><div class="card-heading"><div><span class="eyebrow">CONCENTRATION &amp; RISK</span><h2>고객 집중도와 리스크</h2><p class="card-unit-note">금액: 백만 USD (M$) · 비중: %</p></div></div><div id="overviewRisk" class="risk-grid"></div><div id="overviewTeamLoss" class="team-loss"></div></section>
+  </div>
+  <section class="dashboard-card action-panel"><div class="card-heading"><div><span class="eyebrow">MANAGEMENT FOCUS</span><h2>확인이 필요한 포인트</h2><p class="card-unit-note">금액 단위: 백만 USD (M$)</p></div><span class="mini-label">데이터 기반 · 원인 확인 필요</span></div><div class="action-grid" id="overviewActions"></div></section>
+  <p class="overview-foot" id="overviewDataFoot"></p>
 </div>
 
 <!-- ================= TAB A ================= -->
-<div id="viewC">
+<div id="viewC" class="hidden"><div class="page-intro"><div><span class="eyebrow">MONTHLY DEEP DIVE</span><h2>월별 구조를 깊이 있게</h2><p>손익 흐름부터 고정비·손익분기·핵심 거래선까지, 같은 필터로 연결합니다.</p></div></div><div class="section-jumps"><a href="#cTrSub">월별 추세</a><a href="#cBrSub">증감 요인</a><a href="#cFxSub">고정비</a><a href="#cKA">Key Account</a><a href="#cMsgs">핵심 메시지</a></div>
   <div class="headline" id="hlC"></div>
   <div class="kpis" id="kpisC"></div>
   <div class="foot" id="kpiFootC"></div>
@@ -243,14 +243,14 @@ table.yt tr.cur td{background:var(--surface)}
     </div>
     <h3 style="margin-top:22px">고정비 항목 × 월</h3>
     <div class="hm-wrap"><table class="yt" id="cFxT"></table></div>
-    <div class="foot">색: 각 항목의 1~9월 월평균 대비 많으면 빨강, 적으면 파랑. 'Q3 vs Q1'은 월평균 비교입니다.</div>
+    <div class="foot">색: 각 항목의 1~9월 월평균 대비 많으면 빨강, 적으면 초록. 'Q3 vs Q1'은 월평균 비교입니다.</div>
     <h3 style="margin-top:22px">손익분기 구조</h3>
     <div class="hm-wrap"><table class="yt" id="cBepT"></table></div>
     <h3 style="margin-top:22px">Key Account × 고정비 항목 <small class="mut" style="font-weight:400">매출 대비 비율 · 행을 누르면 해당 거래선으로 필터</small></h3>
     <div class="hm-wrap"><table class="yt" id="cFxA"></table></div>
     <h3 style="margin-top:22px">제품 × 고정비 항목 <small class="mut" style="font-weight:400">매출 대비 비율</small></h3>
     <div class="hm-wrap"><table class="yt" id="cFxP"></table></div>
-    <div class="foot">색: 같은 열의 범위 합계 비율보다 높으면 빨강, 낮으면 파랑. 매출 0.1 미만은 비율을 '–'로 표시합니다.</div>
+    <div class="foot">색: 같은 열의 범위 합계 비율보다 높으면 빨강, 낮으면 초록. 매출 0.1 미만은 비율을 '–'로 표시합니다.</div>
     <h3 style="margin-top:22px">고정비 7개년 추이 (각 연도 1~9월)</h3>
     <p class="sub" id="cFx7Sub"></p>
     <div class="hm-wrap"><table class="yt" id="cFx7"></table></div>
@@ -269,7 +269,7 @@ table.yt tr.cur td{background:var(--surface)}
   </section>
 </div>
 
-<div id="viewA" class="hidden">
+<div id="viewA" class="hidden"><div class="page-intro"><div><span class="eyebrow">HISTORICAL PERFORMANCE</span><h2>7개년의 흐름을 한눈에</h2><p>2020–2026년 실적과 제품·조직 히트맵으로 변화의 맥락을 확인합니다.</p></div></div>
   <div class="headline" id="hlA"></div>
   <div class="kpis" id="kpis"></div>
   <div class="foot" id="kpiFoot"></div>
@@ -282,12 +282,12 @@ table.yt tr.cur td{background:var(--surface)}
       <div class="card"><h3>영업이익 · 영업이익률</h3><div id="chOI"></div></div>
     </div>
     <div class="card" style="margin-top:16px"><h3>월별 순매출 · 영업이익 (2020.1 ~ 2026.9)</h3><div id="chM"></div>
-      <div class="foot">막대 위: 순매출, 막대 아래: 영업이익(파랑 흑자 / 빨강 적자). 막대에 마우스를 올리면 값이 보입니다.</div></div>
+      <div class="foot">막대 위: 순매출, 막대 아래: 영업이익(초록 흑자 / 빨강 적자). 막대에 마우스를 올리면 값이 보입니다.</div></div>
   </section>
 
   <section>
     <h2>제품 × 연도 히트맵</h2>
-    <p class="sub">셀 색은 전년 같은 기간 대비 개선(파랑)·악화(빨강)입니다. 셀을 누르면 해당 연도의 손익 구조, 전년비 3대 원인, 월별 추이가 열립니다.</p>
+    <p class="sub">셀 색은 전년 같은 기간 대비 개선(초록)·악화(빨강)입니다. 셀을 누르면 해당 연도의 손익 구조, 전년비 3대 원인, 월별 추이가 열립니다.</p>
     <div class="ctl" id="mSel"></div>
     <div class="hm-wrap"><table class="hm" id="hmP"></table></div>
     <div class="legend"><span>악화</span><span class="lg-bar"></span><span>개선</span><span id="lgNote" class="mut"></span></div>
@@ -319,7 +319,7 @@ table.yt tr.cur td{background:var(--surface)}
 </div>
 
 <!-- ================= TAB B ================= -->
-<div id="viewB" class="hidden">
+<div id="viewB" class="hidden"><div class="page-intro"><div><span class="eyebrow">PROFIT DRIVERS</span><h2>영업이익은 무엇으로 바뀌었나</h2><p>매출·한계이익률·고정비의 영향을 단계별로 나누어, 제품과 채널의 기여를 확인합니다.</p></div></div>
   <div class="headline" id="hlB"></div>
   <div class="ctl" style="margin-top:6px">
     <span class="lbl">비교</span><span id="yrSel" style="display:contents"></span>
@@ -371,8 +371,8 @@ table.yt tr.cur td{background:var(--surface)}
   </section>
 </div>
 
-<section>
-  <h2>데이터 출처와 한계</h2>
+<section class="source-section" id="sourceNotes">
+  <h2>데이터 출처와 한계</h2><p class="note">통합 안내 · 데이터와 산식은 첨부된 v2 HTML을 사용하고, 온라인 C.O.I의 KPI 카드·월 선택·고객 랭킹·채널 막대·제품 매트릭스를 같은 데이터로 다시 구성했습니다. 온라인 4~5월의 일부 채널 값에는 이전 조정치가 남아 있어 이 값은 이식하지 않았습니다. 부서/제품/거래선 집계와 과거 채널군 집계는 원본 반올림 정밀도로 소액 차이가 날 수 있습니다.</p><p class="note">경영 총괄·월별 심층: 공통 조직 데이터 · 7개년·브리지: 원본의 과거 비교 채널군 데이터. 구조조정비 제외는 원본 추정 배분을 그대로 적용하며 실제 보상금의 확정 배부를 의미하지 않습니다. 집계 거래선 “기타”는 단일 고객이 아니므로 집중도 산정에서 제외합니다.</p>
   <ul class="notes">
     <li>2020~2025년: <b>과거 손익 로우데이터.xlsx</b>(DATA_과거). 2026년 1~8월: <b>거래선별 손익 실적.xlsx</b>(DATA). 2026년 9월: <b>9월 raw data.xlsx</b>를 같은 항목 구조로 변환(C.O.I Raw data와 1~8월 합계 일치 확인).</li>
     <li>채널군: <b>싸이푸 비교군</b> = 2026년 赛夫(+亲水商贸) / 2020~2025년 京东世纪贸易·亲水商贸의 가전·TV 제품(로데이터의 "전년 싸이푸 비교" 표시 기준). <b>징동 IT</b> = 2026년 京东世纪贸易(IT) / 과거 京东世纪贸易 MNT·PC. <b>그 외</b> = 나머지 전체.</li>
@@ -422,7 +422,7 @@ function M(v){const ns=g_(v,'ns'),mp=g_(v,'mp'),oi=g_(v,'oi'),q=g_(v,'q');const 
    dl:g_(v,'dl'),g:g_(v,'g'),d:g_(v,'d'),mat:g_(v,'mat'),pre:g_(v,'pre')}}
 /* ---------- formatting (input KUSD) ---------- */
 const M1=x=>x/1000;
-function fm(x,dec){if(x==null||!isFinite(x))return '–';const v=x/1000;const a=Math.abs(v);const d=dec!=null?dec:(a>=100?0:(a>=1?1:2));return (v<0?'−':'')+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fm(x,dec){if(x==null||!isFinite(x))return '–';const v=x/1000;const a=Math.abs(v);const d=dec!=null?dec:2;return (v<0?'−':'')+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
 function fs(x,dec){if(x==null||!isFinite(x))return '–';const s=fm(x,dec);return (x>0&&s!=='0.0'&&s!=='0.00'?'+':'')+s}
 function pc(x,d=1){if(x==null||!isFinite(x))return '–';return (x<0?'−':'')+Math.abs(x*100).toFixed(d)+'%'}
 function pp(x,d=1){if(x==null||!isFinite(x))return '–';return (x>0?'+':x<0?'−':'')+Math.abs(x*100).toFixed(d)+'%p'}
@@ -1027,26 +1027,242 @@ document.getElementById('oSel').innerHTML=OMET.map(m=>`<button class="seg" data-
 document.querySelectorAll('[data-om]').forEach(b=>b.onclick=()=>{S.ometric=b.dataset.om;document.querySelectorAll('[data-om]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderHMO()});
 document.getElementById('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
 function render(){if(S.tab==='A')renderA();else if(S.tab==='B')renderB();else renderC()}
-function boot(){initGlobal();setTab('C');}
-/* ===== Access gate (fused from COI dashboard) ===== */
-(function(){
-  var KEY='soyik_auth_ok', authed=false;
-  function safeGet(){try{return sessionStorage.getItem(KEY)}catch(e){return authed?'1':null}}
-  function tryAuth(){
-    var inp=document.getElementById('authPw');
-    var v=(inp&&inp.value||'').trim();
-    if(v==='2026'){
-      authed=true; try{sessionStorage.setItem(KEY,'1')}catch(e){}
-      var g=document.getElementById('auth-gate'); if(g)g.classList.add('hidden');
-      if(!window.__b){window.__b=true; boot();}
-    } else {
-      var err=document.getElementById('authErr'); if(err)err.textContent='密码错误 / 비밀번호가 틀렸습니다';
-    }
+// Integration layer: use the reference's O/T/R models and calculation functions.
+// The public dashboard contributes presentation patterns, never mixed adjustments.
+let overviewMonth=9,overviewPeriod='month',rankMetric='oi',productMetric='oi',customerQuery='';
+const RANK_PAGE_SIZE=7;
+let rankPage=1,rankContextKey='';
+const originalRender=render;
+const modelAudit=(()=>{
+  const out=[];
+  for(const m of MS9){
+    const a=zero(),b=zero();
+    D.O.filter(r=>r[4]===m).forEach(r=>{for(let i=0;i<NF;i++)a[i]+=r[i+5]});
+    D.T.filter(r=>r[0]===2026&&r[1]===m).forEach(r=>{for(let i=0;i<NF;i++)b[i]+=r[i+4]});
+    out.push({month:m,organizationNS:a[FI.ns],organizationOI:a[FI.oi],historyNS:b[FI.ns],historyOI:b[FI.oi],differenceNS:a[FI.ns]-b[FI.ns],differenceOI:a[FI.oi]-b[FI.oi]});
   }
-  var g=document.getElementById('auth-gate');
-  if(safeGet()==='1'){ if(g)g.classList.add('hidden'); if(!window.__b){window.__b=true; boot();} }
-  window.__tryAuth=tryAuth;
+  return out;
 })();
+function displayMoney(kusd,digits=2){return fm(kusd,digits)}
+function displayName(name){return name==='Others(기타)'?'기타 거래선(집계)':name==='others'?'기타(조정·공통 포함)':name}
+function isOtherCustomer(name){return name==='Others(기타)'||name==='others'}
+function selectedMonths(){return overviewPeriod==='ytd'?MS9.filter(m=>m<=overviewMonth):[overviewMonth]}
+function periodName(){return overviewPeriod==='ytd'?`1–${overviewMonth}월 누적`:`${overviewMonth}월`}
+function basisName(){return S.restr==='exc'?'구조조정비 제외':'구조조정비 포함 · 실제'}
+function scopeEntities(ms,key){
+  const ix={dep:0,team:1,acct:2,prod:3}[key];
+  const names={dep:D.deps,team:D.teams,acct:D.custs,prod:D.prods}[key];
+  const groups=new Map();
+  D.O.forEach(r=>{
+    if(!ms.includes(r[4])||!fC(r))return;
+    const k=r[ix];if(!groups.has(k))groups.set(k,zero());oAdd(groups.get(k),r);
+  });
+  return [...groups].map(([id,v])=>({id,name:names[id],v,m:M(v)})).filter(x=>x.v.some(v=>Math.abs(v)>.00001));
+}
+function adjustDifference(ms){
+  if(S.restr!=='exc')return 0;
+  const adjusted=oV(ms)[FI.oi];
+  let actual=0;
+  D.O.forEach(r=>{if(ms.includes(r[4])&&fC(r))actual+=r[5+FI.oi]});
+  return adjusted-actual;
+}
+function kpiCard(label,value,description,color='',featured=false,unit='백만 USD'){
+  return `<div class="overview-kpi${featured?' featured':''}"><div class="kpi-label">${label}</div><div class="kpi-value ${color}">${value}<span class="kpi-unit">${unit}</span></div><div class="kpi-desc">${description}</div></div>`;
+}
+function renderOverview(){
+  const ms=selectedMonths(),v=oV(ms),a=M(v),tv=oV(MS9),total=M(tv);
+  const monthly=MS9.map(m=>M(oV([m]))),previous=overviewMonth>1?monthly[overviewMonth-2]:null;
+  const same2025=v25(ms),p25=same2025?M(same2025):null;
+  const monthName=periodName(),adj=adjustDifference(ms);
+  const delta=(overviewPeriod==='month'&&previous)?a.oi-previous.oi:null;
+  const salesNote=p25?`전년 동기 ${ys(yoy(a.ns,p25.ns))}`:`${num(a.q)}대 · 동일 범위`;
+  const oiNote=delta!==null?`전월 대비 ${fs(delta,2)}`:overviewPeriod==='ytd'?`선택 월까지 ${overviewMonth}개월 합계`:'첫 달 · 전월 비교 없음';
+  document.getElementById('overviewMonths').innerHTML=MS9.map(m=>`<button class="month-pill" type="button" data-overview-month="${m}" aria-pressed="${m===overviewMonth}">${m}월</button>`).join('');
+  document.getElementById('overviewKpis').innerHTML=[
+    kpiCard('1–9월 누적 순매출',displayMoney(total.ns),`${num(total.q)}대 · 전체 9개월`,''),
+    kpiCard('1–9월 누적 COI',displayMoney(total.oi),`COI% ${pc(total.oiR)} · ${S.restr==='exc'?'조정 후':'실제'}`,cls(total.oi)),
+    kpiCard(`${monthName} 순매출`,displayMoney(a.ns),salesNote,'',true),
+    kpiCard(`${monthName} COI`,displayMoney(a.oi),oiNote,cls(a.oi),true),
+    kpiCard(`${monthName} COI%`,pc(a.oiR),`한계이익률 ${pc(a.mpR)}`,cls(a.oiR),true,''),
+    kpiCard(`${monthName} 고정비율`,pc(a.fxR),`고정비 ${displayMoney(a.fx)} · 제외 조정 +${displayMoney(adj)}`,'',false,'')
+  ].join('');
+  const top=scopeEntities(ms,'acct').filter(x=>!isOtherCustomer(x.name)).sort((x,y)=>y.m.ns-x.m.ns)[0];
+  const trendText=delta!==null?`전월 대비 COI <b class="${cls(delta)}">${fs(delta,2)}</b> 백만 USD`:`${monthName} COI <b>${displayMoney(a.oi)}</b> 백만 USD`;
+  const topText=top&&a.ns>0?` · 매출 1위 <b>${esc(top.name)}</b> 비중 <b>${pc(top.m.ns/a.ns)}</b>`:'';
+  document.getElementById('overviewNote').innerHTML=`<span class="note-tag">MONTHLY READOUT</span><span>${trendText}${topText} · ${basisName()}</span><button type="button" class="text-btn" data-go="C">원인 분석 ↗</button>`;
+  renderPulse(monthly,total);
+  renderAccountRanking();
+  renderChannels(a);
+  renderProductMatrix();
+  renderRisk(a);
+  renderActions(a,monthly);
+  document.getElementById('overviewDataFoot').textContent=`공통 범위: ${cScopeLbl()} · ${periodName()} · ${basisName()} · KPI·랭킹·제품·채널은 첨부 v2의 조직별 원본 데이터에서 계산합니다. 집계 거래선은 단일 고객 집중도에서 제외합니다. 금액: 백만 USD(1백만 USD = 1,000K$). 원본 반올림으로 과거 채널군 합계와 소액 차이가 있습니다.`;
+}
+function renderPulse(mon,total){
+  document.getElementById('overviewTrend').innerHTML=`<thead><tr><th>월</th><th>순매출<small class="amount-unit">(백만 USD)</small></th><th>COI<small class="amount-unit">(백만 USD)</small></th><th>COI%</th></tr></thead><tbody>${mon.map((x,i)=>`<tr data-overview-month="${i+1}" class="${i+1===overviewMonth?'selected':''}"><td><button class="text-btn" data-overview-month="${i+1}" style="color:inherit;font-size:inherit;padding:0" aria-label="${i+1}월 선택">${i+1}월</button></td><td>${displayMoney(x.ns)}</td><td class="${cls(x.oi)}">${displayMoney(x.oi)}</td><td class="${cls(x.oiR)}">${pc(x.oiR)}</td></tr>`).join('')}</tbody><tfoot><tr class="total"><td>누적</td><td>${displayMoney(total.ns)}</td><td class="${cls(total.oi)}">${displayMoney(total.oi)}</td><td>${pc(total.oiR)}</td></tr></tfoot>`;
+  const W=340,H=108,base=53,top=15,bottom=92,max=Math.max(1,...mon.map(x=>Math.abs(x.oi))),width=34;
+  const bars=mon.map((x,i)=>{const h=Math.abs(x.oi)/max*34;const xx=21+i*35;return `<g role="button" tabindex="0" data-overview-month="${i+1}" aria-label="${i+1}월 COI ${displayMoney(x.oi)} 백만 USD" style="cursor:pointer"><title>${i+1}월 COI ${displayMoney(x.oi)} 백만 USD · ${pc(x.oiR)}</title><rect x="${xx-8}" y="0" width="${width}" height="${H}" fill="${i+1===overviewMonth?'var(--accent-light)':'transparent'}" rx="5"/><rect x="${xx}" y="${x.oi>=0?base-h:base}" width="15" height="${Math.max(.5,h)}" rx="2" fill="${x.oi>=0?'var(--pos)':'var(--neg)'}"/><text x="${xx+7}" y="${x.oi>=0?base-h-5:base+h+11}" text-anchor="middle" style="font-size:7px">${displayMoney(x.oi)}</text><text x="${xx+7}" y="${bottom+7}" text-anchor="middle" style="font-size:8px;fill:${i+1===overviewMonth?'var(--accent)':'var(--ink3)'}">${i+1}월</text></g>`}).join('');
+  document.getElementById('overviewMiniChart').innerHTML=`<div class="chart-unit">월별 COI · 단위: 백만 USD (USD million)</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="1–9월 월별 COI, 단위: 백만 USD"><line x1="12" y1="${base}" x2="330" y2="${base}" stroke="var(--line2)" stroke-dasharray="3 3"/>${bars}</svg>`;
+}
+function renderAccountRanking(){
+  const list=scopeEntities(selectedMonths(),'acct');
+  const customers=list.filter(x=>!isOtherCustomer(x.name));
+  const others=list.filter(x=>isOtherCustomer(x.name));
+  let items=customers.filter(x=>!customerQuery||x.name.toLowerCase().includes(customerQuery.toLowerCase()));
+  items.sort((a,b)=>rankMetric==='ns'?b.m.ns-a.m.ns:rankMetric==='loss'?a.m.oi-b.m.oi:b.m.oi-a.m.oi);
+  if(rankMetric==='loss')items=items.filter(x=>x.m.oi<0);
+  const contextKey=JSON.stringify([overviewMonth,overviewPeriod,rankMetric,customerQuery,S.dep,S.team,S.acct,S.prod,S.restr]);
+  if(contextKey!==rankContextKey){rankPage=1;rankContextKey=contextKey}
+  const pageCount=Math.max(1,Math.ceil(items.length/RANK_PAGE_SIZE));
+  rankPage=Math.max(1,Math.min(rankPage,pageCount));
+  const pageStart=(rankPage-1)*RANK_PAGE_SIZE;
+  const visibleItems=items.slice(pageStart,pageStart+RANK_PAGE_SIZE);
+  const max=Math.max(1,...items.map(x=>Math.abs(x.m[rankMetric==='ns'?'ns':'oi'])));
+  document.getElementById('overviewRankTitle').textContent=`${periodName()} 핵심 고객 ${rankMetric==='ns'?'매출':rankMetric==='loss'?'손실':'COI'}`;
+  document.getElementById('overviewRankCount').textContent=`${items.length} Accounts`;
+  document.getElementById('overviewRanks').innerHTML=visibleItems.length?visibleItems.map((x,i)=>{
+    const value=x.m[rankMetric==='ns'?'ns':'oi'];
+    return `<button type="button" class="rank-row" data-account="${x.id}" title="${esc(x.name)}로 필터"><span class="rank-no">${String(pageStart+i+1).padStart(2,'0')}</span><div class="rank-description"><div class="rank-name">${esc(x.name)}</div><div class="rank-metrics"><span>순매출 ${displayMoney(x.m.ns)} M$</span><span>${num(x.m.q)}대</span></div><div class="rank-track"><i class="${value<0?'loss':''}" style="width:${Math.min(100,Math.abs(value)/max*100)}%"></i></div></div><div class="rank-result ${rankMetric==='ns'?'':cls(value)}"><span class="rank-amount">${displayMoney(value)}<span class="amount-currency">M$</span></span><small>COI ${pc(x.m.oiR)}</small></div></button>`;
+  }).join(''):`<div class="empty-state">${customerQuery?'검색 조건에 해당하는 거래선이 없습니다.':rankMetric==='loss'?'현재 범위에 손실 거래선이 없습니다.':'현재 범위에 거래선 데이터가 없습니다.'}</div>`;
+  document.getElementById('rankPageStatus').textContent=items.length?`${pageStart+1}–${Math.min(pageStart+RANK_PAGE_SIZE,items.length)} / ${items.length} · ${rankPage}/${pageCount} 페이지`:'0 / 0';
+  document.getElementById('rankPrevPage').disabled=rankPage===1;
+  document.getElementById('rankNextPage').disabled=rankPage===pageCount||items.length===0;
+  const footer=document.querySelector('.rank-panel .card-footer span');
+  footer.textContent=others.length?`기타 집계 COI ${displayMoney(others.reduce((n,x)=>n+x.m.oi,0))} M$ · 단일 고객 순위 제외`:'고객 선택 → 공통 필터 적용';
+}
+function renderChannels(total){
+  const channels=scopeEntities(selectedMonths(),'dep').sort((a,b)=>b.m.ns-a.m.ns);
+  const max=Math.max(1,...channels.map(x=>Math.abs(x.m.oi)));
+  document.getElementById('overviewChannelTitle').textContent=`${periodName()} 채널 손익`;
+  document.getElementById('overviewChannels').innerHTML=channels.map(x=>`<button class="channel-row" type="button" data-department="${x.id}" title="${esc(x.name)}로 필터"><div class="channel-top"><span class="channel-name">${esc(displayName(x.name))}</span><span class="channel-amount ${cls(x.m.oi)}">${displayMoney(x.m.oi)} M$ / ${pc(x.m.oiR)}</span></div><div class="channel-track"><i class="${x.m.oi<0?'loss':''}" style="width:${Math.min(100,Math.abs(x.m.oi)/max*100)}%"></i></div><div class="channel-meta"><span>순매출 ${displayMoney(x.m.ns)} M$</span><span>매출 비중 ${pc(total.ns>0?x.m.ns/total.ns:NaN)}</span></div></button>`).join('')||'<div class="empty-state">현재 범위에 데이터가 없습니다.</div>';
+  const colors=['#344a70','#6b89a6','#a50034','#609fa6','#c4cedb'];
+  const positiveSales=channels.reduce((n,x)=>n+Math.max(0,x.m.ns),0);
+  document.getElementById('overviewChannelSummary').innerHTML=`<span>선택 범위 전체 COI</span><b class="${cls(total.oi)}">${displayMoney(total.oi)} <small style="font-size:10px;font-weight:500">백만 USD</small></b><div class="share-track">${channels.map((x,i)=>`<i title="${esc(x.name)} 매출 비중" style="width:${positiveSales?Math.max(0,x.m.ns)/positiveSales*100:0}%;background:${colors[i%colors.length]}"></i>`).join('')}</div><span>순매출 ${displayMoney(total.ns)} · ${channels.length}개 채널<br>막대는 COI 절대 금액, 아래 구성은 양(+) 매출 비중</span>`;
+}
+function renderProductMatrix(){
+  const ps=PSEL();
+  const rows=ps.map(p=>({p,mon:MS9.map(m=>M(oVP([m],p))),total:M(oVP(MS9,p))})).filter(r=>r.mon.some(x=>Math.abs(x.ns)+Math.abs(x.oi)+Math.abs(x.q)>.00001));
+  const monthly=MS9.map(m=>M(oV([m]))),total=M(oV(MS9));
+  const get=x=>productMetric==='rate'?x.oiR:productMetric==='ns'?x.ns:x.oi;
+  const fmt=x=>productMetric==='rate'?pc(x):displayMoney(x);
+  const base=productMetric==='ns'?Math.max(1,...rows.flatMap(r=>r.mon.map(x=>Math.abs(x.ns)))):Math.max(.1,...rows.flatMap(r=>r.mon.map(x=>Math.abs(x.oi))))*.9;
+  const cell=(m,p,month,all=false)=>{const value=get(m),ratio=productMetric==='rate'?value/.15:value/base;const na=!Number.isFinite(value)||Math.abs(m.ns)+Math.abs(m.oi)<.00001;
+    let color=bgc(ratio),ink=tcol(ratio);
+    if(productMetric==='ns'){const alpha=Math.min(.7,Math.abs(value)/base*.6);color=na?'transparent':`rgba(var(--navy-rgb),${.05+alpha})`;ink=alpha>.5?'#fff':'var(--ink)'}
+    return `<td${all?' class="total-col"':''}><button type="button" class="product-cell" data-product-detail="${p}" data-detail-month="${month}" ${na?'disabled':''} style="background:${na?'var(--surface)':color};color:${na?'var(--ink3)':ink}" title="${esc(p==='ALL'?'전체':PNAME[D.prods[p]]||D.prods[p])} · ${month==='ALL'?'1–9월 누적':month+'월'} · ${na?'데이터 없음':fmt(value)}">${na?'–':fmt(value)}</button></td>`;
+  };
+  document.getElementById('overviewProductMatrix').innerHTML=`<thead><tr><th>제품</th>${MS9.map(m=>`<th class="${m===overviewMonth?'active-month':''}">${m}월</th>`).join('')}<th class="total-col">1–9월</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="product-label"><button class="text-btn" style="color:inherit;font-size:10px;padding:0;text-align:left" data-select-product="${r.p}">${esc(PNAME[D.prods[r.p]]||D.prods[r.p])}</button></td>${r.mon.map((x,i)=>cell(x,r.p,i+1)).join('')}${cell(r.total,r.p,'ALL',true)}</tr>`).join('')}<tr><td class="product-label">합계</td>${monthly.map((x,i)=>cell(x,'ALL',i+1)).join('')}${cell(total,'ALL','ALL',true)}</tr></tbody>`;
+}
+function renderRisk(total){
+  const entities=scopeEntities(selectedMonths(),'acct'),named=entities.filter(x=>!isOtherCustomer(x.name)).sort((a,b)=>b.m.ns-a.m.ns);
+  const top=named[0],loss=named.filter(x=>x.m.oi<0),top5=named.slice(0,5).reduce((n,x)=>n+x.m.ns,0);
+  const exclude=top?total.oi-top.m.oi:NaN;
+  document.getElementById('overviewRisk').innerHTML=`
+    <div class="risk-stat"><span class="risk-lbl">매출 1위 거래선</span><b class="risk-name" title="${top?esc(top.name):''}">${top?esc(top.name):'–'}</b><small>기타 집계 제외</small></div>
+    <div class="risk-stat"><span class="risk-lbl">1위 고객 매출 비중</span><b>${pc(top&&total.ns>0?top.m.ns/total.ns:NaN)}</b><small>Top 5 ${pc(total.ns>0?top5/total.ns:NaN)}</small></div>
+    <div class="risk-stat"><span class="risk-lbl">1위 고객 제외 COI</span><b class="risk-money ${cls(exclude)}">${displayMoney(exclude)}<span class="amount-currency">M$</span></b><small>전체 COI − 1위 고객 COI</small></div>
+    <div class="risk-stat"><span class="risk-lbl">손실 거래선</span><b class="${loss.length?'neg':''}">${loss.length}<small> 개</small></b><small>COI 합계 ${displayMoney(loss.reduce((n,x)=>n+x.m.oi,0))} M$</small></div>`;
+  const teams=scopeEntities(selectedMonths(),'team').filter(x=>x.m.oi<0).sort((a,b)=>a.m.oi-b.m.oi).slice(0,3);
+  document.getElementById('overviewTeamLoss').innerHTML=`<h3>손실 영업팀 · Worst 3</h3>${teams.map(x=>`<button class="loss-team-row" type="button" data-team="${x.id}"><span>${esc(x.name)}</span><b class="neg">${displayMoney(x.m.oi)} M$</b></button>`).join('')||'<p class="mini-foot">현재 범위에 손실 영업팀이 없습니다.</p>'}`;
+}
+function renderActions(total,monthly){
+  const products=scopeEntities(selectedMonths(),'prod').sort((a,b)=>a.m.oi-b.m.oi),channels=scopeEntities(selectedMonths(),'dep').sort((a,b)=>a.m.oi-b.m.oi);
+  const loss=products.find(x=>x.m.oi<0),channel=channels.find(x=>x.m.oi<0);
+  const adjustment=adjustDifference(selectedMonths());
+  const denom=total.mpR>0?total.fx/total.mpR:NaN;
+  const margin=Number.isFinite(denom)&&total.ns>0?(total.ns-denom)/total.ns:NaN;
+  const focus=[
+    ['제품 수익성',loss?`${esc(PNAME[loss.name]||loss.name)} COI <span class="neg">${displayMoney(loss.m.oi)}</span>. 제품 믹스·재료비율·판가차감을 확인하세요.`:'현재 선택 범위에 손실 제품이 없습니다. 낮은 COI% 제품의 판가·원가 변화를 확인하세요.'],
+    ['채널 손익',channel?`${esc(channel.name)} COI <span class="neg">${displayMoney(channel.m.oi)}</span>. 고객 조건과 고정비 배부 기준을 확인하세요.`:'선택 범위의 채널 COI는 모두 0 이상입니다. 기여가 낮은 채널의 거래 조건을 확인하세요.'],
+    ['손익분기 구조',Number.isFinite(denom)?`추정 손익분기 매출 <span class="amount">${displayMoney(denom)}</span>, 안전여유율 <span class="amount">${pc(margin)}</span>. 고정비와 한계이익률을 함께 점검하세요.`:'한계이익률이 0 이하이므로 손익분기 매출을 표시하지 않습니다. 변동비와 판가차감을 먼저 확인하세요.'],
+    ['조정 항목과 해석',S.restr==='exc'?`제외 조정 <span class="amount">+${displayMoney(adjustment)}</span>. 4–5월 구조조정비의 원본 추정 배부이며 확정 실제 배부와 구분해야 합니다.`:'현재 실제 실적 기준입니다. 구조조정비 제외를 선택하면 원본 배부 추정치가 KPI·채널·고객에 함께 반영됩니다.']
+  ];
+  document.getElementById('overviewActions').innerHTML=focus.map(([h,p],i)=>`<div class="focus-item"><span class="focus-no">FOCUS ${String(i+1).padStart(2,'0')}</span><h3>${h}</h3><p>${p}</p></div>`).join('');
+}
+function openOverviewDetail(product,month){
+  const p=product==='ALL'?null:+product;
+  const ms=month==='ALL'?MS9:[+month];
+  const filter=p===null?null:r=>r[3]===p;
+  const v=oV(ms,filter),m=M(v),mon=MS9.map(mm=>M(oV([mm],filter)));
+  const nm=p===null?'전체 제품':PNAME[D.prods[p]]||D.prods[p];
+  document.getElementById('dT').textContent=`${nm} · ${month==='ALL'?'1–9월 누적':month+'월'} 손익`;
+  document.getElementById('dS').textContent=`${cScopeLbl()} · ${basisName()} · 단위: 백만 USD`;
+  const table=[['순매출',displayMoney(m.ns)],['수량(대)',num(m.q)],['한계이익',displayMoney(m.mp)],['한계이익률',pc(m.mpR)],['고정비',displayMoney(m.fx)],['고정비율',pc(m.fxR)],['COI',displayMoney(m.oi)],['COI%',pc(m.oiR)],['순판가(USD/대)',num(m.asp)],['차감율',pc(m.dR)]];
+  document.getElementById('dB').innerHTML=`<div class="sec">선택 범위 손익</div><table class="dt"><thead><tr><th>항목</th><th>값</th></tr></thead><tbody>${table.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</tbody></table><div class="sec">월별 손익</div><div class="hm-wrap"><table class="dt"><thead><tr><th>월</th>${MS9.map(mm=>`<th>${mm}월</th>`).join('')}</tr></thead><tbody><tr><td>순매출</td>${mon.map(x=>`<td>${displayMoney(x.ns)}</td>`).join('')}</tr><tr><td>COI</td>${mon.map(x=>`<td class="${cls(x.oi)}">${displayMoney(x.oi)}</td>`).join('')}</tr><tr><td>COI%</td>${mon.map(x=>`<td class="${cls(x.oiR)}">${pc(x.oiR)}</td>`).join('')}</tr></tbody></table></div><div style="display:flex;gap:8px;margin-top:15px"><button class="btn" id="detailDrill">이 범위의 월별 심층 분석 →</button></div>`;
+  document.getElementById('detailDrill').onclick=()=>{if(p!==null)S.prod=D.prods[p];syncSel();document.getElementById('dlg').close();setTab('C')};
+  document.getElementById('dlg').showModal();
+}
+function updateContext(){
+  const historical=S.tab==='A'||S.tab==='B';
+  const scope=historical?scopeLbl():cScopeLbl();
+  document.getElementById('filterContext').innerHTML=`<span>분석 범위 <span class="context-value">${esc(scope)}</span> · ${historical?(S.basis==='ytd'?'동기 1–9월 비교':'과거 연간 / 2026년 1–9월'):S.tab==='O'?periodName():'1–9월 전체'}</span><span class="${S.restr==='exc'?'context-flag':''}">${basisName()}${S.restr==='exc'?' · 원본 추정 배부':''}</span>`;
+  document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',S[b.dataset.g]===b.dataset.v));
+  document.querySelectorAll('.tab').forEach(b=>{const selected=b.dataset.tab===S.tab;b.setAttribute('aria-selected',selected);b.tabIndex=selected?0:-1});
+}
+render=function(){if(S.tab==='O')renderOverview();else originalRender();updateContext()};
+setTab=function(t){
+  S.tab=t;
+  for(const k of ['O','C','A','B']){const el=document.getElementById('view'+k);el.classList.toggle('hidden',t!==k);el.setAttribute('role','tabpanel');el.setAttribute('aria-labelledby','tab'+k)}
+  const historical=t==='A'||t==='B';
+  document.querySelectorAll('.onlyAB').forEach(el=>el.classList.toggle('hidden',!historical));
+  document.querySelectorAll('.onlyC').forEach(el=>el.classList.toggle('hidden',historical));
+  render();window.scrollTo({top:0,behavior:'instant'});
+};
+function toast(message){const el=document.getElementById('appMessage');el.textContent=message;el.hidden=false;setTimeout(()=>el.hidden=true,2600)}
+function exportOverviewCSV(){
+  const q=s=>'"'+String(s).replaceAll('"','""')+'"';
+  const ms=selectedMonths(),rows=[['LGECH C.O.I Dashboard'],['기간',periodName()],['공통 범위',cScopeLbl()],['기준',basisName()],['단위','KUSD; QTY in units; ratios in percent'],[],['구분','이름','순매출_KUSD','COI_KUSD','COI_percent','수량_대']];
+  const summary=M(oV(ms));rows.push(['합계','현재 범위',summary.ns,summary.oi,Number.isFinite(summary.oiR)?summary.oiR*100:'',summary.q]);
+  for(const [key,label]of [['dep','채널'],['prod','제품'],['acct','거래선']])scopeEntities(ms,key).forEach(x=>rows.push([label,displayName(x.name),x.m.ns,x.m.oi,Number.isFinite(x.m.oiR)?x.m.oiR*100:'',x.m.q]));
+  // Prefix cells that could be interpreted as spreadsheet formulas; numeric values stay numeric.
+  const csv='\ufeff'+rows.map(r=>r.map(v=>q(typeof v==='string'&&/^[=+@\-\t\r]/.test(v)?"'"+v:v)).join(',')).join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const a=document.createElement('a');a.href=url;a.download=`LGECH_COI_2026-${String(overviewMonth).padStart(2,'0')}_${S.restr}_${overviewPeriod}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('현재 필터 범위의 CSV를 저장했습니다.');
+}
+function initMerged(){
+  const storage={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}}};
+  document.documentElement.dataset.theme=storage.get('coi-merged-theme')||'light';
+  const gate=document.getElementById('mergedAuth'),input=document.getElementById('unlockPassword');
+  function unlock(){gate.classList.add('hidden');document.documentElement.dataset.locked='false';try{sessionStorage.setItem('coi-merged-auth','ok')}catch{}}
+  function lock(){gate.classList.remove('hidden');document.documentElement.dataset.locked='true';try{sessionStorage.removeItem('coi-merged-auth')}catch{}input.value='';input.focus()}
+  let authenticated=false;try{authenticated=sessionStorage.getItem('coi-merged-auth')==='ok'}catch{}
+  if(authenticated)unlock();else lock();
+  document.getElementById('unlockForm').onsubmit=e=>{e.preventDefault();if(input.value==='2026'){document.getElementById('unlockError').textContent='';unlock()}else{document.getElementById('unlockError').textContent='密码错误，请重试 / 비밀번호를 확인하세요.';input.value='';input.focus()}};
+  document.getElementById('lockDashboard').onclick=lock;
+  document.getElementById('themeToggle').onclick=()=>{const dark=document.documentElement.dataset.theme!=='dark';document.documentElement.dataset.theme=dark?'dark':'light';storage.set('coi-merged-theme',dark?'dark':'light');document.getElementById('themeToggle').setAttribute('aria-label',dark?'밝은 테마 전환':'어두운 테마 전환')};
+  document.getElementById('printReport').onclick=()=>window.print();
+  initGlobal();
+  const parse=x=>x==='ALL'?'ALL':+x;
+  document.getElementById('cDep').onchange=e=>{S.dep=parse(e.target.value);S.team='ALL';S.acct='ALL';syncSel();render()};
+  document.getElementById('cTeam').onchange=e=>{S.team=parse(e.target.value);S.acct='ALL';syncSel();render()};
+  document.getElementById('cAcct').onchange=e=>{S.acct=parse(e.target.value);syncSel();render()};
+  document.getElementById('resetFilters').onclick=()=>{Object.assign(S,{dep:'ALL',team:'ALL',acct:'ALL',prod:'ALL',scope:'ALL',basis:'ytd',restr:'inc'});overviewMonth=9;overviewPeriod='month';rankMetric='oi';productMetric='oi';customerQuery='';document.getElementById('overviewPeriod').value='month';document.getElementById('customerSearch').value='';document.querySelectorAll('[data-rank]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.rank==='oi'));document.querySelectorAll('[data-pmetric]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pmetric==='oi'));syncSel();render()};
+  document.getElementById('overviewPeriod').onchange=e=>{overviewPeriod=e.target.value;render()};
+  document.getElementById('customerSearch').oninput=e=>{customerQuery=e.target.value;renderAccountRanking()};
+  document.getElementById('downloadOverview').onclick=exportOverviewCSV;
+  document.getElementById('rankPrevPage').onclick=()=>{rankPage-=1;renderAccountRanking()};
+  document.getElementById('rankNextPage').onclick=()=>{rankPage+=1;renderAccountRanking()};
+  document.querySelectorAll('[data-rank]').forEach(b=>b.onclick=()=>{rankMetric=b.dataset.rank;document.querySelectorAll('[data-rank]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderAccountRanking()});
+  document.querySelectorAll('[data-pmetric]').forEach(b=>b.onclick=()=>{productMetric=b.dataset.pmetric;document.querySelectorAll('[data-pmetric]').forEach(x=>x.setAttribute('aria-pressed',x===b));renderProductMatrix()});
+  document.getElementById('viewO').addEventListener('click',e=>{
+    const b=e.target.closest('button,[data-overview-month]');if(!b)return;
+    if(b.dataset.overviewMonth){overviewMonth=+b.dataset.overviewMonth;render()}
+    else if(b.dataset.account!==undefined){S.acct=+b.dataset.account;syncSel();render()}
+    else if(b.dataset.department!==undefined){S.dep=+b.dataset.department;S.team='ALL';S.acct='ALL';syncSel();render()}
+    else if(b.dataset.team!==undefined){S.team=+b.dataset.team;S.dep=D.deps.indexOf(D.tm[D.teams[S.team]]);S.acct='ALL';syncSel();render()}
+    else if(b.dataset.selectProduct!==undefined){S.prod=D.prods[+b.dataset.selectProduct];syncSel();render()}
+    else if(b.dataset.productDetail!==undefined)openOverviewDetail(b.dataset.productDetail,b.dataset.detailMonth);
+    else if(b.dataset.go)setTab(b.dataset.go);
+  });
+  document.getElementById('viewO').addEventListener('keydown',e=>{const b=e.target.closest('[data-overview-month]');if(b&&b.tagName.toLowerCase()!=='button'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();overviewMonth=+b.dataset.overviewMonth;render()}});
+  document.querySelector('.tabs').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...document.querySelectorAll('.tab')];const current=tabs.findIndex(t=>t.dataset.tab===S.tab);const ix=e.key==='Home'?0:e.key==='End'?tabs.length-1:(current+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;setTab(tabs[ix].dataset.tab);tabs[ix].focus()});
+  const source=document.querySelector('#sourceNotes>h2');source.tabIndex=0;source.setAttribute('role','button');source.setAttribute('aria-expanded','false');function toggleSources(){const expanded=document.getElementById('sourceNotes').classList.toggle('expanded');source.setAttribute('aria-expanded',String(expanded))}source.onclick=toggleSources;source.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSources()}};
+  setTab('O');
+  // Compact, read-only access for reproducible source and reconciliation checks.
+  window.coiAudit=()=>({source:'coi-reference.html',canonical:'reference O for executive/monthly; T for historical/bridge',months:modelAudit,period:periodName(),basis:basisName(),scope:cScopeLbl(),selected:M(oV(selectedMonths())),ytd:M(oV(MS9)),adjustment:adjustDifference(selectedMonths()),historicalAdjustment:D.R.reduce((n,r)=>n+r[2],0)});
+}
+
+initMerged();
 </script>
 </body>
 </html>
